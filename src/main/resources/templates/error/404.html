@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html
+  lang="pt-br"
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="layouts/base :: base(~{::title}, ~{::main})"
+>
+  <head>
+    <title>Página Não Encontrada - GearHub</title>
+  </head>
+  <body>
+    <main>
+      <div
+        class="px-10 md:px-20 lg:px-40 flex flex-1 justify-center items-center py-20"
+      >
+        <div
+          class="layout-content-container flex flex-col max-w-[960px] flex-1 text-center"
+        >
+          <!-- Ícone de Erro -->
+          <div class="mb-8">
+            <div class="flex justify-center mb-6">
+              <div class="size-32 text-[#1565c0]">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 256 256"
+                >
+                  <path
+                    d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm-8,56a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm8,104a12,12,0,1,1,12-12A12,12,0,0,1,128,184Z"
+                  ></path>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Código de Erro -->
+            <h1 class="text-white text-7xl font-black leading-tight mb-4">
+              404
+            </h1>
+            <p class="text-[#93adc8] text-2xl font-semibold mb-2">
+              Página Não Encontrada
+            </p>
+            <p class="text-[#93adc8] text-base">
+              Ops! A página que você está procurando não existe ou foi movida.
+            </p>
+          </div>
+
+          <!-- Ações Sugeridas -->
+          <div
+            class="flex flex-col sm:flex-row gap-4 justify-center items-center mt-8"
+          >
+            <a
+              th:href="@{/}"
+              class="flex items-center justify-center rounded-lg bg-[#1565c0] text-white gap-2 px-6 py-3 font-bold hover:bg-[#0d47a1] transition-colors"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20px"
+                height="20px"
+                fill="currentColor"
+                viewBox="0 0 256 256"
+              >
+                <path
+                  d="M224,115.55V208a16,16,0,0,1-16,16H168a16,16,0,0,1-16-16V168a8,8,0,0,0-8-8H112a8,8,0,0,0-8,8v40a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V115.55a16,16,0,0,1,5.17-11.78l80-75.48.11-.11a16,16,0,0,1,21.53,0,1.14,1.14,0,0,0,.11.11l80,75.48A16,16,0,0,1,224,115.55Z"
+                ></path>
+              </svg>
+              <span>Voltar para Home</span>
+            </a>
+
+            <a
+              th:href="@{/veiculos}"
+              class="flex items-center justify-center rounded-lg border-2 border-[#3b4f5f] text-white gap-2 px-6 py-3 font-bold hover:border-[#1565c0] hover:bg-[#223649] transition-all"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20px"
+                height="20px"
+                fill="currentColor"
+                viewBox="0 0 256 256"
+              >
+                <path
+                  d="M240,112H229.2L201.42,49.5A16,16,0,0,0,186.8,40H69.2a16,16,0,0,0-14.62,9.5L26.8,112H16a8,8,0,0,0,0,16h8v80a16,16,0,0,0,16,16H64a16,16,0,0,0,16-16v-8h96v8a16,16,0,0,0,16,16h24a16,16,0,0,0,16-16V128h8a8,8,0,0,0,0-16ZM69.2,56H186.8l24.89,56H44.31ZM64,208H40V192H64Zm128,0V192h24v16Zm24-32H40V128H216ZM56,152a8,8,0,0,1,8-8H80a8,8,0,0,1,0,16H64A8,8,0,0,1,56,152Zm112,0a8,8,0,0,1,8-8h16a8,8,0,0,1,0,16H176A8,8,0,0,1,168,152Z"
+                ></path>
+              </svg>
+              <span>Ver Veículos</span>
+            </a>
+          </div>
+
+          <!-- Informação Adicional -->
+          <div class="mt-12">
+            <p class="text-[#93adc8] text-sm">
+              Se você acredita que isso é um erro, entre em contato com o
+              suporte.
+            </p>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

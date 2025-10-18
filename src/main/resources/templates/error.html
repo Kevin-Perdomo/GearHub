@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org" th:replace="layouts/base :: base(~{::title}, ~{::main})">
+  <head>
+    <title>Erro - GearHub</title>
+  </head>
+  <body>
+    <main>
+      <div class="px-10 md:px-20 lg:px-40 flex flex-1 justify-center items-center py-20">
+        <div class="layout-content-container flex flex-col max-w-[960px] flex-1 text-center">
+          
+          <div class="mb-8">
+            <h1 class="text-white text-7xl font-black leading-tight mb-4" th:text="${status} ?: '500'">500</h1>
+            <p class="text-[#93adc8] text-2xl font-semibold mb-2" th:text="${error} ?: 'Erro Interno do Servidor'">Erro Interno do Servidor</p>
+            <p class="text-[#93adc8] text-base">
+              Desculpe, algo deu errado. Por favor, tente novamente mais tarde.
+            </p>
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mt-8">
+            <a th:href="@{/}" class="flex items-center justify-center rounded-lg bg-[#1565c0] text-white gap-2 px-6 py-3 font-bold hover:bg-[#0d47a1] transition-colors">
+              <span>Voltar para Home</span>
+            </a>
+            
+            <a th:href="@{/veiculos}" class="flex items-center justify-center rounded-lg border-2 border-[#3b4f5f] text-white gap-2 px-6 py-3 font-bold hover:border-[#1565c0] hover:bg-[#223649] transition-all">
+              <span>Ver Veículos</span>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

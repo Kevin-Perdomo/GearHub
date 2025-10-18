@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html
+  lang="pt-br"
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="layouts/base :: base(~{::title}, ~{::main})"
+>
+  <head>
+    <title>Detalhes do Veículo - GearHub</title>
+    <!-- Bootstrap 5 CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <main>
+      <div class="container mt-4">
+        <!-- Cabeçalho com informações do veículo -->
+        <div class="row mb-4">
+          <div class="col-md-12">
+            <h1 class="text-white">
+              Detalhes do Veículo:
+              <span th:text="${veiculo.marca + ' ' + veiculo.modelo}"
+                >Yamaha Fazer 250</span
+              >
+            </h1>
+            <p class="text-white-50">
+              <span
+                th:if="${veiculo.placa}"
+                th:text="'Placa: ' + ${veiculo.placa}"
+                >Placa: ABC-1234</span
+              >
+              <span
+                th:if="${veiculo.anoModelo}"
+                th:text="' | Ano: ' + ${veiculo.anoModelo}"
+              >
+                | Ano: 2015</span
+              >
+            </p>
+          </div>
+        </div>
+
+        <!-- Card de informações gerais -->
+        <div class="card bg-dark text-white mb-4">
+          <div class="card-body">
+            <h5 class="card-title">Informações Gerais</h5>
+            <div class="row">
+              <div class="col-md-4">
+                <p>
+                  <strong>Marca:</strong>
+                  <span th:text="${veiculo.marca}">Yamaha</span>
+                </p>
+                <p>
+                  <strong>Modelo:</strong>
+                  <span th:text="${veiculo.modelo}">Fazer 250</span>
+                </p>
+              </div>
+              <div class="col-md-4">
+                <p>
+                  <strong>Ano Modelo:</strong>
+                  <span th:text="${veiculo.anoModelo}">2015</span>
+                </p>
+                <p>
+                  <strong>Combustível:</strong>
+                  <span th:text="${veiculo.combustivelRecomendado}"
+                    >Gasolina</span
+                  >
+                </p>
+              </div>
+              <div class="col-md-4">
+                <p>
+                  <strong>Capacidade Tanque:</strong>
+                  <span th:text="${veiculo.capacidadeTanqueLitros + ' L'}"
+                    >14 L</span
+                  >
+                </p>
+                <p>
+                  <strong>Capacidade Reserva:</strong>
+                  <span th:text="${veiculo.capacidadeReservaLitros + ' L'}"
+                    >2.6 L</span
+                  >
+                </p>
+              </div>
+            </div>
+            <div class="row" th:if="${veiculo.descricao}">
+              <div class="col-md-12">
+                <p>
+                  <strong>Descrição:</strong>
+                  <span th:text="${veiculo.descricao}"
+                    >Descrição do veículo</span
+                  >
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sistema de Abas (Tabs) -->
+        <ul class="nav nav-tabs" id="abasVeiculo" role="tablist">
+          <li class="nav-item" role="presentation">
+            <a
+              class="nav-link active"
+              id="docs-tab"
+              data-bs-toggle="tab"
+              href="#docs"
+              role="tab"
+              aria-controls="docs"
+              aria-selected="true"
+            >
+              Documentação
+            </a>
+          </li>
+          <li class="nav-item" role="presentation">
+            <a
+              class="nav-link"
+              id="oleo-tab"
+              data-bs-toggle="tab"
+              href="#oleo"
+              role="tab"
+              aria-controls="oleo"
+              aria-selected="false"
+            >
+              Troca de Óleo
+            </a>
+          </li>
+          <li class="nav-item" role="presentation">
+            <a
+              class="nav-link"
+              id="bateria-tab"
+              data-bs-toggle="tab"
+              href="#bateria"
+              role="tab"
+              aria-controls="bateria"
+              aria-selected="false"
+            >
+              Bateria
+            </a>
+          </li>
+          <li class="nav-item" role="presentation">
+            <a
+              class="nav-link"
+              id="pneus-tab"
+              data-bs-toggle="tab"
+              href="#pneus"
+              role="tab"
+              aria-controls="pneus"
+              aria-selected="false"
+            >
+              Pneus
+            </a>
+          </li>
+        </ul>
+
+        <!-- Conteúdo das Abas -->
+        <div
+          class="tab-content p-4 bg-dark text-white"
+          id="conteudoAbasVeiculo"
+        >
+          <!-- Aba: Documentação -->
+          <div
+            class="tab-pane fade show active"
+            id="docs"
+            role="tabpanel"
+            aria-labelledby="docs-tab"
+          >
+            <h3>Histórico de Documentos</h3>
+            <button class="btn btn-primary mb-3">
+              <i class="bi bi-plus-circle"></i> Adicionar Documento
+            </button>
+
+            <div class="table-responsive">
+              <table class="table table-dark table-striped table-hover">
+                <thead>
+                  <tr>
+                    <th>Tipo</th>
+                    <th>Ano</th>
+                    <th>Status</th>
+                    <th>Data Pagamento</th>
+                    <th>Arquivo</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr th:each="doc : ${veiculo.documentosVeiculo}">
+                    <td th:text="${doc.tipoDocumento}">IPVA</td>
+                    <td th:text="${doc.anoReferencia}">2024</td>
+                    <td>
+                      <span
+                        class="badge"
+                        th:classappend="${doc.status == 'Pago' ? 'bg-success' : 'bg-warning'}"
+                        th:text="${doc.status}"
+                        >Pago</span
+                      >
+                    </td>
+                    <td
+                      th:text="${#temporals.format(doc.dataPagamento, 'dd/MM/yyyy')}"
+                    >
+                      15/01/2024
+                    </td>
+                    <td>
+                      <a
+                        th:if="${doc.urlArquivo}"
+                        th:href="${doc.urlArquivo}"
+                        class="btn btn-sm btn-outline-light"
+                        target="_blank"
+                      >
+                        <i class="bi bi-file-earmark-pdf"></i> Ver
+                      </a>
+                    </td>
+                    <td>
+                      <button class="btn btn-sm btn-outline-warning">
+                        Editar
+                      </button>
+                      <button class="btn btn-sm btn-outline-danger">
+                        Excluir
+                      </button>
+                    </td>
+                  </tr>
+                  <tr th:if="${#lists.isEmpty(veiculo.documentosVeiculo)}">
+                    <td colspan="6" class="text-center text-muted">
+                      Nenhum documento cadastrado
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Aba: Troca de Óleo -->
+          <div
+            class="tab-pane fade"
+            id="oleo"
+            role="tabpanel"
+            aria-labelledby="oleo-tab"
+          >
+            <h3>Histórico de Trocas de Óleo</h3>
+            <button class="btn btn-primary mb-3">
+              <i class="bi bi-plus-circle"></i> Registrar Troca
+            </button>
+
+            <div class="table-responsive">
+              <table class="table table-dark table-striped table-hover">
+                <thead>
+                  <tr>
+                    <th>Data</th>
+                    <th>KM</th>
+                    <th>Tipo de Óleo</th>
+                    <th>Quantidade (L)</th>
+                    <th>Filtro Trocado</th>
+                    <th>Foto</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr th:each="troca : ${veiculo.trocasDeOleo}">
+                    <td
+                      th:text="${#temporals.format(troca.dataTroca, 'dd/MM/yyyy')}"
+                    >
+                      15/01/2024
+                    </td>
+                    <td th:text="${troca.quilometragem + ' km'}">25.000 km</td>
+                    <td th:text="${troca.tipoOleo}">Motul 7100 10W40</td>
+                    <td th:text="${troca.quantidadeLitros}">2.7</td>
+                    <td>
+                      <span
+                        class="badge"
+                        th:classappend="${troca.trocouFiltro ? 'bg-success' : 'bg-secondary'}"
+                        th:text="${troca.trocouFiltro ? 'Sim' : 'Não'}"
+                        >Sim</span
+                      >
+                    </td>
+                    <td>
+                      <a
+                        th:if="${troca.urlFoto}"
+                        th:href="${troca.urlFoto}"
+                        class="btn btn-sm btn-outline-light"
+                        target="_blank"
+                      >
+                        <i class="bi bi-image"></i>
+                      </a>
+                    </td>
+                    <td>
+                      <button class="btn btn-sm btn-outline-warning">
+                        Editar
+                      </button>
+                      <button class="btn btn-sm btn-outline-danger">
+                        Excluir
+                      </button>
+                    </td>
+                  </tr>
+                  <tr th:if="${#lists.isEmpty(veiculo.trocasDeOleo)}">
+                    <td colspan="7" class="text-center text-muted">
+                      Nenhuma troca de óleo registrada
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Aba: Bateria -->
+          <div
+            class="tab-pane fade"
+            id="bateria"
+            role="tabpanel"
+            aria-labelledby="bateria-tab"
+          >
+            <h3>Histórico da Bateria</h3>
+            <button class="btn btn-primary mb-3">
+              <i class="bi bi-plus-circle"></i> Registrar Bateria
+            </button>
+
+            <div class="table-responsive">
+              <table class="table table-dark table-striped table-hover">
+                <thead>
+                  <tr>
+                    <th>Marca</th>
+                    <th>Modelo</th>
+                    <th>Voltagem</th>
+                    <th>Capacidade (Ah)</th>
+                    <th>Data Instalação</th>
+                    <th>KM Instalação</th>
+                    <th>Fim Garantia</th>
+                    <th>Foto</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr th:each="bateria : ${veiculo.historicoBateria}">
+                    <td th:text="${bateria.marca}">Moura</td>
+                    <td th:text="${bateria.modelo}">MA5-D</td>
+                    <td th:text="${bateria.voltagem}">12V</td>
+                    <td th:text="${bateria.capacidadeAh}">5Ah</td>
+                    <td
+                      th:text="${#temporals.format(bateria.dataInstalacao, 'dd/MM/yyyy')}"
+                    >
+                      10/06/2023
+                    </td>
+                    <td th:text="${bateria.kmInstalacao + ' km'}">20.000 km</td>
+                    <td
+                      th:text="${#temporals.format(bateria.fimGarantia, 'dd/MM/yyyy')}"
+                    >
+                      10/06/2024
+                    </td>
+                    <td>
+                      <a
+                        th:if="${bateria.urlFoto}"
+                        th:href="${bateria.urlFoto}"
+                        class="btn btn-sm btn-outline-light"
+                        target="_blank"
+                      >
+                        <i class="bi bi-image"></i>
+                      </a>
+                    </td>
+                    <td>
+                      <button class="btn btn-sm btn-outline-warning">
+                        Editar
+                      </button>
+                      <button class="btn btn-sm btn-outline-danger">
+                        Excluir
+                      </button>
+                    </td>
+                  </tr>
+                  <tr th:if="${#lists.isEmpty(veiculo.historicoBateria)}">
+                    <td colspan="9" class="text-center text-muted">
+                      Nenhuma bateria registrada
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Aba: Pneus -->
+          <div
+            class="tab-pane fade"
+            id="pneus"
+            role="tabpanel"
+            aria-labelledby="pneus-tab"
+          >
+            <h3>Histórico de Pneus</h3>
+            <button class="btn btn-primary mb-3">
+              <i class="bi bi-plus-circle"></i> Registrar Pneu
+            </button>
+
+            <div class="table-responsive">
+              <table class="table table-dark table-striped table-hover">
+                <thead>
+                  <tr>
+                    <th>Posição</th>
+                    <th>Marca</th>
+                    <th>Modelo</th>
+                    <th>Medida</th>
+                    <th>Data Instalação</th>
+                    <th>KM Instalação</th>
+                    <th>Foto</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr th:each="pneu : ${veiculo.historicoPneus}">
+                    <td>
+                      <span class="badge bg-info" th:text="${pneu.posicao}"
+                        >Dianteiro</span
+                      >
+                    </td>
+                    <td th:text="${pneu.marca}">Pirelli</td>
+                    <td th:text="${pneu.modelo}">Diablo Rosso II</td>
+                    <td th:text="${pneu.medida}">110/70-17</td>
+                    <td
+                      th:text="${#temporals.format(pneu.dataInstalacao, 'dd/MM/yyyy')}"
+                    >
+                      05/03/2024
+                    </td>
+                    <td th:text="${pneu.kmInstalacao + ' km'}">22.000 km</td>
+                    <td>
+                      <a
+                        th:if="${pneu.urlFoto}"
+                        th:href="${pneu.urlFoto}"
+                        class="btn btn-sm btn-outline-light"
+                        target="_blank"
+                      >
+                        <i class="bi bi-image"></i>
+                      </a>
+                    </td>
+                    <td>
+                      <button class="btn btn-sm btn-outline-warning">
+                        Editar
+                      </button>
+                      <button class="btn btn-sm btn-outline-danger">
+                        Excluir
+                      </button>
+                    </td>
+                  </tr>
+                  <tr th:if="${#lists.isEmpty(veiculo.historicoPneus)}">
+                    <td colspan="8" class="text-center text-muted">
+                      Nenhum pneu registrado
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Bootstrap 5 JS Bundle (inclui Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Bootstrap Icons (opcional, para os ícones) -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css"
+    />
+  </body>
+</html>

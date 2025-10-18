@@ -26,12 +26,25 @@ public class Veiculo {
     @Column(nullable = false, length = 100)
     private String modelo;
 
+    @Size(max = 100, message = "Marca deve ter no máximo 100 caracteres")
+    @Column(length = 100)
+    private String marca;
+
     @Size(max = 20, message = "Placa deve ter no máximo 20 caracteres")
     @Column(length = 20)
     private String placa;
 
-    @Column
-    private Integer ano;
+    @Column(name = "ano_modelo")
+    private Integer anoModelo;
+
+    @Column(name = "combustivel_recomendado", length = 50)
+    private String combustivelRecomendado;
+
+    @Column(name = "capacidade_tanque_litros")
+    private Double capacidadeTanqueLitros;
+
+    @Column(name = "capacidade_reserva_litros")
+    private Double capacidadeReservaLitros;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sede_id", nullable = false)
@@ -45,4 +58,16 @@ public class Veiculo {
 
     @OneToMany(mappedBy = "veiculo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Documento> documentos = new ArrayList<>();
+
+    @OneToMany(mappedBy = "veiculo", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TrocaDeOleo> trocasDeOleo = new ArrayList<>();
+
+    @OneToMany(mappedBy = "veiculo", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<HistoricoBateria> historicoBateria = new ArrayList<>();
+
+    @OneToMany(mappedBy = "veiculo", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<HistoricoPneu> historicoPneus = new ArrayList<>();
+
+    @OneToMany(mappedBy = "veiculo", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DocumentoVeiculo> documentosVeiculo = new ArrayList<>();
 }
