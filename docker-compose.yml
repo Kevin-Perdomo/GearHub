@@ -10,7 +10,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - mysql-data:/var/lib/mysql
+      - ./mysql-data:/var/lib/mysql
     networks:
       - gearhub-network
     healthcheck:
@@ -33,9 +33,6 @@ services:
     networks:
       - gearhub-network
     restart: unless-stopped
-
-volumes:
-  mysql-data:
 
 networks:
   gearhub-network:

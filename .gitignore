@@ -41,3 +41,6 @@ build/
 *.sqlite
 *.sqlite3
 exemplo.mv.db
+
+### Docker Volumes ###
+mysql-data/
