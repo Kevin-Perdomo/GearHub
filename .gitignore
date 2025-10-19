@@ -1,3 +1,4 @@
+### Maven ###
 HELP.md
 target/
 .mvn/wrapper/maven-wrapper.jar
@@ -44,3 +45,6 @@ exemplo.mv.db
 
 ### Docker Volumes ###
 mysql-data/
+
+### Environment Variables ###
+.env
