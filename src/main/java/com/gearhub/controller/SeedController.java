@@ -29,7 +29,7 @@ public class SeedController {
      * Ou via terminal: curl http://localhost:8080/seed/executar
      */
     @GetMapping("/executar")
-    @Operation(summary = "Popular Banco (GET)", description = "Executa seed via navegador. Redireciona para home com mensagem de confirmação.")
+    @Operation(hidden = true)
     public String executarSeed(RedirectAttributes redirectAttributes) {
         String resultado = seederService.executarSeed();
         redirectAttributes.addFlashAttribute("mensagem", resultado);
@@ -43,7 +43,7 @@ public class SeedController {
      * Ou via terminal: curl http://localhost:8080/seed/limpar
      */
     @GetMapping("/limpar")
-    @Operation(summary = "Limpar Banco (GET)", description = "Remove todos os dados via navegador. Redireciona para home com mensagem de confirmação.")
+    @Operation(hidden = true)
     public String limparBanco(RedirectAttributes redirectAttributes) {
         String resultado = seederService.limparBanco();
         redirectAttributes.addFlashAttribute("mensagem", resultado);

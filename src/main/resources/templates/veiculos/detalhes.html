@@ -1,102 +1,337 @@
 <!DOCTYPE html><!DOCTYPE html>
 
-<html lang="pt-br" xmlns:th="http://www.thymeleaf.org"<html
+<html<html
 
-      th:replace="layouts/base :: base(~{::title}, ~{::main})">  lang="pt-br"
+  lang="pt-br"  lang="pt-br"
 
-<head>  xmlns:th="http://www.thymeleaf.org"
+  xmlns:th="http://www.thymeleaf.org"  xmlns:th="http://www.thymeleaf.org"
 
-    <title>Detalhes do Veículo - GearHub</title>  th:replace="layouts/base :: base(~{::title}, ~{::main})"
+  th:replace="layouts/base :: base(~{::title}, ~{::main})"  th:replace="layouts/base :: base(~{::title}, ~{::main})"
 
-</head>>
+>>
 
-<body>  <head>
+  <head>  <head>
 
-<main>    <title>Detalhes do Veículo - GearHub</title>
+    <title>Detalhes do Veículo - GearHub</title>    <title>Detalhes do Veículo - GearHub</title>
 
-    <div class="px-10 md:px-20 lg:px-40 py-10">    <!-- Bootstrap 5 CSS -->
+  </head>  </head>
 
-        <!-- Header -->    <link
+  <body>  <body>
 
-        <div class="flex justify-between items-center mb-8">      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    <main>    <main>
 
-            <div>      rel="stylesheet"
+      <div class="px-10 md:px-20 lg:px-40 py-10">      <div class="px-10 md:px-20 lg:px-40 py-10">
 
-                <h1 class="text-white text-4xl font-black mb-2">Detalhes do Veículo</h1>    />
+        <!-- Header -->        <!-- Header -->
 
-                <p class="text-[#93adc8]" th:text="${veiculo.marca + ' ' + veiculo.modelo + ' - ' + veiculo.placa}"></p>  </head>
+        <div class="flex justify-between items-center mb-8">        <div class="flex justify-between items-center mb-8">
 
-            </div>  <body>
+          <div>          <div>
 
-            <div class="flex gap-2">    <main>
+            <h1 class="text-white text-4xl font-black mb-2">            <h1 class="text-white text-4xl font-black mb-2">
 
-                <a th:href="@{/veiculos/{id}/editar(id=${veiculo.id})}"       <div class="container mt-4">
+              Detalhes do Veículo              Detalhes do Veículo
 
-                   class="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">        <!-- Cabeçalho com informações do veículo -->
+            </h1>            </h1>
 
-                    Editar        <div class="row mb-4">
+            <p            <p
 
-                </a>          <div class="col-md-12">
+              class="text-[#93adc8]"              class="text-[#93adc8]"
 
-                <a th:href="@{/veiculos}"             <h1 class="text-white">
+              th:text="${veiculo.marca + ' ' + veiculo.modelo + ' - ' + veiculo.placa}"              th:text="${veiculo.marca + ' ' + veiculo.modelo + ' - ' + veiculo.placa}"
 
-                   class="bg-[#3b4f5f] hover:bg-[#4a5f73] text-white font-bold py-3 px-6 rounded-lg transition-colors">              Detalhes do Veículo:
+            ></p>            ></p>
 
-                    Voltar              <span th:text="${veiculo.marca + ' ' + veiculo.modelo}"
+          </div>          </div>
 
-                </a>                >Yamaha Fazer 250</span
+          <div class="flex gap-2">          <div class="flex gap-2">
 
-            </div>              >
+            <a            <a
 
-        </div>            </h1>
+              th:href="@{/veiculos/{id}/editar(id=${veiculo.id})}"              th:href="@{/veiculos/{id}/editar(id=${veiculo.id})}"
 
-            <p class="text-white-50">
+              class="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-3 px-6 rounded-lg transition-colors"              class="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-3 px-6 rounded-lg transition-colors"
 
-        <!-- Informações Gerais -->              <span
+            >            >
 
-        <div class="bg-[#1a2733] rounded-lg border-2 border-[#3b4f5f] p-8 mb-6">                th:if="${veiculo.placa}"
+              Editar              Editar
 
-            <h2 class="text-white text-2xl font-bold mb-6">Informações Gerais</h2>                th:text="'Placa: ' + ${veiculo.placa}"
+            </a>            </a>
 
-                            >Placa: ABC-1234</span
+            <a            <a
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">              >
+              th:href="@{/veiculos}"              th:href="@{/veiculos}"
 
-                <div>              <span
+              class="bg-[#3b4f5f] hover:bg-[#4a5f73] text-white font-bold py-3 px-6 rounded-lg transition-colors"              class="bg-[#3b4f5f] hover:bg-[#4a5f73] text-white font-bold py-3 px-6 rounded-lg transition-colors"
 
-                    <p class="text-[#93adc8] text-sm mb-1">Marca</p>                th:if="${veiculo.anoModelo}"
+            >            >
 
-                    <p class="text-white text-lg font-bold" th:text="${veiculo.marca}"></p>                th:text="' | Ano: ' + ${veiculo.anoModelo}"
+              Voltar              Voltar
 
-                </div>              >
+            </a>            </a>
 
-                                | Ano: 2015</span
+          </div>          </div>
 
-                <div>              >
+        </div>        </div>
 
-                    <p class="text-[#93adc8] text-sm mb-1">Modelo</p>            </p>
 
-                    <p class="text-white text-lg font-bold" th:text="${veiculo.modelo}"></p>          </div>
 
-                </div>        </div>
+        <!-- Informações Gerais -->        <!-- Informações Gerais -->
 
-                
+        <div class="bg-[#1a2733] rounded-lg border-2 border-[#3b4f5f] p-8 mb-6">        <div class="bg-[#1a2733] rounded-lg border-2 border-[#3b4f5f] p-8 mb-6">
 
-                <div>        <!-- Card de informações gerais -->
+          <h2 class="text-white text-2xl font-bold mb-6">          <h2 class="text-white text-2xl font-bold mb-6">
 
-                    <p class="text-[#93adc8] text-sm mb-1">Placa</p>        <div class="card bg-dark text-white mb-4">
+            Informações Gerais            Informações Gerais
 
-                    <p class="text-white text-lg font-bold" th:text="${veiculo.placa}"></p>          <div class="card-body">
+          </h2>          </h2>
 
-                </div>            <h5 class="card-title">Informações Gerais</h5>
 
-                            <div class="row">
 
-                <div>              <div class="col-md-4">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-                    <p class="text-[#93adc8] text-sm mb-1">Ano Modelo</p>                <p>
+            <div>            <div>
 
-                    <p class="text-white text-lg font-bold" th:text="${veiculo.anoModelo}"></p>                  <strong>Marca:</strong>
+              <p class="text-[#93adc8] text-sm mb-1">Marca</p>              <p class="text-[#93adc8] text-sm mb-1">Marca</p>
+
+              <p class="text-white text-lg font-bold" th:text="${veiculo.marca}"></p>              <p class="text-white text-lg font-bold" th:text="${veiculo.marca}"></p>
+
+            </div>            </div>
+
+
+
+            <div>            <div>
+
+              <p class="text-[#93adc8] text-sm mb-1">Modelo</p>              <p class="text-[#93adc8] text-sm mb-1">Modelo</p>
+
+              <p class="text-white text-lg font-bold" th:text="${veiculo.modelo}"></p>              <p class="text-white text-lg font-bold" th:text="${veiculo.modelo}"></p>
+
+            </div>            </div>
+
+
+
+            <div>            <div>
+
+              <p class="text-[#93adc8] text-sm mb-1">Placa</p>              <p class="text-[#93adc8] text-sm mb-1">Placa</p>
+
+              <p class="text-white text-lg font-bold" th:text="${veiculo.placa}"></p>              <p class="text-white text-lg font-bold" th:text="${veiculo.placa}"></p>
+
+            </div>            </div>
+
+
+
+            <div>            <div>
+
+              <p class="text-[#93adc8] text-sm mb-1">Ano Modelo</p>              <p class="text-[#93adc8] text-sm mb-1">Ano Modelo</p>
+
+              <p class="text-white text-lg font-bold" th:text="${veiculo.anoModelo}"></p>              <p class="text-white text-lg font-bold" th:text="${veiculo.anoModelo}"></p>
+
+            </div>            </div>
+
+
+
+            <div>            <div>
+
+              <p class="text-[#93adc8] text-sm mb-1">Combustível Recomendado</p>              <p class="text-[#93adc8] text-sm mb-1">Combustível Recomendado</p>
+
+              <p class="text-white text-lg font-bold" th:text="${veiculo.combustivelRecomendado}"></p>              <p class="text-white text-lg font-bold" th:text="${veiculo.combustivelRecomendado}"></p>
+
+            </div>            </div>
+
+
+
+            <div>            <div>
+
+              <p class="text-[#93adc8] text-sm mb-1">Sede</p>              <p class="text-[#93adc8] text-sm mb-1">Sede</p>
+
+              <p class="text-white text-lg font-bold" th:text="${veiculo.sede?.nome ?: 'Não informado'}"></p>              <p class="text-white text-lg font-bold" th:text="${veiculo.sede?.nome ?: 'Não informado'}"></p>
+
+            </div>            </div>
+
+
+
+            <div>            <div>
+
+              <p class="text-[#93adc8] text-sm mb-1">Capacidade do Tanque</p>              <p class="text-[#93adc8] text-sm mb-1">Capacidade do Tanque</p>
+
+              <p class="text-white text-lg font-bold" th:text="${veiculo.capacidadeTanqueLitros + ' L'}"></p>              <p class="text-white text-lg font-bold" th:text="${veiculo.capacidadeTanqueLitros + ' L'}"></p>
+
+            </div>            </div>
+
+
+
+            <div>            <div>
+
+              <p class="text-[#93adc8] text-sm mb-1">Capacidade da Reserva</p>              <p class="text-[#93adc8] text-sm mb-1">Capacidade da Reserva</p>
+
+              <p class="text-white text-lg font-bold" th:text="${veiculo.capacidadeReservaLitros + ' L'}"></p>              <p class="text-white text-lg font-bold" th:text="${veiculo.capacidadeReservaLitros + ' L'}"></p>
+
+            </div>            </div>
+
+          </div>          </div>
+
+        </div>        </div>
+
+
+
+        <!-- Documentos -->        <!-- Documentos -->
+
+        <div class="bg-[#1a2733] rounded-lg border-2 border-[#3b4f5f] p-8">        <div class="bg-[#1a2733] rounded-lg border-2 border-[#3b4f5f] p-8">
+
+          <div class="flex justify-between items-center mb-6">          <div class="flex justify-between items-center mb-6">
+
+            <h2 class="text-white text-2xl font-bold">Documentos</h2>            <h2 class="text-white text-2xl font-bold">Documentos</h2>
+
+            <a            <a
+
+              th:href="@{/documentos-veiculo/novo(veiculoId=${veiculo.id})}"              th:href="@{/documentos-veiculo/novo(veiculoId=${veiculo.id})}"
+
+              class="bg-[#1565c0] hover:bg-[#0d47a1] text-white font-bold py-2 px-4 rounded-lg transition-colors"              class="bg-[#1565c0] hover:bg-[#0d47a1] text-white font-bold py-2 px-4 rounded-lg transition-colors"
+
+            >            >
+
+              + Adicionar Documento              + Adicionar Documento
+
+            </a>            </a>
+
+          </div>          </div>
+
+
+
+          <div th:if="${veiculo.documentos != null and !veiculo.documentos.isEmpty()}">          <div th:if="${veiculo.documentos != null and !veiculo.documentos.isEmpty()}">
+
+            <div class="overflow-x-auto">            <div class="overflow-x-auto">
+
+              <table class="w-full text-white">              <table class="w-full text-white">
+
+                <thead>                <thead>
+
+                  <tr class="border-b border-[#3b4f5f]">                  <tr class="border-b border-[#3b4f5f]">
+
+                    <th class="text-left py-3 px-4">Tipo</th>                    <th class="text-left py-3 px-4">Tipo</th>
+
+                    <th class="text-left py-3 px-4">Ano Referência</th>                    <th class="text-left py-3 px-4">Ano Referência</th>
+
+                    <th class="text-left py-3 px-4">Status</th>                    <th class="text-left py-3 px-4">Status</th>
+
+                    <th class="text-left py-3 px-4">Data Pagamento</th>                    <th class="text-left py-3 px-4">Data Pagamento</th>
+
+                    <th class="text-center py-3 px-4">Ações</th>                    <th class="text-center py-3 px-4">Ações</th>
+
+                  </tr>                  </tr>
+
+                </thead>                </thead>
+
+                <tbody>                <tbody>
+
+                  <tr                  <tr
+
+                    th:each="doc : ${veiculo.documentos}"                    th:each="doc : ${veiculo.documentos}"
+
+                    class="border-b border-[#3b4f5f] hover:bg-[#223649]"                    class="border-b border-[#3b4f5f] hover:bg-[#223649]"
+
+                  >                  >
+
+                    <td class="py-3 px-4" th:text="${doc.tipoDocumento}"></td>                    <td class="py-3 px-4" th:text="${doc.tipoDocumento}"></td>
+
+                    <td class="py-3 px-4" th:text="${doc.anoReferencia}"></td>                    <td class="py-3 px-4" th:text="${doc.anoReferencia}"></td>
+
+                    <td class="py-3 px-4">                    <td class="py-3 px-4">
+
+                      <span                      <span
+
+                        th:class="${doc.status == 'Pago' ? 'bg-green-600' : 'bg-red-600'}"                        th:class="${doc.status == 'Pago' ? 'bg-green-600' : 'bg-red-600'}"
+
+                        class="px-2 py-1 rounded text-sm"                        class="px-2 py-1 rounded text-sm"
+
+                        th:text="${doc.status}"                        th:text="${doc.status}"
+
+                      ></span>                      ></span>
+
+                    </td>                    </td>
+
+                    <td                    <td
+
+                      class="py-3 px-4"                      class="py-3 px-4"
+
+                      th:text="${doc.dataPagamento != null ? #temporals.format(doc.dataPagamento, 'dd/MM/yyyy') : '-'}"                      th:text="${doc.dataPagamento != null ? #temporals.format(doc.dataPagamento, 'dd/MM/yyyy') : '-'}"
+
+                    ></td>                    ></td>
+
+                    <td class="py-3 px-4 text-center">                    <td class="py-3 px-4 text-center">
+
+                      <a                      <a
+
+                        th:href="@{/documentos-veiculo/{id}(id=${doc.id})}"                        th:href="@{/documentos-veiculo/{id}(id=${doc.id})}"
+
+                        class="text-[#1565c0] hover:text-[#0d47a1] mr-3"                        class="text-[#1565c0] hover:text-[#0d47a1] mr-3"
+
+                      >                      >
+
+                        Ver                        Ver
+
+                      </a>                      </a>
+
+                      <a                      <a
+
+                        th:href="@{/documentos-veiculo/{id}/editar(id=${doc.id})}"                        th:href="@{/documentos-veiculo/{id}/editar(id=${doc.id})}"
+
+                        class="text-yellow-500 hover:text-yellow-600"                        class="text-yellow-500 hover:text-yellow-600"
+
+                      >                      >
+
+                        Editar                        Editar
+
+                      </a>                      </a>
+
+                    </td>                    </td>
+
+                  </tr>                  </tr>
+
+                </tbody>                </tbody>
+
+              </table>              </table>
+
+            </div>            </div>
+
+          </div>          </div>
+
+
+
+          <div          <div
+
+            th:if="${veiculo.documentos == null or veiculo.documentos.isEmpty()}"            th:if="${veiculo.documentos == null or veiculo.documentos.isEmpty()}"
+
+            class="text-center py-8"            class="text-center py-8"
+
+          >          >
+
+            <p class="text-[#93adc8] mb-4">Nenhum documento cadastrado.</p>            <p class="text-[#93adc8] mb-4">Nenhum documento cadastrado.</p>
+
+            <a            <a
+
+              th:href="@{/documentos-veiculo/novo(veiculoId=${veiculo.id})}"              th:href="@{/documentos-veiculo/novo(veiculoId=${veiculo.id})}"
+
+              class="text-[#1565c0] hover:text-[#0d47a1]"              class="text-[#1565c0] hover:text-[#0d47a1]"
+
+            >            >
+
+              Adicionar primeiro documento              Adicionar primeiro documento
+
+            </a>            </a>
+
+          </div>          </div>
+
+        </div>        </div>
+
+      </div>      </div>
+
+    </main>    </main>
+
+  </body>  </body>
+
+</html></html>
+
 
                 </div>                  <span th:text="${veiculo.marca}">Yamaha</span>
 
