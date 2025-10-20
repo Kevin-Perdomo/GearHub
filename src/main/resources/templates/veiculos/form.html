@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html
+  lang="pt-br"
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="layouts/base :: base(~{::title}, ~{::main})"
+>
+  <head>
+    <title
+      th:text="${veiculo.id == null ? 'Novo Veículo' : 'Editar Veículo'} + ' - GearHub'"
+    ></title>
+  </head>
+  <body>
+    <main>
+      <div class="px-10 md:px-20 lg:px-40 py-10">
+        <!-- Header -->
+        <div class="mb-8">
+          <h1
+            class="text-white text-4xl font-black mb-2"
+            th:text="${veiculo.id == null ? 'Novo Veículo' : 'Editar Veículo'}"
+          ></h1>
+          <p class="text-[#93adc8]">Preencha os dados do veículo</p>
+        </div>
+
+        <!-- Formulário -->
+        <div
+          class="bg-[#1a2733] rounded-lg border-2 border-[#3b4f5f] p-8 max-w-4xl"
+        >
+          <form th:action="@{/veiculos}" th:object="${veiculo}" method="post">
+            <input type="hidden" th:field="*{id}" />
+
+            <!-- Linha 1: Marca e Modelo -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              <div>
+                <label for="marca" class="block text-white font-bold mb-2"
+                  >Marca *</label
+                >
+                <input
+                  type="text"
+                  id="marca"
+                  th:field="*{marca}"
+                  class="w-full px-4 py-3 rounded-lg bg-[#0f1b24] border-2 border-[#3b4f5f] text-white focus:border-[#1565c0] focus:outline-none"
+                  placeholder="Digite a marca"
+                  required
+                />
+                <p
+                  th:if="${#fields.hasErrors('marca')}"
+                  th:errors="*{marca}"
+                  class="text-red-400 text-sm mt-1"
+                ></p>
+              </div>
+
+              <div>
+                <label for="modelo" class="block text-white font-bold mb-2"
+                  >Modelo *</label
+                >
+                <input
+                  type="text"
+                  id="modelo"
+                  th:field="*{modelo}"
+                  class="w-full px-4 py-3 rounded-lg bg-[#0f1b24] border-2 border-[#3b4f5f] text-white focus:border-[#1565c0] focus:outline-none"
+                  placeholder="Digite o modelo"
+                  required
+                />
+                <p
+                  th:if="${#fields.hasErrors('modelo')}"
+                  th:errors="*{modelo}"
+                  class="text-red-400 text-sm mt-1"
+                ></p>
+              </div>
+            </div>
+
+            <!-- Linha 2: Placa e Ano -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              <div>
+                <label for="placa" class="block text-white font-bold mb-2"
+                  >Placa</label
+                >
+                <input
+                  type="text"
+                  id="placa"
+                  th:field="*{placa}"
+                  class="w-full px-4 py-3 rounded-lg bg-[#0f1b24] border-2 border-[#3b4f5f] text-white focus:border-[#1565c0] focus:outline-none"
+                  placeholder="ABC-1234"
+                  maxlength="20"
+                />
+                <p
+                  th:if="${#fields.hasErrors('placa')}"
+                  th:errors="*{placa}"
+                  class="text-red-400 text-sm mt-1"
+                ></p>
+              </div>
+
+              <div>
+                <label for="anoModelo" class="block text-white font-bold mb-2"
+                  >Ano do Modelo</label
+                >
+                <input
+                  type="number"
+                  id="anoModelo"
+                  th:field="*{anoModelo}"
+                  class="w-full px-4 py-3 rounded-lg bg-[#0f1b24] border-2 border-[#3b4f5f] text-white focus:border-[#1565c0] focus:outline-none"
+                  placeholder="2024"
+                  min="1900"
+                  max="2100"
+                />
+                <p
+                  th:if="${#fields.hasErrors('anoModelo')}"
+                  th:errors="*{anoModelo}"
+                  class="text-red-400 text-sm mt-1"
+                ></p>
+              </div>
+            </div>
+
+            <!-- Linha 3: Combustível e Sede -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              <div>
+                <label
+                  for="combustivelRecomendado"
+                  class="block text-white font-bold mb-2"
+                  >Combustível Recomendado</label
+                >
+                <select
+                  id="combustivelRecomendado"
+                  th:field="*{combustivelRecomendado}"
+                  class="w-full px-4 py-3 rounded-lg bg-[#0f1b24] border-2 border-[#3b4f5f] text-white focus:border-[#1565c0] focus:outline-none"
+                >
+                  <option value="">Selecione</option>
+                  <option value="Gasolina">Gasolina</option>
+                  <option value="Etanol">Etanol</option>
+                  <option value="Flex">Flex</option>
+                  <option value="Diesel">Diesel</option>
+                  <option value="Elétrico">Elétrico</option>
+                  <option value="Híbrido">Híbrido</option>
+                </select>
+                <p
+                  th:if="${#fields.hasErrors('combustivelRecomendado')}"
+                  th:errors="*{combustivelRecomendado}"
+                  class="text-red-400 text-sm mt-1"
+                ></p>
+              </div>
+
+              <div>
+                <label for="sede" class="block text-white font-bold mb-2"
+                  >Sede *</label
+                >
+                <select
+                  id="sede"
+                  th:field="*{sede.id}"
+                  class="w-full px-4 py-3 rounded-lg bg-[#0f1b24] border-2 border-[#3b4f5f] text-white focus:border-[#1565c0] focus:outline-none"
+                  required
+                >
+                  <option value="">Selecione uma sede</option>
+                  <option
+                    th:each="s : ${sedes}"
+                    th:value="${s.id}"
+                    th:text="${s.nome}"
+                  ></option>
+                </select>
+                <p
+                  th:if="${#fields.hasErrors('sede')}"
+                  th:errors="*{sede}"
+                  class="text-red-400 text-sm mt-1"
+                ></p>
+              </div>
+            </div>
+
+            <!-- Linha 4: Capacidades -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              <div>
+                <label
+                  for="capacidadeTanqueLitros"
+                  class="block text-white font-bold mb-2"
+                  >Capacidade do Tanque (L)</label
+                >
+                <input
+                  type="number"
+                  id="capacidadeTanqueLitros"
+                  th:field="*{capacidadeTanqueLitros}"
+                  step="0.1"
+                  class="w-full px-4 py-3 rounded-lg bg-[#0f1b24] border-2 border-[#3b4f5f] text-white focus:border-[#1565c0] focus:outline-none"
+                  placeholder="50.0"
+                />
+                <p
+                  th:if="${#fields.hasErrors('capacidadeTanqueLitros')}"
+                  th:errors="*{capacidadeTanqueLitros}"
+                  class="text-red-400 text-sm mt-1"
+                ></p>
+              </div>
+
+              <div>
+                <label
+                  for="capacidadeReservaLitros"
+                  class="block text-white font-bold mb-2"
+                  >Capacidade da Reserva (L)</label
+                >
+                <input
+                  type="number"
+                  id="capacidadeReservaLitros"
+                  th:field="*{capacidadeReservaLitros}"
+                  step="0.1"
+                  class="w-full px-4 py-3 rounded-lg bg-[#0f1b24] border-2 border-[#3b4f5f] text-white focus:border-[#1565c0] focus:outline-none"
+                  placeholder="5.0"
+                />
+                <p
+                  th:if="${#fields.hasErrors('capacidadeReservaLitros')}"
+                  th:errors="*{capacidadeReservaLitros}"
+                  class="text-red-400 text-sm mt-1"
+                ></p>
+              </div>
+            </div>
+
+            <!-- Botões -->
+            <div class="flex gap-4 mt-8">
+              <button
+                type="submit"
+                class="bg-[#1565c0] hover:bg-[#0d47a1] text-white font-bold py-3 px-6 rounded-lg transition-colors flex-1"
+              >
+                Salvar
+              </button>
+              <a
+                th:href="@{/veiculos}"
+                class="bg-[#3b4f5f] hover:bg-[#4a5f73] text-white font-bold py-3 px-6 rounded-lg transition-colors text-center flex-1"
+              >
+                Cancelar
+              </a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
