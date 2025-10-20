@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html
+  lang="pt-br"
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="layouts/base :: base(~{::title}, ~{::main})"
+>
+  <head>
+    <title>Documentos de Veículos - GearHub</title>
+  </head>
+  <body>
+    <main>
+      <div class="px-10 md:px-20 lg:px-40 py-10">
+        <div class="flex justify-between items-center mb-8">
+          <div>
+            <h1 class="text-white text-4xl font-black mb-2">
+              Documentos de Veículos
+            </h1>
+            <p class="text-[#93adc8]">Gerencie os documentos dos veículos</p>
+          </div>
+          <a
+            th:href="@{/documentos-veiculo/novo}"
+            class="bg-[#1565c0] hover:bg-[#0d47a1] text-white font-bold py-3 px-6 rounded-lg transition-colors"
+          >
+            + Novo Documento
+          </a>
+        </div>
+
+        <div
+          th:if="${mensagem}"
+          class="bg-green-500/20 border border-green-500 text-green-300 px-4 py-3 rounded-lg mb-6"
+        >
+          <p th:text="${mensagem}"></p>
+        </div>
+
+        <div
+          class="bg-[#1a2733] rounded-lg border-2 border-[#3b4f5f] overflow-hidden"
+        >
+          <table class="w-full">
+            <thead class="bg-[#0f1b24] border-b-2 border-[#3b4f5f]">
+              <tr>
+                <th class="text-left text-white font-bold px-6 py-4">
+                  Veículo
+                </th>
+                <th class="text-left text-white font-bold px-6 py-4">Tipo</th>
+                <th class="text-left text-white font-bold px-6 py-4">Ano</th>
+                <th class="text-left text-white font-bold px-6 py-4">Status</th>
+                <th class="text-left text-white font-bold px-6 py-4">
+                  Pagamento
+                </th>
+                <th class="text-center text-white font-bold px-6 py-4">
+                  Ações
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:if="${#lists.isEmpty(documentos)}">
+                <td colspan="6" class="text-center text-[#93adc8] px-6 py-8">
+                  Nenhum documento cadastrado
+                </td>
+              </tr>
+              <tr
+                th:each="doc : ${documentos}"
+                class="border-b border-[#3b4f5f] hover:bg-[#223649] transition-colors"
+              >
+                <td
+                  class="text-white px-6 py-4"
+                  th:text="${doc.veiculo.marca + ' ' + doc.veiculo.modelo + ' - ' + doc.veiculo.placa}"
+                ></td>
+                <td
+                  class="text-[#93adc8] px-6 py-4"
+                  th:text="${doc.tipoDocumento}"
+                ></td>
+                <td
+                  class="text-[#93adc8] px-6 py-4"
+                  th:text="${doc.anoReferencia}"
+                ></td>
+                <td class="px-6 py-4">
+                  <span
+                    th:if="${doc.status == 'Pago'}"
+                    class="bg-green-500/20 text-green-300 px-3 py-1 rounded-full text-sm"
+                    >Pago</span
+                  >
+                  <span
+                    th:if="${doc.status == 'Pendente'}"
+                    class="bg-yellow-500/20 text-yellow-300 px-3 py-1 rounded-full text-sm"
+                    >Pendente</span
+                  >
+                  <span
+                    th:if="${doc.status != 'Pago' && doc.status != 'Pendente'}"
+                    class="bg-gray-500/20 text-gray-300 px-3 py-1 rounded-full text-sm"
+                    th:text="${doc.status}"
+                  ></span>
+                </td>
+                <td
+                  class="text-[#93adc8] px-6 py-4"
+                  th:text="${doc.dataPagamento != null ? #temporals.format(doc.dataPagamento, 'dd/MM/yyyy') : '-'}"
+                ></td>
+                <td class="px-6 py-4">
+                  <div class="flex justify-center gap-2">
+                    <a
+                      th:href="@{/documentos-veiculo/{id}(id=${doc.id})}"
+                      class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors"
+                      >Ver</a
+                    >
+                    <a
+                      th:href="@{/documentos-veiculo/{id}/editar(id=${doc.id})}"
+                      class="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded transition-colors"
+                      >Editar</a
+                    >
+                    <a
+                      th:href="@{/documentos-veiculo/{id}/excluir(id=${doc.id})}"
+                      onclick="return confirm('Tem certeza que deseja excluir este documento?')"
+                      class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition-colors"
+                      >Excluir</a
+                    >
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html
+  lang="pt-br"
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="layouts/base :: base(~{::title}, ~{::main})"
+>
+  <head>
+    <title>Detalhes da Empresa - GearHub</title>
+  </head>
+  <body>
+    <main>
+      <div class="px-10 md:px-20 lg:px-40 py-10">
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-8">
+          <div>
+            <h1 class="text-white text-4xl font-black mb-2">
+              Detalhes da Empresa
+            </h1>
+            <p class="text-[#93adc8]">Informações completas</p>
+          </div>
+          <div class="flex gap-2">
+            <a
+              th:href="@{/empresas/{id}/editar(id=${empresa.id})}"
+              class="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-3 px-6 rounded-lg transition-colors"
+            >
+              Editar
+            </a>
+            <a
+              th:href="@{/empresas}"
+              class="bg-[#3b4f5f] hover:bg-[#4a5f73] text-white font-bold py-3 px-6 rounded-lg transition-colors"
+            >
+              Voltar
+            </a>
+          </div>
+        </div>
+
+        <!-- Dados da Empresa -->
+        <div class="bg-[#1a2733] rounded-lg border-2 border-[#3b4f5f] p-8 mb-6">
+          <h2 class="text-white text-2xl font-bold mb-6">Dados da Empresa</h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <p class="text-[#93adc8] text-sm mb-1">ID</p>
+              <p
+                class="text-white text-lg font-bold"
+                th:text="${empresa.id}"
+              ></p>
+            </div>
+
+            <div>
+              <p class="text-[#93adc8] text-sm mb-1">Nome</p>
+              <p
+                class="text-white text-lg font-bold"
+                th:text="${empresa.nome}"
+              ></p>
+            </div>
+
+            <div>
+              <p class="text-[#93adc8] text-sm mb-1">CNPJ</p>
+              <p
+                class="text-white text-lg font-bold"
+                th:text="${empresa.cnpj}"
+              ></p>
+            </div>
+
+            <div>
+              <p class="text-[#93adc8] text-sm mb-1">Data de Criação</p>
+              <p
+                class="text-white text-lg font-bold"
+                th:text="${#temporals.format(empresa.dataCriacao, 'dd/MM/yyyy HH:mm:ss')}"
+              ></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sedes -->
+        <div class="bg-[#1a2733] rounded-lg border-2 border-[#3b4f5f] p-8">
+          <div class="flex justify-between items-center mb-6">
+            <h2 class="text-white text-2xl font-bold">Sedes</h2>
+            <a
+              th:href="@{/sedes/nova}"
+              class="bg-[#1565c0] hover:bg-[#0d47a1] text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm"
+            >
+              + Nova Sede
+            </a>
+          </div>
+
+          <div
+            th:if="${#lists.isEmpty(empresa.sedes)}"
+            class="text-center text-[#93adc8] py-8"
+          >
+            Nenhuma sede cadastrada para esta empresa
+          </div>
+
+          <div th:unless="${#lists.isEmpty(empresa.sedes)}" class="space-y-4">
+            <div
+              th:each="sede : ${empresa.sedes}"
+              class="bg-[#0f1b24] rounded-lg border border-[#3b4f5f] p-4 hover:border-[#1565c0] transition-colors"
+            >
+              <div class="flex justify-between items-start">
+                <div>
+                  <h3
+                    class="text-white font-bold text-lg mb-2"
+                    th:text="${sede.nome}"
+                  ></h3>
+                  <p class="text-[#93adc8]" th:text="${sede.endereco}"></p>
+                </div>
+                <a
+                  th:href="@{/sedes/{id}(id=${sede.id})}"
+                  class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors text-sm"
+                >
+                  Ver Detalhes
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

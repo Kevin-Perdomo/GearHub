@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html
+  lang="pt-br"
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="layouts/base :: base(~{::title}, ~{::main})"
+>
+  <head>
+    <title>Detalhes do Documento - GearHub</title>
+  </head>
+  <body>
+    <main>
+      <div class="px-10 md:px-20 lg:px-40 py-10">
+        <div class="flex justify-between items-center mb-8">
+          <div>
+            <h1 class="text-white text-4xl font-black mb-2">
+              Detalhes do Documento
+            </h1>
+            <p class="text-[#93adc8]">Informações completas</p>
+          </div>
+          <div class="flex gap-2">
+            <a
+              th:href="@{/documentos-veiculo/{id}/editar(id=${documento.id})}"
+              class="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-3 px-6 rounded-lg transition-colors"
+              >Editar</a
+            >
+            <a
+              th:href="@{/documentos-veiculo}"
+              class="bg-[#3b4f5f] hover:bg-[#4a5f73] text-white font-bold py-3 px-6 rounded-lg transition-colors"
+              >Voltar</a
+            >
+          </div>
+        </div>
+
+        <div class="bg-[#1a2733] rounded-lg border-2 border-[#3b4f5f] p-8">
+          <h2 class="text-white text-2xl font-bold mb-6">
+            Informações do Documento
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <p class="text-[#93adc8] text-sm mb-1">Veículo</p>
+              <p
+                class="text-white text-lg font-bold"
+                th:text="${documento.veiculo.marca + ' ' + documento.veiculo.modelo}"
+              ></p>
+              <p
+                class="text-[#93adc8] text-sm"
+                th:text="'Placa: ' + ${documento.veiculo.placa}"
+              ></p>
+            </div>
+            <div>
+              <p class="text-[#93adc8] text-sm mb-1">Tipo de Documento</p>
+              <p
+                class="text-white text-lg font-bold"
+                th:text="${documento.tipoDocumento}"
+              ></p>
+            </div>
+            <div>
+              <p class="text-[#93adc8] text-sm mb-1">Ano de Referência</p>
+              <p
+                class="text-white text-lg font-bold"
+                th:text="${documento.anoReferencia != null ? documento.anoReferencia : '-'}"
+              ></p>
+            </div>
+            <div>
+              <p class="text-[#93adc8] text-sm mb-1">Status</p>
+              <span
+                th:if="${documento.status == 'Pago'}"
+                class="bg-green-500/20 text-green-300 px-3 py-1 rounded-full text-sm font-bold"
+                >Pago</span
+              >
+              <span
+                th:if="${documento.status == 'Pendente'}"
+                class="bg-yellow-500/20 text-yellow-300 px-3 py-1 rounded-full text-sm font-bold"
+                >Pendente</span
+              >
+              <span
+                th:if="${documento.status != 'Pago' && documento.status != 'Pendente' && documento.status != null}"
+                class="bg-gray-500/20 text-gray-300 px-3 py-1 rounded-full text-sm font-bold"
+                th:text="${documento.status}"
+              ></span>
+            </div>
+            <div>
+              <p class="text-[#93adc8] text-sm mb-1">Data de Pagamento</p>
+              <p
+                class="text-white text-lg font-bold"
+                th:text="${documento.dataPagamento != null ? #temporals.format(documento.dataPagamento, 'dd/MM/yyyy') : '-'}"
+              ></p>
+            </div>
+            <div>
+              <p class="text-[#93adc8] text-sm mb-1">Arquivo</p>
+              <a
+                th:if="${documento.urlArquivo != null && !#strings.isEmpty(documento.urlArquivo)}"
+                th:href="${documento.urlArquivo}"
+                target="_blank"
+                class="text-blue-400 hover:text-blue-300 underline"
+                >Ver Arquivo</a
+              >
+              <p
+                th:unless="${documento.urlArquivo != null && !#strings.isEmpty(documento.urlArquivo)}"
+                class="text-white"
+              >
+                -
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
