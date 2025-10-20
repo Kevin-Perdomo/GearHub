@@ -34,7 +34,7 @@ public class VeiculoController {
 
     @GetMapping("/{id}")
     public String detalhesVeiculo(@PathVariable Long id, Model model) {
-        Veiculo veiculo = veiculoRepository.findById(id)
+        Veiculo veiculo = veiculoRepository.findByIdWithDetails(id)
                 .orElseThrow(() -> new RuntimeException("Veículo não encontrado"));
         
         model.addAttribute("veiculo", veiculo);
