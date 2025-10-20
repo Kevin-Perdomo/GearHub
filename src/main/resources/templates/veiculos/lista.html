@@ -121,48 +121,6 @@
             </tbody>
           </table>
         </div>
-
-        <!-- Cards de Veículos (visualização alternativa) -->
-        <div th:if="${!#lists.isEmpty(veiculos)}" class="mt-8">
-          <h2 class="text-white text-2xl font-bold mb-6">
-            Visualização em Cards
-          </h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div
-              th:each="veiculo : ${veiculos}"
-              class="bg-[#1a2733] rounded-lg border-2 border-[#3b4f5f] p-6 hover:border-[#1565c0] transition-colors"
-            >
-              <h3
-                class="text-white text-xl font-bold mb-4"
-                th:text="${veiculo.marca + ' ' + veiculo.modelo}"
-              ></h3>
-              <div class="space-y-2 mb-4">
-                <p class="text-[#93adc8]">
-                  <span class="font-bold">Placa:</span>
-                  <span th:text="${veiculo.placa}"></span>
-                </p>
-                <p class="text-[#93adc8]">
-                  <span class="font-bold">Ano:</span>
-                  <span th:text="${veiculo.anoModelo}"></span>
-                </p>
-                <p class="text-[#93adc8]">
-                  <span class="font-bold">Combustível:</span>
-                  <span th:text="${veiculo.combustivelRecomendado}"></span>
-                </p>
-                <p class="text-[#93adc8]">
-                  <span class="font-bold">Sede:</span>
-                  <span th:text="${veiculo.sede?.nome}"></span>
-                </p>
-              </div>
-              <a
-                th:href="@{/veiculos/{id}(id=${veiculo.id})}"
-                class="block w-full bg-blue-600 hover:bg-blue-700 text-white text-center font-bold py-2 px-4 rounded transition-colors"
-              >
-                Ver Detalhes
-              </a>
-            </div>
-          </div>
-        </div>
       </div>
     </main>
   </body>
