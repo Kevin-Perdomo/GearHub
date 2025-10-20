@@ -70,13 +70,52 @@ curl -X POST http://localhost:8080/seed/api/limpar
 
 Quando você executa o seed, os seguintes dados são inseridos:
 
-- **1 Empresa**: GearHub Transportes (CNPJ: 12.345.678/0001-99)
-- **1 Sede**: Sede Central (Av. Paulista, 1000 - São Paulo/SP)
-- **3 Veículos**:
-  - Fiat Fiorino (ABC-1234) - 2020
-  - Mercedes-Benz Sprinter (XYZ-5678) - 2022
-  - Renault Master (DEF-9012) - 2021
-- **4 Documentos**: IPVA e Licenciamento para os veículos
+### 🏢 Empresas (2)
+
+1. **GearHub Transportes Ltda** (CNPJ: 12.345.678/0001-99)
+2. **LogiFreight Brasil S.A.** (CNPJ: 98.765.432/0001-10)
+
+### 🏭 Sedes (6 - 3 por empresa)
+
+**Empresa 1 - GearHub Transportes:**
+
+- Sede Central - SP (São Paulo)
+- Filial Rio de Janeiro (RJ)
+- Filial Belo Horizonte (MG)
+
+**Empresa 2 - LogiFreight Brasil:**
+
+- Matriz Curitiba (PR)
+- Filial Porto Alegre (RS)
+- Filial Florianópolis (SC)
+
+### 🚗 Veículos (24 - 4 por sede)
+
+**Tipos de veículos incluídos:**
+
+- Furgões pequenos (Fiorino, Saveiro, Montana, etc.)
+- Vans comerciais (Sprinter, Master, Daily, Boxer, etc.)
+- Caminhonetes (Hilux, Amarok, Frontier, L200, S10, Ranger, etc.)
+- Diversos modelos de diferentes marcas
+
+**Marcas representadas:**
+Fiat, Volkswagen, Chevrolet, Ford, Mercedes-Benz, Renault, Iveco, Peugeot, Citroën, Hyundai, JAC, Kia, Toyota, Nissan, Mitsubishi, Ram, Jeep
+
+### 📄 Documentos (96 - 4 por veículo)
+
+Para cada veículo são criados:
+
+1. **IPVA 2024** - Status: Pago
+2. **CRLV - Licenciamento 2024** - Status: Pago
+3. **Seguro Veicular 2024** - Status: Pago
+4. **Revisão Anual 2024** - Status: Pendente
+
+### 📈 Total Criado
+
+- ✅ **2 Empresas**
+- ✅ **6 Sedes**
+- ✅ **24 Veículos**
+- ✅ **96 Documentos**
 
 ## ⚠️ Observações Importantes
 

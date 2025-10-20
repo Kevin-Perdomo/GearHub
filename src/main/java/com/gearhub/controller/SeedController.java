@@ -59,10 +59,10 @@ public class SeedController {
         summary = "🌱 Popular Banco de Dados",
         description = "**Popula o banco com dados de teste (equivalente ao `sail seed` do Laravel)**\n\n" +
                 "**Dados criados:**\n" +
-                "- 1 Empresa (GearHub Transportes)\n" +
-                "- 1 Sede (Sede Central)\n" +
-                "- 3 Veículos (Fiat Fiorino, Mercedes Sprinter, Renault Master)\n" +
-                "- 4 Documentos (IPVA e Licenciamento)\n\n" +
+                "- 2 Empresas (GearHub Transportes e LogiFreight Brasil)\n" +
+                "- 6 Sedes (3 por empresa: SP, RJ, MG / PR, RS, SC)\n" +
+                "- 24 Veículos (4 por sede - diversos modelos)\n" +
+                "- 96 Documentos (IPVA, Licenciamento, Seguro, Revisão)\n\n" +
                 "**Proteção:** Verifica se já existem dados antes de executar."
     )
     @ApiResponses(value = {

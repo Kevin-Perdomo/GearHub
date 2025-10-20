@@ -29,97 +29,176 @@ public class DatabaseSeederService {
 
         log.info("Iniciando seed do banco de dados...");
 
-        // 1. Criar Empresa
-        Empresa empresa = new Empresa();
-        empresa.setNome("GearHub Transportes");
-        empresa.setCnpj("12.345.678/0001-99");
-        empresa = empresaRepository.save(empresa);
-        log.info("Empresa criada: {}", empresa.getNome());
+        // ========== EMPRESA 1 ==========
+        Empresa empresa1 = new Empresa();
+        empresa1.setNome("GearHub Transportes Ltda");
+        empresa1.setCnpj("12.345.678/0001-99");
+        empresa1 = empresaRepository.save(empresa1);
+        log.info("Empresa 1 criada: {}", empresa1.getNome());
 
-        // 2. Criar Sede
-        Sede sede = new Sede();
-        sede.setNome("Sede Central");
-        sede.setEndereco("Av. Paulista, 1000 - São Paulo/SP");
-        sede.setEmpresa(empresa);
-        sede = sedeRepository.save(sede);
-        log.info("Sede criada: {}", sede.getNome());
+        // Sedes da Empresa 1
+        Sede sede1_1 = criarSede("Sede Central - SP", "Av. Paulista, 1000 - São Paulo/SP", empresa1);
+        Sede sede1_2 = criarSede("Filial Rio de Janeiro", "Av. Rio Branco, 500 - Rio de Janeiro/RJ", empresa1);
+        Sede sede1_3 = criarSede("Filial Belo Horizonte", "Av. Afonso Pena, 300 - Belo Horizonte/MG", empresa1);
 
-        // 3. Criar Veículos
-        Veiculo veiculo1 = new Veiculo();
-        veiculo1.setModelo("Fiorino");
-        veiculo1.setMarca("Fiat");
-        veiculo1.setPlaca("ABC-1234");
-        veiculo1.setAnoModelo(2020);
-        veiculo1.setCombustivelRecomendado("Gasolina");
-        veiculo1.setCapacidadeTanqueLitros(50.0);
-        veiculo1.setCapacidadeReservaLitros(5.0);
-        veiculo1.setSede(sede);
-        veiculo1 = veiculoRepository.save(veiculo1);
-        log.info("Veículo criado: {} - {}", veiculo1.getMarca(), veiculo1.getModelo());
+        // Veículos da Sede 1.1 (SP)
+        Veiculo v1_1_1 = criarVeiculo("Fiat", "Fiorino", "ABC-1234", 2020, "Gasolina", 50.0, 5.0, sede1_1);
+        criarDocumentos(v1_1_1);
+        
+        Veiculo v1_1_2 = criarVeiculo("Volkswagen", "Saveiro", "ABC-1235", 2021, "Flex", 55.0, 6.0, sede1_1);
+        criarDocumentos(v1_1_2);
+        
+        Veiculo v1_1_3 = criarVeiculo("Chevrolet", "Montana", "ABC-1236", 2022, "Flex", 54.0, 5.5, sede1_1);
+        criarDocumentos(v1_1_3);
+        
+        Veiculo v1_1_4 = criarVeiculo("Ford", "Courier", "ABC-1237", 2020, "Flex", 52.0, 5.0, sede1_1);
+        criarDocumentos(v1_1_4);
 
-        Veiculo veiculo2 = new Veiculo();
-        veiculo2.setModelo("Sprinter");
-        veiculo2.setMarca("Mercedes-Benz");
-        veiculo2.setPlaca("XYZ-5678");
-        veiculo2.setAnoModelo(2022);
-        veiculo2.setCombustivelRecomendado("Diesel");
-        veiculo2.setCapacidadeTanqueLitros(75.0);
-        veiculo2.setCapacidadeReservaLitros(8.0);
-        veiculo2.setSede(sede);
-        veiculo2 = veiculoRepository.save(veiculo2);
-        log.info("Veículo criado: {} - {}", veiculo2.getMarca(), veiculo2.getModelo());
+        // Veículos da Sede 1.2 (RJ)
+        Veiculo v1_2_1 = criarVeiculo("Mercedes-Benz", "Sprinter", "DEF-5678", 2022, "Diesel", 75.0, 8.0, sede1_2);
+        criarDocumentos(v1_2_1);
+        
+        Veiculo v1_2_2 = criarVeiculo("Renault", "Master", "DEF-5679", 2021, "Diesel", 90.0, 10.0, sede1_2);
+        criarDocumentos(v1_2_2);
+        
+        Veiculo v1_2_3 = criarVeiculo("Iveco", "Daily", "DEF-5680", 2023, "Diesel", 80.0, 9.0, sede1_2);
+        criarDocumentos(v1_2_3);
+        
+        Veiculo v1_2_4 = criarVeiculo("Peugeot", "Boxer", "DEF-5681", 2022, "Diesel", 85.0, 8.5, sede1_2);
+        criarDocumentos(v1_2_4);
 
-        Veiculo veiculo3 = new Veiculo();
-        veiculo3.setModelo("Master");
-        veiculo3.setMarca("Renault");
-        veiculo3.setPlaca("DEF-9012");
-        veiculo3.setAnoModelo(2021);
-        veiculo3.setCombustivelRecomendado("Diesel");
-        veiculo3.setCapacidadeTanqueLitros(90.0);
-        veiculo3.setCapacidadeReservaLitros(10.0);
-        veiculo3.setSede(sede);
-        veiculo3 = veiculoRepository.save(veiculo3);
-        log.info("Veículo criado: {} - {}", veiculo3.getMarca(), veiculo3.getModelo());
+        // Veículos da Sede 1.3 (BH)
+        Veiculo v1_3_1 = criarVeiculo("Fiat", "Ducato", "GHI-9012", 2021, "Diesel", 90.0, 10.0, sede1_3);
+        criarDocumentos(v1_3_1);
+        
+        Veiculo v1_3_2 = criarVeiculo("Citroën", "Jumper", "GHI-9013", 2022, "Diesel", 88.0, 9.5, sede1_3);
+        criarDocumentos(v1_3_2);
+        
+        Veiculo v1_3_3 = criarVeiculo("Volkswagen", "Delivery", "GHI-9014", 2020, "Diesel", 100.0, 12.0, sede1_3);
+        criarDocumentos(v1_3_3);
+        
+        Veiculo v1_3_4 = criarVeiculo("Ford", "Transit", "GHI-9015", 2023, "Diesel", 80.0, 8.0, sede1_3);
+        criarDocumentos(v1_3_4);
 
-        // 4. Criar Documentos dos Veículos
-        DocumentoVeiculo doc1 = new DocumentoVeiculo();
-        doc1.setVeiculo(veiculo1);
-        doc1.setTipoDocumento("CRLV - Licenciamento");
-        doc1.setAnoReferencia(2024);
-        doc1.setStatus("Pago");
-        doc1.setDataPagamento(LocalDate.of(2024, 1, 15));
-        documentoVeiculoRepository.save(doc1);
-        log.info("Documento criado para veículo: {} - {}", veiculo1.getPlaca(), doc1.getTipoDocumento());
+        // ========== EMPRESA 2 ==========
+        Empresa empresa2 = new Empresa();
+        empresa2.setNome("LogiFreight Brasil S.A.");
+        empresa2.setCnpj("98.765.432/0001-10");
+        empresa2 = empresaRepository.save(empresa2);
+        log.info("Empresa 2 criada: {}", empresa2.getNome());
 
-        DocumentoVeiculo doc2 = new DocumentoVeiculo();
-        doc2.setVeiculo(veiculo1);
-        doc2.setTipoDocumento("IPVA");
-        doc2.setAnoReferencia(2024);
-        doc2.setStatus("Pago");
-        doc2.setDataPagamento(LocalDate.of(2024, 1, 10));
-        documentoVeiculoRepository.save(doc2);
-        log.info("Documento criado para veículo: {} - {}", veiculo1.getPlaca(), doc2.getTipoDocumento());
+        // Sedes da Empresa 2
+        Sede sede2_1 = criarSede("Matriz Curitiba", "Rua XV de Novembro, 800 - Curitiba/PR", empresa2);
+        Sede sede2_2 = criarSede("Filial Porto Alegre", "Av. Borges de Medeiros, 200 - Porto Alegre/RS", empresa2);
+        Sede sede2_3 = criarSede("Filial Florianópolis", "Av. Beira Mar Norte, 100 - Florianópolis/SC", empresa2);
 
-        DocumentoVeiculo doc3 = new DocumentoVeiculo();
-        doc3.setVeiculo(veiculo2);
-        doc3.setTipoDocumento("CRLV - Licenciamento");
-        doc3.setAnoReferencia(2024);
-        doc3.setStatus("Pago");
-        doc3.setDataPagamento(LocalDate.of(2024, 2, 20));
-        documentoVeiculoRepository.save(doc3);
-        log.info("Documento criado para veículo: {} - {}", veiculo2.getPlaca(), doc3.getTipoDocumento());
+        // Veículos da Sede 2.1 (Curitiba)
+        Veiculo v2_1_1 = criarVeiculo("Hyundai", "HR", "JKL-3456", 2022, "Diesel", 60.0, 7.0, sede2_1);
+        criarDocumentos(v2_1_1);
+        
+        Veiculo v2_1_2 = criarVeiculo("JAC", "X200", "JKL-3457", 2021, "Diesel", 65.0, 7.5, sede2_1);
+        criarDocumentos(v2_1_2);
+        
+        Veiculo v2_1_3 = criarVeiculo("Kia", "Bongo", "JKL-3458", 2023, "Diesel", 62.0, 7.0, sede2_1);
+        criarDocumentos(v2_1_3);
+        
+        Veiculo v2_1_4 = criarVeiculo("Toyota", "Hilux", "JKL-3459", 2022, "Diesel", 80.0, 9.0, sede2_1);
+        criarDocumentos(v2_1_4);
 
-        DocumentoVeiculo doc4 = new DocumentoVeiculo();
-        doc4.setVeiculo(veiculo3);
-        doc4.setTipoDocumento("IPVA");
-        doc4.setAnoReferencia(2024);
-        doc4.setStatus("Pendente");
-        documentoVeiculoRepository.save(doc4);
-        log.info("Documento criado para veículo: {} - {}", veiculo3.getPlaca(), doc4.getTipoDocumento());
+        // Veículos da Sede 2.2 (Porto Alegre)
+        Veiculo v2_2_1 = criarVeiculo("Volkswagen", "Amarok", "MNO-7890", 2023, "Diesel", 80.0, 8.0, sede2_2);
+        criarDocumentos(v2_2_1);
+        
+        Veiculo v2_2_2 = criarVeiculo("Nissan", "Frontier", "MNO-7891", 2022, "Diesel", 80.0, 8.5, sede2_2);
+        criarDocumentos(v2_2_2);
+        
+        Veiculo v2_2_3 = criarVeiculo("Mitsubishi", "L200", "MNO-7892", 2021, "Diesel", 75.0, 8.0, sede2_2);
+        criarDocumentos(v2_2_3);
+        
+        Veiculo v2_2_4 = criarVeiculo("Chevrolet", "S10", "MNO-7893", 2023, "Diesel", 76.0, 8.2, sede2_2);
+        criarDocumentos(v2_2_4);
+
+        // Veículos da Sede 2.3 (Florianópolis)
+        Veiculo v2_3_1 = criarVeiculo("Ram", "2500", "PQR-2468", 2023, "Diesel", 100.0, 12.0, sede2_3);
+        criarDocumentos(v2_3_1);
+        
+        Veiculo v2_3_2 = criarVeiculo("Ford", "Ranger", "PQR-2469", 2022, "Diesel", 80.0, 9.0, sede2_3);
+        criarDocumentos(v2_3_2);
+        
+        Veiculo v2_3_3 = criarVeiculo("Fiat", "Toro", "PQR-2470", 2023, "Diesel", 60.0, 7.0, sede2_3);
+        criarDocumentos(v2_3_3);
+        
+        Veiculo v2_3_4 = criarVeiculo("Jeep", "Gladiator", "PQR-2471", 2023, "Diesel", 85.0, 9.5, sede2_3);
+        criarDocumentos(v2_3_4);
 
         log.info("Seed do banco de dados concluído com sucesso!");
         
-        return "Seed executado com sucesso! 1 Empresa, 1 Sede, 3 Veículos e 4 Documentos criados.";
+        return "Seed executado com sucesso! 2 Empresas, 6 Sedes, 24 Veículos e 96 Documentos criados.";
+    }
+
+    private Sede criarSede(String nome, String endereco, Empresa empresa) {
+        Sede sede = new Sede();
+        sede.setNome(nome);
+        sede.setEndereco(endereco);
+        sede.setEmpresa(empresa);
+        sede = sedeRepository.save(sede);
+        log.info("Sede criada: {} - {}", sede.getNome(), empresa.getNome());
+        return sede;
+    }
+
+    private Veiculo criarVeiculo(String marca, String modelo, String placa, int anoModelo, 
+                                  String combustivel, double capacidadeTanque, double capacidadeReserva, Sede sede) {
+        Veiculo veiculo = new Veiculo();
+        veiculo.setMarca(marca);
+        veiculo.setModelo(modelo);
+        veiculo.setPlaca(placa);
+        veiculo.setAnoModelo(anoModelo);
+        veiculo.setCombustivelRecomendado(combustivel);
+        veiculo.setCapacidadeTanqueLitros(capacidadeTanque);
+        veiculo.setCapacidadeReservaLitros(capacidadeReserva);
+        veiculo.setSede(sede);
+        veiculo = veiculoRepository.save(veiculo);
+        log.info("Veículo criado: {} {} ({}) - {}", marca, modelo, placa, sede.getNome());
+        return veiculo;
+    }
+
+    private void criarDocumentos(Veiculo veiculo) {
+        // IPVA 2024
+        DocumentoVeiculo ipva = new DocumentoVeiculo();
+        ipva.setVeiculo(veiculo);
+        ipva.setTipoDocumento("IPVA");
+        ipva.setAnoReferencia(2024);
+        ipva.setStatus("Pago");
+        ipva.setDataPagamento(LocalDate.of(2024, 1, 10));
+        documentoVeiculoRepository.save(ipva);
+
+        // Licenciamento 2024
+        DocumentoVeiculo licenciamento = new DocumentoVeiculo();
+        licenciamento.setVeiculo(veiculo);
+        licenciamento.setTipoDocumento("CRLV - Licenciamento");
+        licenciamento.setAnoReferencia(2024);
+        licenciamento.setStatus("Pago");
+        licenciamento.setDataPagamento(LocalDate.of(2024, 1, 15));
+        documentoVeiculoRepository.save(licenciamento);
+
+        // Seguro
+        DocumentoVeiculo seguro = new DocumentoVeiculo();
+        seguro.setVeiculo(veiculo);
+        seguro.setTipoDocumento("Seguro Veicular");
+        seguro.setAnoReferencia(2024);
+        seguro.setStatus("Pago");
+        seguro.setDataPagamento(LocalDate.of(2024, 2, 1));
+        documentoVeiculoRepository.save(seguro);
+
+        // Revisão
+        DocumentoVeiculo revisao = new DocumentoVeiculo();
+        revisao.setVeiculo(veiculo);
+        revisao.setTipoDocumento("Revisão Anual");
+        revisao.setAnoReferencia(2024);
+        revisao.setStatus("Pendente");
+        documentoVeiculoRepository.save(revisao);
+
+        log.info("4 Documentos criados para veículo: {}", veiculo.getPlaca());
     }
 
     @Transactional
