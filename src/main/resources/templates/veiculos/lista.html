@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html
+  lang="pt-br"
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="layouts/base :: base(~{::title}, ~{::main})"
+>
+  <head>
+    <title>Veículos - GearHub</title>
+  </head>
+  <body>
+    <main>
+      <div class="px-10 md:px-20 lg:px-40 py-10">
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-8">
+          <div>
+            <h1 class="text-white text-4xl font-black mb-2">Veículos</h1>
+            <p class="text-[#93adc8]">Gerencie a frota de veículos</p>
+          </div>
+          <a
+            th:href="@{/veiculos/novo}"
+            class="bg-[#1565c0] hover:bg-[#0d47a1] text-white font-bold py-3 px-6 rounded-lg transition-colors"
+          >
+            + Novo Veículo
+          </a>
+        </div>
+
+        <!-- Mensagens -->
+        <div
+          th:if="${mensagem}"
+          class="bg-green-500/20 border border-green-500 text-green-300 px-4 py-3 rounded-lg mb-6"
+        >
+          <p th:text="${mensagem}"></p>
+        </div>
+        <div
+          th:if="${erro}"
+          class="bg-red-500/20 border border-red-500 text-red-300 px-4 py-3 rounded-lg mb-6"
+        >
+          <p th:text="${erro}"></p>
+        </div>
+
+        <!-- Lista de Veículos -->
+        <div
+          class="bg-[#1a2733] rounded-lg border-2 border-[#3b4f5f] overflow-hidden"
+        >
+          <table class="w-full">
+            <thead class="bg-[#0f1b24] border-b-2 border-[#3b4f5f]">
+              <tr>
+                <th class="text-left text-white font-bold px-6 py-4">ID</th>
+                <th class="text-left text-white font-bold px-6 py-4">
+                  Marca/Modelo
+                </th>
+                <th class="text-left text-white font-bold px-6 py-4">Placa</th>
+                <th class="text-left text-white font-bold px-6 py-4">Ano</th>
+                <th class="text-left text-white font-bold px-6 py-4">
+                  Combustível
+                </th>
+                <th class="text-left text-white font-bold px-6 py-4">Sede</th>
+                <th class="text-center text-white font-bold px-6 py-4">
+                  Ações
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:if="${#lists.isEmpty(veiculos)}">
+                <td colspan="7" class="text-center text-[#93adc8] px-6 py-8">
+                  Nenhum veículo cadastrado
+                </td>
+              </tr>
+              <tr
+                th:each="veiculo : ${veiculos}"
+                class="border-b border-[#3b4f5f] hover:bg-[#223649] transition-colors"
+              >
+                <td
+                  class="text-[#93adc8] px-6 py-4"
+                  th:text="${veiculo.id}"
+                ></td>
+                <td class="text-white px-6 py-4">
+                  <span class="font-bold" th:text="${veiculo.marca}"></span>
+                  <span th:text="${veiculo.modelo}"></span>
+                </td>
+                <td
+                  class="text-[#93adc8] px-6 py-4"
+                  th:text="${veiculo.placa}"
+                ></td>
+                <td
+                  class="text-[#93adc8] px-6 py-4"
+                  th:text="${veiculo.anoModelo}"
+                ></td>
+                <td
+                  class="text-[#93adc8] px-6 py-4"
+                  th:text="${veiculo.combustivelRecomendado}"
+                ></td>
+                <td
+                  class="text-[#93adc8] px-6 py-4"
+                  th:text="${veiculo.sede?.nome}"
+                ></td>
+                <td class="px-6 py-4">
+                  <div class="flex justify-center gap-2">
+                    <a
+                      th:href="@{/veiculos/{id}(id=${veiculo.id})}"
+                      class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors"
+                    >
+                      Ver
+                    </a>
+                    <a
+                      th:href="@{/veiculos/{id}/editar(id=${veiculo.id})}"
+                      class="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded transition-colors"
+                    >
+                      Editar
+                    </a>
+                    <a
+                      th:href="@{/veiculos/{id}/excluir(id=${veiculo.id})}"
+                      onclick="return confirm('Tem certeza que deseja excluir este veículo?')"
+                      class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition-colors"
+                    >
+                      Excluir
+                    </a>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Cards de Veículos (visualização alternativa) -->
+        <div th:if="${!#lists.isEmpty(veiculos)}" class="mt-8">
+          <h2 class="text-white text-2xl font-bold mb-6">
+            Visualização em Cards
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div
+              th:each="veiculo : ${veiculos}"
+              class="bg-[#1a2733] rounded-lg border-2 border-[#3b4f5f] p-6 hover:border-[#1565c0] transition-colors"
+            >
+              <h3
+                class="text-white text-xl font-bold mb-4"
+                th:text="${veiculo.marca + ' ' + veiculo.modelo}"
+              ></h3>
+              <div class="space-y-2 mb-4">
+                <p class="text-[#93adc8]">
+                  <span class="font-bold">Placa:</span>
+                  <span th:text="${veiculo.placa}"></span>
+                </p>
+                <p class="text-[#93adc8]">
+                  <span class="font-bold">Ano:</span>
+                  <span th:text="${veiculo.anoModelo}"></span>
+                </p>
+                <p class="text-[#93adc8]">
+                  <span class="font-bold">Combustível:</span>
+                  <span th:text="${veiculo.combustivelRecomendado}"></span>
+                </p>
+                <p class="text-[#93adc8]">
+                  <span class="font-bold">Sede:</span>
+                  <span th:text="${veiculo.sede?.nome}"></span>
+                </p>
+              </div>
+              <a
+                th:href="@{/veiculos/{id}(id=${veiculo.id})}"
+                class="block w-full bg-blue-600 hover:bg-blue-700 text-white text-center font-bold py-2 px-4 rounded transition-colors"
+              >
+                Ver Detalhes
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

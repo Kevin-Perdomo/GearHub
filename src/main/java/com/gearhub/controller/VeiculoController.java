@@ -19,7 +19,7 @@ public class VeiculoController {
     @GetMapping
     public String listarVeiculos(Model model) {
         model.addAttribute("veiculos", veiculoRepository.findAll());
-        return "lista-veiculos";
+        return "veiculos/lista";
     }
 
     @GetMapping("/{id}")
@@ -28,6 +28,6 @@ public class VeiculoController {
                 .orElseThrow(() -> new RuntimeException("Veículo não encontrado"));
         
         model.addAttribute("veiculo", veiculo);
-        return "detalhes-veiculo";
+        return "veiculos/detalhes";
     }
 }
