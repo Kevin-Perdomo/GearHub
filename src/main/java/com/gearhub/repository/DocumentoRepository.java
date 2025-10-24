@@ -10,4 +10,7 @@ import java.util.List;
 public interface DocumentoRepository extends JpaRepository<Documento, Long> {
     List<Documento> findByVeiculoId(Long veiculoId);
     List<Documento> findByTipoDocumento(String tipoDocumento);
+    List<Documento> findByVeiculoIdAndTipoDocumento(Long veiculoId, String tipoDocumento);
+    List<Documento> findByStatus(String status);
+    List<Documento> findByAnoReferencia(Integer anoReferencia);
 }

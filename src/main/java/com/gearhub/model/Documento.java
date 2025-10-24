@@ -23,9 +23,9 @@ public class Documento {
     private Long id;
 
     @NotBlank(message = "Tipo de documento é obrigatório")
-    @Size(max = 100, message = "Tipo deve ter no máximo 100 caracteres")
+    @Size(max = 100, message = "Tipo de documento deve ter no máximo 100 caracteres")
     @Column(name = "TIPO_DOCUMENTO", nullable = false, length = 100)
-    private String tipoDocumento; // Ex: "IPVA", "CRLV", "Seguro", "Manual", "Nota Fiscal"
+    private String tipoDocumento; // Ex: "IPVA", "CRLV", "SEGURO", "MANUAL", "NOTA_FISCAL", etc.
 
     @Column(name = "ANO_REFERENCIA")
     private Integer anoReferencia; // Para documentos anuais como IPVA

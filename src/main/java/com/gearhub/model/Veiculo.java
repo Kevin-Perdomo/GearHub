@@ -38,21 +38,22 @@ public class Veiculo {
     @Column(name = "ANO_MODELO")
     private Integer anoModelo;
 
-    @Column(name = "COMBUSTIVEL_RECOMENDADO", length = 50)
-    private String combustivelRecomendado;
-
-    @Column(name = "CAPACIDADE_TANQUE_LITROS")
-    private Double capacidadeTanqueLitros;
-
-    @Column(name = "CAPACIDADE_RESERVA_LITROS")
-    private Double capacidadeReservaLitros;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SEDE_ID", nullable = false)
     private Sede sede;
 
     @Column(name = "DESCRICAO", columnDefinition = "TEXT")
     private String descricao;
+
+    @Lob
+    @Column(name = "FOTO", columnDefinition = "LONGBLOB")
+    private byte[] foto;
+
+    @Column(name = "NOME_ARQUIVO_FOTO", length = 255)
+    private String nomeArquivoFoto;
+
+    @OneToOne(mappedBy = "veiculo", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Autonomia autonomia;
 
     @OneToMany(mappedBy = "veiculo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Documento> documentos = new ArrayList<>();

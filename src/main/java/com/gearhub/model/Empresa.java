@@ -36,6 +36,13 @@ public class Empresa {
     @Column(name = "DATA_CRIACAO", nullable = false, updatable = false)
     private LocalDateTime dataCriacao;
 
+    @Lob
+    @Column(name = "LOGO", columnDefinition = "LONGBLOB")
+    private byte[] logo;
+
+    @Column(name = "NOME_ARQUIVO_LOGO", length = 255)
+    private String nomeArquivoLogo;
+
     @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Sede> sedes = new ArrayList<>();
 

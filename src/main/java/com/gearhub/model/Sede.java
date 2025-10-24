@@ -31,6 +31,13 @@ public class Sede {
     @Column(name = "ENDERECO", length = 255)
     private String endereco;
 
+    @Lob
+    @Column(name = "FOTO", columnDefinition = "LONGBLOB")
+    private byte[] foto;
+
+    @Column(name = "NOME_ARQUIVO_FOTO", length = 255)
+    private String nomeArquivoFoto;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "EMPRESA_ID", nullable = false)
     private Empresa empresa;
