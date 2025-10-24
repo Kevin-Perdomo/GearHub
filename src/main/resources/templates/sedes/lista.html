@@ -43,6 +43,7 @@
             <thead class="bg-[#0f1b24] border-b-2 border-[#3b4f5f]">
               <tr>
                 <th class="text-left text-white font-bold px-6 py-4">ID</th>
+                <th class="text-left text-white font-bold px-6 py-4">Foto</th>
                 <th class="text-left text-white font-bold px-6 py-4">Nome</th>
                 <th class="text-left text-white font-bold px-6 py-4">
                   Endereço
@@ -57,7 +58,7 @@
             </thead>
             <tbody>
               <tr th:if="${#lists.isEmpty(sedes)}">
-                <td colspan="5" class="text-center text-[#93adc8] px-6 py-8">
+                <td colspan="6" class="text-center text-[#93adc8] px-6 py-8">
                   Nenhuma sede cadastrada
                 </td>
               </tr>
@@ -66,6 +67,19 @@
                 class="border-b border-[#3b4f5f] hover:bg-[#223649] transition-colors"
               >
                 <td class="text-[#93adc8] px-6 py-4" th:text="${sede.id}"></td>
+                <td class="px-6 py-4">
+                  <img
+                    th:if="${sede.foto != null}"
+                    th:src="@{/sedes/{id}/foto(id=${sede.id})}"
+                    alt="Foto"
+                    class="w-12 h-12 object-cover rounded-lg"
+                  />
+                  <span
+                    th:unless="${sede.foto != null}"
+                    class="text-[#93adc8] text-sm"
+                    >Sem foto</span
+                  >
+                </td>
                 <td class="text-white px-6 py-4" th:text="${sede.nome}"></td>
                 <td
                   class="text-[#93adc8] px-6 py-4"

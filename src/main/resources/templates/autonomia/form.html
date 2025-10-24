@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html
+  lang="pt-br"
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="layouts/base :: base(~{::title}, ~{::main})"
+>
+  <head>
+    <title
+      th:text="${autonomia.id == null ? 'Nova Autonomia' : 'Editar Autonomia'} + ' - GearHub'"
+    ></title>
+  </head>
+  <body>
+    <main>
+      <div class="px-10 md:px-20 lg:px-40 py-10">
+        <!-- Header -->
+        <div class="mb-8">
+          <h1
+            class="text-white text-4xl font-black mb-2"
+            th:text="${autonomia.id == null ? 'Nova Autonomia' : 'Editar Autonomia'}"
+          ></h1>
+          <p class="text-[#93adc8]">
+            Preencha os dados de combustível e capacidade
+          </p>
+        </div>
+
+        <!-- Formulário -->
+        <div
+          class="bg-[#1a2733] rounded-lg border-2 border-[#3b4f5f] p-8 max-w-2xl"
+        >
+          <form
+            th:action="@{/autonomia}"
+            th:object="${autonomia}"
+            method="post"
+          >
+            <input type="hidden" th:field="*{id}" />
+
+            <!-- Veículo -->
+            <div class="mb-6">
+              <label for="veiculo" class="block text-white font-bold mb-2"
+                >Veículo *</label
+              >
+              <select
+                id="veiculo"
+                th:field="*{veiculo.id}"
+                class="w-full px-4 py-3 rounded-lg bg-[#0f1b24] border-2 border-[#3b4f5f] text-white focus:border-[#1565c0] focus:outline-none"
+                required
+              >
+                <option value="">Selecione um veículo</option>
+                <option
+                  th:each="v : ${veiculos}"
+                  th:value="${v.id}"
+                  th:text="${v.marca + ' ' + v.modelo + ' (' + v.placa + ')'}"
+                ></option>
+              </select>
+              <p
+                th:if="${#fields.hasErrors('veiculo')}"
+                th:errors="*{veiculo}"
+                class="text-red-400 text-sm mt-1"
+              ></p>
+            </div>
+
+            <!-- Combustível Recomendado -->
+            <div class="mb-6">
+              <label
+                for="combustivelRecomendado"
+                class="block text-white font-bold mb-2"
+                >Combustível Recomendado</label
+              >
+              <select
+                id="combustivelRecomendado"
+                th:field="*{combustivelRecomendado}"
+                class="w-full px-4 py-3 rounded-lg bg-[#0f1b24] border-2 border-[#3b4f5f] text-white focus:border-[#1565c0] focus:outline-none"
+              >
+                <option value="">Selecione</option>
+                <option value="Gasolina">Gasolina</option>
+                <option value="Etanol">Etanol</option>
+                <option value="Flex">Flex</option>
+                <option value="Diesel">Diesel</option>
+                <option value="Elétrico">Elétrico</option>
+                <option value="Híbrido">Híbrido</option>
+                <option value="GNV">GNV</option>
+              </select>
+              <p
+                th:if="${#fields.hasErrors('combustivelRecomendado')}"
+                th:errors="*{combustivelRecomendado}"
+                class="text-red-400 text-sm mt-1"
+              ></p>
+            </div>
+
+            <!-- Capacidades -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              <div>
+                <label
+                  for="capacidadeTanqueLitros"
+                  class="block text-white font-bold mb-2"
+                  >Capacidade do Tanque (L)</label
+                >
+                <input
+                  type="number"
+                  id="capacidadeTanqueLitros"
+                  th:field="*{capacidadeTanqueLitros}"
+                  step="0.1"
+                  class="w-full px-4 py-3 rounded-lg bg-[#0f1b24] border-2 border-[#3b4f5f] text-white focus:border-[#1565c0] focus:outline-none"
+                  placeholder="50.0"
+                />
+                <p
+                  th:if="${#fields.hasErrors('capacidadeTanqueLitros')}"
+                  th:errors="*{capacidadeTanqueLitros}"
+                  class="text-red-400 text-sm mt-1"
+                ></p>
+              </div>
+
+              <div>
+                <label
+                  for="capacidadeReservaLitros"
+                  class="block text-white font-bold mb-2"
+                  >Capacidade da Reserva (L)</label
+                >
+                <input
+                  type="number"
+                  id="capacidadeReservaLitros"
+                  th:field="*{capacidadeReservaLitros}"
+                  step="0.1"
+                  class="w-full px-4 py-3 rounded-lg bg-[#0f1b24] border-2 border-[#3b4f5f] text-white focus:border-[#1565c0] focus:outline-none"
+                  placeholder="5.0"
+                />
+                <p
+                  th:if="${#fields.hasErrors('capacidadeReservaLitros')}"
+                  th:errors="*{capacidadeReservaLitros}"
+                  class="text-red-400 text-sm mt-1"
+                ></p>
+              </div>
+            </div>
+
+            <!-- Botões -->
+            <div class="flex gap-4 mt-8">
+              <button
+                type="submit"
+                class="bg-[#1565c0] hover:bg-[#0d47a1] text-white font-bold py-3 px-6 rounded-lg transition-colors flex-1"
+              >
+                Salvar
+              </button>
+              <a
+                th:href="@{/autonomia}"
+                class="bg-[#3b4f5f] hover:bg-[#4a5f73] text-white font-bold py-3 px-6 rounded-lg transition-colors text-center flex-1"
+              >
+                Cancelar
+              </a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

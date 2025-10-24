@@ -5,7 +5,7 @@
   th:replace="layouts/base :: base(~{::title}, ~{::main})"
 >
   <head>
-    <title>Empresas - GearHub</title>
+    <title>Pneus - GearHub</title>
   </head>
   <body>
     <main>
@@ -13,14 +13,14 @@
         <!-- Header -->
         <div class="flex justify-between items-center mb-8">
           <div>
-            <h1 class="text-white text-4xl font-black mb-2">Empresas</h1>
-            <p class="text-[#93adc8]">Gerencie as empresas do sistema</p>
+            <h1 class="text-white text-4xl font-black mb-2">Pneus</h1>
+            <p class="text-[#93adc8]">Gerencie os pneus dos veículos</p>
           </div>
           <a
-            th:href="@{/empresas/nova}"
+            th:href="@{/pneus/novo}"
             class="bg-[#1565c0] hover:bg-[#0d47a1] text-white font-bold py-3 px-6 rounded-lg transition-colors"
           >
-            + Nova Empresa
+            + Novo Pneu
           </a>
         </div>
 
@@ -38,7 +38,7 @@
           <p th:text="${erro}"></p>
         </div>
 
-        <!-- Lista de Empresas -->
+        <!-- Lista de Pneus -->
         <div
           class="bg-[#1a2733] rounded-lg border-2 border-[#3b4f5f] overflow-hidden"
         >
@@ -46,11 +46,19 @@
             <thead class="bg-[#0f1b24] border-b-2 border-[#3b4f5f]">
               <tr>
                 <th class="text-left text-white font-bold px-6 py-4">ID</th>
-                <th class="text-left text-white font-bold px-6 py-4">Logo</th>
-                <th class="text-left text-white font-bold px-6 py-4">Nome</th>
-                <th class="text-left text-white font-bold px-6 py-4">CNPJ</th>
+                <th class="text-left text-white font-bold px-6 py-4">Foto</th>
                 <th class="text-left text-white font-bold px-6 py-4">
-                  Data Criação
+                  Veículo
+                </th>
+                <th class="text-left text-white font-bold px-6 py-4">
+                  Posição
+                </th>
+                <th class="text-left text-white font-bold px-6 py-4">
+                  Marca/Modelo
+                </th>
+                <th class="text-left text-white font-bold px-6 py-4">Medida</th>
+                <th class="text-left text-white font-bold px-6 py-4">
+                  Data Instalação
                 </th>
                 <th class="text-center text-white font-bold px-6 py-4">
                   Ações
@@ -58,58 +66,70 @@
               </tr>
             </thead>
             <tbody>
-              <tr th:if="${#lists.isEmpty(empresas)}">
-                <td colspan="6" class="text-center text-[#93adc8] px-6 py-8">
-                  Nenhuma empresa cadastrada
+              <tr th:if="${#lists.isEmpty(pneus)}">
+                <td colspan="8" class="text-center text-[#93adc8] px-6 py-8">
+                  Nenhum pneu cadastrado
                 </td>
               </tr>
               <tr
-                th:each="empresa : ${empresas}"
+                th:each="pneu : ${pneus}"
                 class="border-b border-[#3b4f5f] hover:bg-[#223649] transition-colors"
               >
-                <td
-                  class="text-[#93adc8] px-6 py-4"
-                  th:text="${empresa.id}"
-                ></td>
+                <td class="text-[#93adc8] px-6 py-4" th:text="${pneu.id}"></td>
                 <td class="px-6 py-4">
                   <img
-                    th:if="${empresa.logo != null}"
-                    th:src="@{/empresas/{id}/logo(id=${empresa.id})}"
-                    alt="Logo"
-                    class="w-12 h-12 object-contain rounded-lg bg-[#0f1b24] p-1"
+                    th:if="${pneu.foto != null}"
+                    th:src="@{/pneus/{id}/foto(id=${pneu.id})}"
+                    alt="Foto"
+                    class="w-12 h-12 object-cover rounded-lg"
                   />
                   <span
-                    th:unless="${empresa.logo != null}"
+                    th:unless="${pneu.foto != null}"
                     class="text-[#93adc8] text-sm"
-                    >Sem logo</span
+                    >Sem foto</span
                   >
                 </td>
-                <td class="text-white px-6 py-4" th:text="${empresa.nome}"></td>
+                <td class="text-white px-6 py-4">
+                  <span th:text="${pneu.veiculo.marca}"></span>
+                  <span th:text="${pneu.veiculo.modelo}"></span>
+                  <span
+                    class="text-[#93adc8] text-sm"
+                    th:text="'('+${pneu.veiculo.placa}+')'"
+                  ></span>
+                </td>
                 <td
                   class="text-[#93adc8] px-6 py-4"
-                  th:text="${empresa.cnpj}"
+                  th:text="${pneu.posicao}"
+                ></td>
+                <td class="text-[#93adc8] px-6 py-4">
+                  <span th:text="${pneu.marca}"></span>
+                  <span th:text="${pneu.modelo}"></span>
+                </td>
+                <td
+                  class="text-[#93adc8] px-6 py-4"
+                  th:text="${pneu.medida}"
                 ></td>
                 <td
                   class="text-[#93adc8] px-6 py-4"
-                  th:text="${#temporals.format(empresa.dataCriacao, 'dd/MM/yyyy HH:mm')}"
+                  th:text="${pneu.dataInstalacao != null ? #temporals.format(pneu.dataInstalacao, 'dd/MM/yyyy') : '-'}"
                 ></td>
                 <td class="px-6 py-4">
                   <div class="flex justify-center gap-2">
                     <a
-                      th:href="@{/empresas/{id}(id=${empresa.id})}"
+                      th:href="@{/pneus/{id}(id=${pneu.id})}"
                       class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors"
                     >
                       Ver
                     </a>
                     <a
-                      th:href="@{/empresas/{id}/editar(id=${empresa.id})}"
+                      th:href="@{/pneus/{id}/editar(id=${pneu.id})}"
                       class="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded transition-colors"
                     >
                       Editar
                     </a>
                     <a
-                      th:href="@{/empresas/{id}/excluir(id=${empresa.id})}"
-                      onclick="return confirm('Tem certeza que deseja excluir esta empresa?')"
+                      th:href="@{/pneus/{id}/excluir(id=${pneu.id})}"
+                      onclick="return confirm('Tem certeza que deseja excluir este pneu?')"
                       class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition-colors"
                     >
                       Excluir

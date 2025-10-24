@@ -1,8 +1,9 @@
 package com.gearhub.controller;
 
-import com.gearhub.model.Sede;
-import com.gearhub.repository.EmpresaRepository;
-import com.gearhub.repository.SedeRepository;
+import com.gearhub.model.Pneu;
+import com.gearhub.repository.PneuRepository;
+import com.gearhub.repository.VeiculoRepository;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -15,98 +16,97 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import jakarta.validation.Valid;
 import java.io.IOException;
 
 @Controller
-@RequestMapping("/sedes")
+@RequestMapping("/pneus")
 @RequiredArgsConstructor
-public class SedeController {
+public class PneuController {
 
-    private final SedeRepository sedeRepository;
-    private final EmpresaRepository empresaRepository;
+    private final PneuRepository pneuRepository;
+    private final VeiculoRepository veiculoRepository;
 
     @GetMapping
     public String listar(Model model) {
-        model.addAttribute("sedes", sedeRepository.findAll());
-        return "sedes/lista";
+        model.addAttribute("pneus", pneuRepository.findAll());
+        return "pneus/lista";
     }
 
-    @GetMapping("/nova")
-    public String nova(Model model) {
-        model.addAttribute("sede", new Sede());
-        model.addAttribute("empresas", empresaRepository.findAll());
-        return "sedes/form";
+    @GetMapping("/novo")
+    public String novo(Model model) {
+        model.addAttribute("pneu", new Pneu());
+        model.addAttribute("veiculos", veiculoRepository.findAll());
+        return "pneus/form";
     }
 
     @GetMapping("/{id}")
     public String detalhes(@PathVariable Long id, Model model) {
-        Sede sede = sedeRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Sede não encontrada"));
-        model.addAttribute("sede", sede);
-        return "sedes/detalhes";
+        Pneu pneu = pneuRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Pneu não encontrado"));
+        model.addAttribute("pneu", pneu);
+        return "pneus/detalhes";
     }
 
     @GetMapping("/{id}/editar")
     public String editar(@PathVariable Long id, Model model) {
-        Sede sede = sedeRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Sede não encontrada"));
-        model.addAttribute("sede", sede);
-        model.addAttribute("empresas", empresaRepository.findAll());
-        return "sedes/form";
+        Pneu pneu = pneuRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Pneu não encontrado"));
+        model.addAttribute("pneu", pneu);
+        model.addAttribute("veiculos", veiculoRepository.findAll());
+        return "pneus/form";
     }
 
     @PostMapping
-    public String salvar(@Valid @ModelAttribute Sede sede,
+    public String salvar(@Valid @ModelAttribute Pneu pneu,
                         BindingResult result,
                         @RequestParam(value = "fotoFile", required = false) MultipartFile fotoFile,
                         Model model,
                         RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
-            model.addAttribute("empresas", empresaRepository.findAll());
-            return "sedes/form";
+            model.addAttribute("veiculos", veiculoRepository.findAll());
+            return "pneus/form";
         }
         
         // Processar upload da foto
         if (fotoFile != null && !fotoFile.isEmpty()) {
             try {
-                sede.setFoto(fotoFile.getBytes());
-                sede.setNomeArquivoFoto(fotoFile.getOriginalFilename());
+                pneu.setFoto(fotoFile.getBytes());
+                pneu.setNomeArquivoFoto(fotoFile.getOriginalFilename());
             } catch (IOException e) {
                 redirectAttributes.addFlashAttribute("erro", "Erro ao processar o arquivo de foto");
-                return "redirect:/sedes";
+                return "redirect:/pneus";
             }
         }
         
-        sedeRepository.save(sede);
-        redirectAttributes.addFlashAttribute("mensagem", "Sede salva com sucesso!");
-        return "redirect:/sedes";
+        pneuRepository.save(pneu);
+        redirectAttributes.addFlashAttribute("mensagem", "Pneu salvo com sucesso!");
+        return "redirect:/pneus";
     }
 
     @GetMapping("/{id}/excluir")
     public String excluir(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         try {
-            sedeRepository.deleteById(id);
-            redirectAttributes.addFlashAttribute("mensagem", "Sede excluída com sucesso!");
+            pneuRepository.deleteById(id);
+            redirectAttributes.addFlashAttribute("mensagem", "Pneu excluído com sucesso!");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("erro", "Erro ao excluir sede. Verifique se não há veículos associados.");
+            redirectAttributes.addFlashAttribute("erro", "Erro ao excluir pneu.");
         }
-        return "redirect:/sedes";
+        return "redirect:/pneus";
     }
 
     @GetMapping("/{id}/foto")
     public ResponseEntity<byte[]> getFoto(@PathVariable Long id) {
-        Sede sede = sedeRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Sede não encontrada"));
+        Pneu pneu = pneuRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Pneu não encontrado"));
         
-        if (sede.getFoto() == null) {
+        if (pneu.getFoto() == null) {
             return ResponseEntity.notFound().build();
         }
         
         // Determinar tipo de conteúdo baseado no nome do arquivo
         String contentType = MediaType.IMAGE_PNG_VALUE; // padrão
-        if (sede.getNomeArquivoFoto() != null) {
-            String fileName = sede.getNomeArquivoFoto().toLowerCase();
+        if (pneu.getNomeArquivoFoto() != null) {
+            String fileName = pneu.getNomeArquivoFoto().toLowerCase();
             if (fileName.endsWith(".jpg") || fileName.endsWith(".jpeg")) {
                 contentType = MediaType.IMAGE_JPEG_VALUE;
             } else if (fileName.endsWith(".png")) {
@@ -118,8 +118,8 @@ public class SedeController {
         
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType(contentType));
-        headers.setContentLength(sede.getFoto().length);
+        headers.setContentLength(pneu.getFoto().length);
         
-        return new ResponseEntity<>(sede.getFoto(), headers, HttpStatus.OK);
+        return new ResponseEntity<>(pneu.getFoto(), headers, HttpStatus.OK);
     }
 }

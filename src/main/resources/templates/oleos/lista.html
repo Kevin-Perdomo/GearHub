@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html
+  lang="pt-br"
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="layouts/base :: base(~{::title}, ~{::main})"
+>
+  <head>
+    <title>Óleos - GearHub</title>
+  </head>
+  <body>
+    <main>
+      <div class="px-10 md:px-20 lg:px-40 py-10">
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-8">
+          <div>
+            <h1 class="text-white text-4xl font-black mb-2">Óleos</h1>
+            <p class="text-[#93adc8]">Gerenciar trocas de óleo dos veículos</p>
+          </div>
+          <a
+            href="/oleos/novo"
+            class="bg-[#1565c0] hover:bg-[#0d47a1] text-white font-bold py-3 px-6 rounded-lg transition-colors"
+          >
+            + Nova Troca
+          </a>
+        </div>
+
+        <!-- Tabela -->
+        <div
+          class="bg-[#1a2733] rounded-lg border-2 border-[#3b4f5f] overflow-hidden"
+        >
+          <div class="overflow-x-auto">
+            <table class="w-full">
+              <thead>
+                <tr class="border-b-2 border-[#3b4f5f]">
+                  <th class="text-left p-4 text-white font-bold">ID</th>
+                  <th class="text-left p-4 text-white font-bold">Foto</th>
+                  <th class="text-left p-4 text-white font-bold">Veículo</th>
+                  <th class="text-left p-4 text-white font-bold">Data Troca</th>
+                  <th class="text-left p-4 text-white font-bold">
+                    Quilometragem
+                  </th>
+                  <th class="text-left p-4 text-white font-bold">Tipo Óleo</th>
+                  <th class="text-left p-4 text-white font-bold">Quantidade</th>
+                  <th class="text-left p-4 text-white font-bold">
+                    Trocou Filtro
+                  </th>
+                  <th class="text-left p-4 text-white font-bold">Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  th:if="${oleos.empty}"
+                  class="border-b border-[#3b4f5f] hover:bg-[#223649] transition-colors"
+                >
+                  <td colspan="9" class="p-4 text-center text-[#93adc8]">
+                    Nenhuma troca de óleo cadastrada
+                  </td>
+                </tr>
+                <tr
+                  th:each="oleo : ${oleos}"
+                  class="border-b border-[#3b4f5f] hover:bg-[#223649] transition-colors"
+                >
+                  <td class="p-4 text-white" th:text="${oleo.id}"></td>
+                  <td class="p-4">
+                    <img
+                      th:if="${oleo.foto != null}"
+                      th:src="@{/oleos/{id}/foto(id=${oleo.id})}"
+                      th:alt="${'Foto - ' + oleo.veiculo.marca + ' ' + oleo.veiculo.modelo}"
+                      class="w-12 h-12 object-cover rounded-lg bg-[#0f1b24] p-1"
+                    />
+                    <span
+                      th:if="${oleo.foto == null}"
+                      class="text-[#93adc8] text-sm"
+                      >Sem foto</span
+                    >
+                  </td>
+                  <td class="p-4 text-white">
+                    <span
+                      th:text="${oleo.veiculo.marca + ' ' + oleo.veiculo.modelo + ' (' + oleo.veiculo.placa + ')'}"
+                    ></span>
+                  </td>
+                  <td
+                    class="p-4 text-white"
+                    th:text="${oleo.dataTroca != null ? #temporals.format(oleo.dataTroca, 'dd/MM/yyyy') : '-'}"
+                  ></td>
+                  <td
+                    class="p-4 text-white"
+                    th:text="${oleo.quilometragem != null ? oleo.quilometragem + ' km' : '-'}"
+                  ></td>
+                  <td
+                    class="p-4 text-white"
+                    th:text="${oleo.tipoOleo ?: '-'}"
+                  ></td>
+                  <td
+                    class="p-4 text-white"
+                    th:text="${oleo.quantidadeLitros != null ? oleo.quantidadeLitros + 'L' : '-'}"
+                  ></td>
+                  <td class="p-4">
+                    <span
+                      th:if="${oleo.trocouFiltro}"
+                      class="bg-green-600 text-white px-3 py-1 rounded-full text-sm font-bold"
+                      >Sim</span
+                    >
+                    <span
+                      th:if="${!oleo.trocouFiltro}"
+                      class="bg-gray-600 text-white px-3 py-1 rounded-full text-sm font-bold"
+                      >Não</span
+                    >
+                  </td>
+                  <td class="p-4">
+                    <div class="flex gap-2">
+                      <a
+                        th:href="@{/oleos/{id}(id=${oleo.id})}"
+                        class="bg-[#1565c0] hover:bg-[#0d47a1] text-white font-bold py-2 px-4 rounded-lg transition-colors"
+                        >Ver</a
+                      >
+                      <a
+                        th:href="@{/oleos/editar/{id}(id=${oleo.id})}"
+                        class="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-lg transition-colors"
+                        >Editar</a
+                      >
+                      <form
+                        th:action="@{/oleos/{id}(id=${oleo.id})}"
+                        method="post"
+                        style="display: inline"
+                        onsubmit="return confirm('Tem certeza que deseja excluir esta troca de óleo?');"
+                      >
+                        <input type="hidden" name="_method" value="delete" />
+                        <button
+                          type="submit"
+                          class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition-colors"
+                        >
+                          Excluir
+                        </button>
+                      </form>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

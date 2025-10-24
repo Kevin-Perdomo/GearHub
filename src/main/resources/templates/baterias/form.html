@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html
+  lang="pt-br"
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="layouts/base :: base(~{::title}, ~{::main})"
+>
+  <head>
+    <title
+      th:text="${bateria.id == null ? 'Nova Bateria' : 'Editar Bateria'} + ' - GearHub'"
+    ></title>
+  </head>
+  <body>
+    <main>
+      <div class="px-10 md:px-20 lg:px-40 py-10">
+        <!-- Header -->
+        <div class="mb-8">
+          <h1
+            class="text-white text-4xl font-black mb-2"
+            th:text="${bateria.id == null ? 'Nova Bateria' : 'Editar Bateria'}"
+          ></h1>
+          <p class="text-[#93adc8]">Preencha os dados da bateria</p>
+        </div>
+
+        <!-- Formulário -->
+        <div
+          class="bg-[#1a2733] rounded-lg border-2 border-[#3b4f5f] p-8 max-w-3xl"
+        >
+          <form
+            th:action="@{/baterias}"
+            th:object="${bateria}"
+            method="post"
+            enctype="multipart/form-data"
+          >
+            <input type="hidden" th:field="*{id}" />
+
+            <!-- Veículo -->
+            <div class="mb-6">
+              <label for="veiculo" class="block text-white font-bold mb-2"
+                >Veículo *</label
+              >
+              <select
+                id="veiculo"
+                th:field="*{veiculo.id}"
+                class="w-full px-4 py-3 rounded-lg bg-[#0f1b24] border-2 border-[#3b4f5f] text-white focus:border-[#1565c0] focus:outline-none"
+                required
+              >
+                <option value="">Selecione um veículo</option>
+                <option
+                  th:each="v : ${veiculos}"
+                  th:value="${v.id}"
+                  th:text="${v.marca + ' ' + v.modelo + ' (' + v.placa + ')'}"
+                ></option>
+              </select>
+              <p
+                th:if="${#fields.hasErrors('veiculo')}"
+                th:errors="*{veiculo}"
+                class="text-red-400 text-sm mt-1"
+              ></p>
+            </div>
+
+            <!-- Marca e Modelo -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              <div>
+                <label for="marca" class="block text-white font-bold mb-2"
+                  >Marca</label
+                >
+                <input
+                  type="text"
+                  id="marca"
+                  th:field="*{marca}"
+                  class="w-full px-4 py-3 rounded-lg bg-[#0f1b24] border-2 border-[#3b4f5f] text-white focus:border-[#1565c0] focus:outline-none"
+                  placeholder="Ex: Moura"
+                />
+              </div>
+
+              <div>
+                <label for="modelo" class="block text-white font-bold mb-2"
+                  >Modelo</label
+                >
+                <input
+                  type="text"
+                  id="modelo"
+                  th:field="*{modelo}"
+                  class="w-full px-4 py-3 rounded-lg bg-[#0f1b24] border-2 border-[#3b4f5f] text-white focus:border-[#1565c0] focus:outline-none"
+                  placeholder="Ex: M60GD"
+                />
+              </div>
+            </div>
+
+            <!-- Voltagem e Capacidade -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              <div>
+                <label for="voltagem" class="block text-white font-bold mb-2"
+                  >Voltagem (V)</label
+                >
+                <input
+                  type="number"
+                  id="voltagem"
+                  th:field="*{voltagem}"
+                  step="0.1"
+                  class="w-full px-4 py-3 rounded-lg bg-[#0f1b24] border-2 border-[#3b4f5f] text-white focus:border-[#1565c0] focus:outline-none"
+                  placeholder="12"
+                />
+              </div>
+
+              <div>
+                <label
+                  for="capacidadeAh"
+                  class="block text-white font-bold mb-2"
+                  >Capacidade (Ah)</label
+                >
+                <input
+                  type="number"
+                  id="capacidadeAh"
+                  th:field="*{capacidadeAh}"
+                  step="0.1"
+                  class="w-full px-4 py-3 rounded-lg bg-[#0f1b24] border-2 border-[#3b4f5f] text-white focus:border-[#1565c0] focus:outline-none"
+                  placeholder="60"
+                />
+              </div>
+            </div>
+
+            <!-- Data e KM de Instalação -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              <div>
+                <label
+                  for="dataInstalacao"
+                  class="block text-white font-bold mb-2"
+                  >Data de Instalação</label
+                >
+                <input
+                  type="date"
+                  id="dataInstalacao"
+                  th:field="*{dataInstalacao}"
+                  class="w-full px-4 py-3 rounded-lg bg-[#0f1b24] border-2 border-[#3b4f5f] text-white focus:border-[#1565c0] focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label
+                  for="kmInstalacao"
+                  class="block text-white font-bold mb-2"
+                  >KM de Instalação</label
+                >
+                <input
+                  type="number"
+                  id="kmInstalacao"
+                  th:field="*{kmInstalacao}"
+                  class="w-full px-4 py-3 rounded-lg bg-[#0f1b24] border-2 border-[#3b4f5f] text-white focus:border-[#1565c0] focus:outline-none"
+                  placeholder="50000"
+                />
+              </div>
+            </div>
+
+            <!-- Fim da Garantia -->
+            <div class="mb-6">
+              <label for="fimGarantia" class="block text-white font-bold mb-2"
+                >Fim da Garantia</label
+              >
+              <input
+                type="date"
+                id="fimGarantia"
+                th:field="*{fimGarantia}"
+                class="w-full px-4 py-3 rounded-lg bg-[#0f1b24] border-2 border-[#3b4f5f] text-white focus:border-[#1565c0] focus:outline-none"
+              />
+            </div>
+
+            <!-- Foto -->
+            <div class="mb-6">
+              <label for="foto" class="block text-white font-bold mb-2"
+                >Foto da Bateria</label
+              >
+              <input
+                type="file"
+                id="foto"
+                name="fotoFile"
+                accept="image/*"
+                class="w-full px-4 py-3 rounded-lg bg-[#0f1b24] border-2 border-[#3b4f5f] text-[#93adc8] focus:border-[#1565c0] focus:outline-none file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-[#1565c0] file:text-white file:cursor-pointer hover:file:bg-[#0d47a1]"
+              />
+              <p class="text-[#93adc8] text-sm mt-1">
+                Formatos: JPG, PNG (máx. 5MB)
+              </p>
+            </div>
+
+            <!-- Botões -->
+            <div class="flex gap-4 mt-8">
+              <button
+                type="submit"
+                class="bg-[#1565c0] hover:bg-[#0d47a1] text-white font-bold py-3 px-6 rounded-lg transition-colors flex-1"
+              >
+                Salvar
+              </button>
+              <a
+                th:href="@{/baterias}"
+                class="bg-[#3b4f5f] hover:bg-[#4a5f73] text-white font-bold py-3 px-6 rounded-lg transition-colors text-center flex-1"
+              >
+                Cancelar
+              </a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

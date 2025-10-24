@@ -44,7 +44,7 @@
           </div>
 
           <div
-            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto w-full"
+            class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto w-full"
           >
             <!-- Empresas -->
             <a th:href="@{/empresas}" class="group">
@@ -87,7 +87,7 @@
                     class="group-hover:scale-110 transition-transform"
                   >
                     <path
-                      d="M240,208H224V96a16,16,0,0,0-16-16H164.94L139.31,55.31A16,16,0,0,0,128,50.34V32h16a8,8,0,0,0,0-16H112a8,8,0,0,0,0,16h16V48H48A16,16,0,0,0,32,64V208H16a8,8,0,0,0,0,16H240a8,8,0,0,0,0-16ZM208,96V208H144V96ZM48,64h80V208H48ZM72,88a8,8,0,0,1,8-8H96a8,8,0,0,1,0,16H80A8,8,0,0,1,72,88Zm0,40a8,8,0,0,1,8-8H96a8,8,0,0,1,0,16H80A8,8,0,0,1,72,128Zm0,40a8,8,0,0,1,8-8H96a8,8,0,0,1,0,16H80A8,8,0,0,1,72,168Zm96-48a8,8,0,0,1,8-8h16a8,8,0,0,1,0,16H176A8,8,0,0,1,168,120Zm0,40a8,8,0,0,1,8-8h16a8,8,0,0,1,0,16H176A8,8,0,0,1,168,160Z"
+                      d="M240,208H224V96a16,16,0,0,0-16-16H164.94L139.31,55.31A16,16,0,0,0,128,50.34V32h16a8,8,0,0,0,0-16H112a8,8,0,0,0,0-16h16V48H48A16,16,0,0,0,32,64V208H16a8,8,0,0,0,0,16H240a8,8,0,0,0,0-16ZM208,96V208H144V96ZM48,64h80V208H48ZM72,88a8,8,0,0,1,8-8H96a8,8,0,0,1,0,16H80A8,8,0,0,1,72,88Zm0,40a8,8,0,0,1,8-8H96a8,8,0,0,1,0,16H80A8,8,0,0,1,72,128Zm0,40a8,8,0,0,1,8-8H96a8,8,0,0,1,0,16H80A8,8,0,0,1,72,168Zm96-48a8,8,0,0,1,8-8h16a8,8,0,0,1,0,16H176A8,8,0,0,1,168,120Zm0,40a8,8,0,0,1,8-8h16a8,8,0,0,1,0,16H176A8,8,0,0,1,168,160Z"
                     ></path>
                   </svg>
                 </div>
@@ -119,33 +119,9 @@
                 </div>
                 <div class="text-center">
                   <h3 class="text-white text-xl font-bold mb-2">Veículos</h3>
-                  <p class="text-[#93adc8] text-sm">Gerencie veículos</p>
-                </div>
-              </div>
-            </a>
-
-            <!-- Documentos -->
-            <a th:href="@{/documentos-veiculo}" class="group">
-              <div
-                class="flex flex-col gap-4 rounded-lg border-2 border-[#3b4f5f] bg-[#1a2733] p-6 hover:border-[#1565c0] hover:bg-[#223649] transition-all duration-300"
-              >
-                <div class="text-white flex justify-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="48px"
-                    height="48px"
-                    fill="currentColor"
-                    viewBox="0 0 256 256"
-                    class="group-hover:scale-110 transition-transform"
-                  >
-                    <path
-                      d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Zm-32-80a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,136Zm0,32a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,168Z"
-                    ></path>
-                  </svg>
-                </div>
-                <div class="text-center">
-                  <h3 class="text-white text-xl font-bold mb-2">Documentos</h3>
-                  <p class="text-[#93adc8] text-sm">Gerencie documentos</p>
+                  <p class="text-[#93adc8] text-sm">
+                    Gerencie frota e manutenções
+                  </p>
                 </div>
               </div>
             </a>

@@ -18,7 +18,7 @@
             <p class="text-[#93adc8]">Gerencie os documentos dos veículos</p>
           </div>
           <a
-            th:href="@{/documentos-veiculo/novo}"
+            th:href="@{/documentos/novo}"
             class="bg-[#1565c0] hover:bg-[#0d47a1] text-white font-bold py-3 px-6 rounded-lg transition-colors"
           >
             + Novo Documento
@@ -98,17 +98,17 @@
                 <td class="px-6 py-4">
                   <div class="flex justify-center gap-2">
                     <a
-                      th:href="@{/documentos-veiculo/{id}(id=${doc.id})}"
+                      th:href="@{/documentos/{id}(id=${doc.id})}"
                       class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors"
                       >Ver</a
                     >
                     <a
-                      th:href="@{/documentos-veiculo/{id}/editar(id=${doc.id})}"
+                      th:href="@{/documentos/{id}/editar(id=${doc.id})}"
                       class="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded transition-colors"
                       >Editar</a
                     >
                     <a
-                      th:href="@{/documentos-veiculo/{id}/excluir(id=${doc.id})}"
+                      th:href="@{/documentos/{id}/excluir(id=${doc.id})}"
                       onclick="return confirm('Tem certeza que deseja excluir este documento?')"
                       class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition-colors"
                       >Excluir</a

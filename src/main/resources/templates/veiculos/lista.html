@@ -46,14 +46,12 @@
             <thead class="bg-[#0f1b24] border-b-2 border-[#3b4f5f]">
               <tr>
                 <th class="text-left text-white font-bold px-6 py-4">ID</th>
+                <th class="text-left text-white font-bold px-6 py-4">Foto</th>
                 <th class="text-left text-white font-bold px-6 py-4">
                   Marca/Modelo
                 </th>
                 <th class="text-left text-white font-bold px-6 py-4">Placa</th>
                 <th class="text-left text-white font-bold px-6 py-4">Ano</th>
-                <th class="text-left text-white font-bold px-6 py-4">
-                  Combustível
-                </th>
                 <th class="text-left text-white font-bold px-6 py-4">Sede</th>
                 <th class="text-center text-white font-bold px-6 py-4">
                   Ações
@@ -74,6 +72,19 @@
                   class="text-[#93adc8] px-6 py-4"
                   th:text="${veiculo.id}"
                 ></td>
+                <td class="px-6 py-4">
+                  <img
+                    th:if="${veiculo.foto != null}"
+                    th:src="@{/veiculos/{id}/foto(id=${veiculo.id})}"
+                    alt="Foto"
+                    class="w-16 h-12 object-cover rounded-lg"
+                  />
+                  <span
+                    th:unless="${veiculo.foto != null}"
+                    class="text-[#93adc8] text-sm"
+                    >Sem foto</span
+                  >
+                </td>
                 <td class="text-white px-6 py-4">
                   <span class="font-bold" th:text="${veiculo.marca}"></span>
                   <span th:text="${veiculo.modelo}"></span>
@@ -85,10 +96,6 @@
                 <td
                   class="text-[#93adc8] px-6 py-4"
                   th:text="${veiculo.anoModelo}"
-                ></td>
-                <td
-                  class="text-[#93adc8] px-6 py-4"
-                  th:text="${veiculo.combustivelRecomendado}"
                 ></td>
                 <td
                   class="text-[#93adc8] px-6 py-4"
