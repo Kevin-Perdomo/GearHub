@@ -10,43 +10,48 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "historico_bateria")
+@Table(name = "GH_BATERIAS")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class HistoricoBateria {
+public class Bateria {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private Long id;
 
     @NotBlank(message = "Marca é obrigatória")
-    @Column(name = "marca", length = 100, nullable = false)
+    @Column(name = "MARCA", length = 100, nullable = false)
     private String marca;
 
-    @Column(name = "modelo", length = 100)
+    @Column(name = "MODELO", length = 100)
     private String modelo;
 
-    @Column(name = "voltagem", length = 20)
+    @Column(name = "VOLTAGEM", length = 20)
     private String voltagem;
 
-    @Column(name = "capacidade_ah", length = 20)
+    @Column(name = "CAPACIDADE_AH", length = 20)
     private String capacidadeAh;
 
-    @Column(name = "data_instalacao")
+    @Column(name = "DATA_INSTALACAO")
     private LocalDate dataInstalacao;
 
     @Positive(message = "Quilometragem de instalação deve ser positiva")
-    @Column(name = "km_instalacao")
+    @Column(name = "KM_INSTALACAO")
     private Integer kmInstalacao;
 
-    @Column(name = "fim_garantia")
+    @Column(name = "FIM_GARANTIA")
     private LocalDate fimGarantia;
 
-    @Column(name = "url_foto")
-    private String urlFoto;
+    @Lob
+    @Column(name = "FOTO", columnDefinition = "LONGBLOB")
+    private byte[] foto;
+
+    @Column(name = "NOME_ARQUIVO_FOTO", length = 255)
+    private String nomeArquivoFoto;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "veiculo_id", nullable = false)
+    @JoinColumn(name = "VEICULO_ID", nullable = false)
     private Veiculo veiculo;
 }

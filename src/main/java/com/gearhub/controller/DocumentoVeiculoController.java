@@ -1,7 +1,7 @@
 package com.gearhub.controller;
 
-import com.gearhub.model.DocumentoVeiculo;
-import com.gearhub.repository.DocumentoVeiculoRepository;
+import com.gearhub.model.Documento;
+import com.gearhub.repository.DocumentoRepository;
 import com.gearhub.repository.VeiculoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -17,25 +17,25 @@ import jakarta.validation.Valid;
 @RequiredArgsConstructor
 public class DocumentoVeiculoController {
 
-    private final DocumentoVeiculoRepository documentoVeiculoRepository;
+    private final DocumentoRepository documentoRepository;
     private final VeiculoRepository veiculoRepository;
 
     @GetMapping
     public String listar(Model model) {
-        model.addAttribute("documentos", documentoVeiculoRepository.findAll());
+        model.addAttribute("documentos", documentoRepository.findAll());
         return "documentos-veiculo/lista";
     }
 
     @GetMapping("/novo")
     public String novo(Model model) {
-        model.addAttribute("documento", new DocumentoVeiculo());
+        model.addAttribute("documento", new Documento());
         model.addAttribute("veiculos", veiculoRepository.findAll());
         return "documentos-veiculo/form";
     }
 
     @GetMapping("/{id}")
     public String detalhes(@PathVariable Long id, Model model) {
-        DocumentoVeiculo documento = documentoVeiculoRepository.findById(id)
+        Documento documento = documentoRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Documento não encontrado"));
         model.addAttribute("documento", documento);
         return "documentos-veiculo/detalhes";
@@ -43,7 +43,7 @@ public class DocumentoVeiculoController {
 
     @GetMapping("/{id}/editar")
     public String editar(@PathVariable Long id, Model model) {
-        DocumentoVeiculo documento = documentoVeiculoRepository.findById(id)
+        Documento documento = documentoRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Documento não encontrado"));
         model.addAttribute("documento", documento);
         model.addAttribute("veiculos", veiculoRepository.findAll());
@@ -51,7 +51,7 @@ public class DocumentoVeiculoController {
     }
 
     @PostMapping
-    public String salvar(@Valid @ModelAttribute DocumentoVeiculo documento, 
+    public String salvar(@Valid @ModelAttribute Documento documento, 
                         BindingResult result, 
                         Model model,
                         RedirectAttributes redirectAttributes) {
@@ -59,14 +59,14 @@ public class DocumentoVeiculoController {
             model.addAttribute("veiculos", veiculoRepository.findAll());
             return "documentos-veiculo/form";
         }
-        documentoVeiculoRepository.save(documento);
+        documentoRepository.save(documento);
         redirectAttributes.addFlashAttribute("mensagem", "Documento salvo com sucesso!");
         return "redirect:/documentos-veiculo";
     }
 
     @GetMapping("/{id}/excluir")
     public String excluir(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-        documentoVeiculoRepository.deleteById(id);
+        documentoRepository.deleteById(id);
         redirectAttributes.addFlashAttribute("mensagem", "Documento excluído com sucesso!");
         return "redirect:/documentos-veiculo";
     }

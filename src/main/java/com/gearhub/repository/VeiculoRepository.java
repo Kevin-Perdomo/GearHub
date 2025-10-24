@@ -14,6 +14,6 @@ public interface VeiculoRepository extends JpaRepository<Veiculo, Long> {
     List<Veiculo> findBySedeId(Long sedeId);
     List<Veiculo> findByPlaca(String placa);
     
-    @Query("SELECT v FROM Veiculo v LEFT JOIN FETCH v.sede LEFT JOIN FETCH v.documentosVeiculo WHERE v.id = :id")
+    @Query("SELECT v FROM Veiculo v LEFT JOIN FETCH v.sede LEFT JOIN FETCH v.documentos WHERE v.id = :id")
     Optional<Veiculo> findByIdWithDetails(@Param("id") Long id);
 }

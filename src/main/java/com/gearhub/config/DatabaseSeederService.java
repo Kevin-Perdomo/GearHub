@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -17,7 +18,7 @@ public class DatabaseSeederService {
     private final EmpresaRepository empresaRepository;
     private final SedeRepository sedeRepository;
     private final VeiculoRepository veiculoRepository;
-    private final DocumentoVeiculoRepository documentoVeiculoRepository;
+    private final DocumentoRepository documentoRepository;
 
     @Transactional
     public String executarSeed() {
@@ -164,39 +165,43 @@ public class DatabaseSeederService {
 
     private void criarDocumentos(Veiculo veiculo) {
         // IPVA 2024
-        DocumentoVeiculo ipva = new DocumentoVeiculo();
+        Documento ipva = new Documento();
         ipva.setVeiculo(veiculo);
         ipva.setTipoDocumento("IPVA");
         ipva.setAnoReferencia(2024);
         ipva.setStatus("Pago");
         ipva.setDataPagamento(LocalDate.of(2024, 1, 10));
-        documentoVeiculoRepository.save(ipva);
+        ipva.setDataUpload(LocalDateTime.now());
+        documentoRepository.save(ipva);
 
         // Licenciamento 2024
-        DocumentoVeiculo licenciamento = new DocumentoVeiculo();
+        Documento licenciamento = new Documento();
         licenciamento.setVeiculo(veiculo);
         licenciamento.setTipoDocumento("CRLV - Licenciamento");
         licenciamento.setAnoReferencia(2024);
         licenciamento.setStatus("Pago");
         licenciamento.setDataPagamento(LocalDate.of(2024, 1, 15));
-        documentoVeiculoRepository.save(licenciamento);
+        licenciamento.setDataUpload(LocalDateTime.now());
+        documentoRepository.save(licenciamento);
 
         // Seguro
-        DocumentoVeiculo seguro = new DocumentoVeiculo();
+        Documento seguro = new Documento();
         seguro.setVeiculo(veiculo);
         seguro.setTipoDocumento("Seguro Veicular");
         seguro.setAnoReferencia(2024);
         seguro.setStatus("Pago");
         seguro.setDataPagamento(LocalDate.of(2024, 2, 1));
-        documentoVeiculoRepository.save(seguro);
+        seguro.setDataUpload(LocalDateTime.now());
+        documentoRepository.save(seguro);
 
         // Revisão
-        DocumentoVeiculo revisao = new DocumentoVeiculo();
+        Documento revisao = new Documento();
         revisao.setVeiculo(veiculo);
         revisao.setTipoDocumento("Revisão Anual");
         revisao.setAnoReferencia(2024);
         revisao.setStatus("Pendente");
-        documentoVeiculoRepository.save(revisao);
+        revisao.setDataUpload(LocalDateTime.now());
+        documentoRepository.save(revisao);
 
         log.info("4 Documentos criados para veículo: {}", veiculo.getPlaca());
     }
@@ -205,7 +210,7 @@ public class DatabaseSeederService {
     public String limparBanco() {
         log.info("Limpando banco de dados...");
         
-        documentoVeiculoRepository.deleteAll();
+        documentoRepository.deleteAll();
         veiculoRepository.deleteAll();
         sedeRepository.deleteAll();
         empresaRepository.deleteAll();

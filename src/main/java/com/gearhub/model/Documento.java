@@ -7,10 +7,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "documentos")
+@Table(name = "GH_DOCUMENTOS")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,26 +19,40 @@ public class Documento {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private Long id;
 
-    @NotBlank(message = "Tipo é obrigatório")
+    @NotBlank(message = "Tipo de documento é obrigatório")
     @Size(max = 100, message = "Tipo deve ter no máximo 100 caracteres")
-    @Column(nullable = false, length = 100)
-    private String tipo;
+    @Column(name = "TIPO_DOCUMENTO", nullable = false, length = 100)
+    private String tipoDocumento; // Ex: "IPVA", "CRLV", "Seguro", "Manual", "Nota Fiscal"
 
-    @NotBlank(message = "Caminho do arquivo é obrigatório")
-    @Column(name = "arquivo_path", nullable = false)
-    private String arquivoPath;
+    @Column(name = "ANO_REFERENCIA")
+    private Integer anoReferencia; // Para documentos anuais como IPVA
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "veiculo_id", nullable = false)
-    private Veiculo veiculo;
+    @Size(max = 50, message = "Status deve ter no máximo 50 caracteres")
+    @Column(name = "STATUS", length = 50)
+    private String status; // Ex: "Pago", "Pendente", "Vencido"
 
-    @Column(columnDefinition = "TEXT")
+    @Column(name = "DATA_PAGAMENTO")
+    private LocalDate dataPagamento;
+
+    @Column(name = "DATA_UPLOAD", nullable = false, updatable = false)
+    private LocalDateTime dataUpload;
+
+    @Lob
+    @Column(name = "ARQUIVO_PDF", columnDefinition = "LONGBLOB")
+    private byte[] arquivoPdf;
+
+    @Column(name = "NOME_ARQUIVO", length = 255)
+    private String nomeArquivo;
+
+    @Column(name = "DESCRICAO", columnDefinition = "TEXT")
     private String descricao;
 
-    @Column(name = "data_upload", nullable = false, updatable = false)
-    private LocalDateTime dataUpload;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "VEICULO_ID", nullable = false)
+    private Veiculo veiculo;
 
     @PrePersist
     protected void onCreate() {

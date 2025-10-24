@@ -10,38 +10,43 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "trocas_oleo")
+@Table(name = "GH_OLEOS")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TrocaDeOleo {
+public class Oleo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private Long id;
 
     @NotNull(message = "Data da troca é obrigatória")
-    @Column(name = "data_troca", nullable = false)
+    @Column(name = "DATA_TROCA", nullable = false)
     private LocalDate dataTroca;
 
     @Positive(message = "Quilometragem deve ser positiva")
-    @Column(name = "quilometragem")
+    @Column(name = "QUILOMETRAGEM")
     private Integer quilometragem;
 
-    @Column(name = "tipo_oleo", length = 100)
-    private String tipoOleo;
+    @Column(name = "TIPO_OLEO", length = 100)
+    private String tipoOleo; // Ex: "5W30 Sintético", "10W40 Semissintético"
 
     @Positive(message = "Quantidade de litros deve ser positiva")
-    @Column(name = "quantidade_litros")
+    @Column(name = "QUANTIDADE_LITROS")
     private Double quantidadeLitros;
 
-    @Column(name = "trocou_filtro")
+    @Column(name = "TROCOU_FILTRO")
     private Boolean trocouFiltro;
 
-    @Column(name = "url_foto")
-    private String urlFoto;
+    @Lob
+    @Column(name = "FOTO", columnDefinition = "LONGBLOB")
+    private byte[] foto;
+
+    @Column(name = "NOME_ARQUIVO_FOTO", length = 255)
+    private String nomeArquivoFoto;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "veiculo_id", nullable = false)
+    @JoinColumn(name = "VEICULO_ID", nullable = false)
     private Veiculo veiculo;
 }
