@@ -45,20 +45,30 @@ public class AutonomiaController {
     }
 
     @GetMapping("/{id}")
-    public String detalhes(@PathVariable Long id, Model model) {
-        Autonomia autonomia = autonomiaRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Autonomia não encontrada"));
-        model.addAttribute("autonomia", autonomia);
-        return "autonomia/detalhes";
+    public String detalhes(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
+        return autonomiaRepository.findById(id)
+                .map(autonomia -> {
+                    model.addAttribute("autonomia", autonomia);
+                    return "autonomia/detalhes";
+                })
+                .orElseGet(() -> {
+                    redirectAttributes.addFlashAttribute("erro", "Autonomia não encontrada");
+                    return "redirect:/autonomia";
+                });
     }
 
     @GetMapping("/{id}/editar")
-    public String editar(@PathVariable Long id, Model model) {
-        Autonomia autonomia = autonomiaRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Autonomia não encontrada"));
-        model.addAttribute("autonomia", autonomia);
-        model.addAttribute("veiculos", veiculoRepository.findAll());
-        return "autonomia/form";
+    public String editar(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
+        return autonomiaRepository.findById(id)
+                .map(autonomia -> {
+                    model.addAttribute("autonomia", autonomia);
+                    model.addAttribute("veiculos", veiculoRepository.findAll());
+                    return "autonomia/form";
+                })
+                .orElseGet(() -> {
+                    redirectAttributes.addFlashAttribute("erro", "Autonomia não encontrada");
+                    return "redirect:/autonomia";
+                });
     }
 
     @PostMapping

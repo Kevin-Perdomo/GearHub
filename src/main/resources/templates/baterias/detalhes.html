@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html
   xmlns:th="http://www.thymeleaf.org"
-  th:replace="~{layouts/main :: layout(~{::title}, ~{::content})}"
+  th:replace="layouts/base :: base(~{::title}, ~{::main})"
 >
   <head>
     <title>Detalhes da Bateria</title>
   </head>
   <body>
-    <div th:fragment="content">
+    <div th:fragment="main">
       <div class="container mx-auto px-4 py-8">
         <!-- Header -->
         <div class="flex justify-between items-center mb-6">

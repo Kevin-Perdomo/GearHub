@@ -47,20 +47,30 @@ public class PneuController {
     }
 
     @GetMapping("/{id}")
-    public String detalhes(@PathVariable Long id, Model model) {
-        Pneu pneu = pneuRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Pneu não encontrado"));
-        model.addAttribute("pneu", pneu);
-        return "pneus/detalhes";
+    public String detalhes(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
+        return pneuRepository.findById(id)
+                .map(pneu -> {
+                    model.addAttribute("pneu", pneu);
+                    return "pneus/detalhes";
+                })
+                .orElseGet(() -> {
+                    redirectAttributes.addFlashAttribute("erro", "Pneu não encontrado");
+                    return "redirect:/pneus";
+                });
     }
 
     @GetMapping("/{id}/editar")
-    public String editar(@PathVariable Long id, Model model) {
-        Pneu pneu = pneuRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Pneu não encontrado"));
-        model.addAttribute("pneu", pneu);
-        model.addAttribute("veiculos", veiculoRepository.findAll());
-        return "pneus/form";
+    public String editar(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
+        return pneuRepository.findById(id)
+                .map(pneu -> {
+                    model.addAttribute("pneu", pneu);
+                    model.addAttribute("veiculos", veiculoRepository.findAll());
+                    return "pneus/form";
+                })
+                .orElseGet(() -> {
+                    redirectAttributes.addFlashAttribute("erro", "Pneu não encontrado");
+                    return "redirect:/pneus";
+                });
     }
 
     @PostMapping
@@ -103,30 +113,31 @@ public class PneuController {
 
     @GetMapping("/{id}/foto")
     public ResponseEntity<byte[]> getFoto(@PathVariable Long id) {
-        Pneu pneu = pneuRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Pneu não encontrado"));
-        
-        if (pneu.getFoto() == null) {
-            return ResponseEntity.notFound().build();
-        }
-        
-        // Determinar tipo de conteúdo baseado no nome do arquivo
-        String contentType = MediaType.IMAGE_PNG_VALUE; // padrão
-        if (pneu.getNomeArquivoFoto() != null) {
-            String fileName = pneu.getNomeArquivoFoto().toLowerCase();
-            if (fileName.endsWith(".jpg") || fileName.endsWith(".jpeg")) {
-                contentType = MediaType.IMAGE_JPEG_VALUE;
-            } else if (fileName.endsWith(".png")) {
-                contentType = MediaType.IMAGE_PNG_VALUE;
-            } else if (fileName.endsWith(".gif")) {
-                contentType = MediaType.IMAGE_GIF_VALUE;
-            }
-        }
-        
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.parseMediaType(contentType));
-        headers.setContentLength(pneu.getFoto().length);
-        
-        return new ResponseEntity<>(pneu.getFoto(), headers, HttpStatus.OK);
+        return pneuRepository.findById(id)
+                .map(pneu -> {
+                    if (pneu.getFoto() == null) {
+                        return ResponseEntity.notFound().<byte[]>build();
+                    }
+                    
+                    // Determinar tipo de conteúdo baseado no nome do arquivo
+                    String contentType = MediaType.IMAGE_PNG_VALUE; // padrão
+                    if (pneu.getNomeArquivoFoto() != null) {
+                        String fileName = pneu.getNomeArquivoFoto().toLowerCase();
+                        if (fileName.endsWith(".jpg") || fileName.endsWith(".jpeg")) {
+                            contentType = MediaType.IMAGE_JPEG_VALUE;
+                        } else if (fileName.endsWith(".png")) {
+                            contentType = MediaType.IMAGE_PNG_VALUE;
+                        } else if (fileName.endsWith(".gif")) {
+                            contentType = MediaType.IMAGE_GIF_VALUE;
+                        }
+                    }
+                    
+                    HttpHeaders headers = new HttpHeaders();
+                    headers.setContentType(MediaType.parseMediaType(contentType));
+                    headers.setContentLength(pneu.getFoto().length);
+                    
+                    return new ResponseEntity<>(pneu.getFoto(), headers, HttpStatus.OK);
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

@@ -40,21 +40,30 @@ public class VeiculoController {
     }
 
     @GetMapping("/{id}")
-    public String detalhesVeiculo(@PathVariable Long id, Model model) {
-        Veiculo veiculo = veiculoRepository.findByIdWithDetails(id)
-                .orElseThrow(() -> new RuntimeException("Veículo não encontrado"));
-        
-        model.addAttribute("veiculo", veiculo);
-        return "veiculos/detalhes";
+    public String detalhesVeiculo(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
+        return veiculoRepository.findByIdWithDetails(id)
+                .map(veiculo -> {
+                    model.addAttribute("veiculo", veiculo);
+                    return "veiculos/detalhes";
+                })
+                .orElseGet(() -> {
+                    redirectAttributes.addFlashAttribute("erro", "Veículo não encontrado");
+                    return "redirect:/veiculos";
+                });
     }
 
     @GetMapping("/{id}/editar")
-    public String editarVeiculo(@PathVariable Long id, Model model) {
-        Veiculo veiculo = veiculoRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Veículo não encontrado"));
-        model.addAttribute("veiculo", veiculo);
-        model.addAttribute("sedes", sedeRepository.findAll());
-        return "veiculos/form";
+    public String editarVeiculo(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
+        return veiculoRepository.findById(id)
+                .map(veiculo -> {
+                    model.addAttribute("veiculo", veiculo);
+                    model.addAttribute("sedes", sedeRepository.findAll());
+                    return "veiculos/form";
+                })
+                .orElseGet(() -> {
+                    redirectAttributes.addFlashAttribute("erro", "Veículo não encontrado");
+                    return "redirect:/veiculos";
+                });
     }
 
     @PostMapping

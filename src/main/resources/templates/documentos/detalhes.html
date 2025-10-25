@@ -89,16 +89,13 @@
             <div>
               <p class="text-[#93adc8] text-sm mb-1">Arquivo</p>
               <a
-                th:if="${documento.urlArquivo != null && !#strings.isEmpty(documento.urlArquivo)}"
-                th:href="${documento.urlArquivo}"
+                th:if="${documento.arquivoPdf != null}"
+                th:href="@{/documentos/{id}/pdf(id=${documento.id})}"
                 target="_blank"
                 class="text-blue-400 hover:text-blue-300 underline"
-                >Ver Arquivo</a
+                >📄 Ver PDF</a
               >
-              <p
-                th:unless="${documento.urlArquivo != null && !#strings.isEmpty(documento.urlArquivo)}"
-                class="text-white"
-              >
+              <p th:unless="${documento.arquivoPdf != null}" class="text-white">
                 -
               </p>
             </div>

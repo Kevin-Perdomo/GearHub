@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDate;
 
@@ -53,5 +54,6 @@ public class Bateria {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "VEICULO_ID", nullable = false)
+    @ToString.Exclude
     private Veiculo veiculo;
 }

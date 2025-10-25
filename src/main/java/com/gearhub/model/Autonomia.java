@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Table(name = "GH_AUTONOMIA")
@@ -33,5 +34,6 @@ public class Autonomia {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "VEICULO_ID", nullable = false, unique = true)
+    @ToString.Exclude
     private Veiculo veiculo;
 }

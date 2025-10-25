@@ -47,20 +47,30 @@ public class BateriaController {
     }
 
     @GetMapping("/{id}")
-    public String detalhes(@PathVariable Long id, Model model) {
-        Bateria bateria = bateriaRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Bateria não encontrada"));
-        model.addAttribute("bateria", bateria);
-        return "baterias/detalhes";
+    public String detalhes(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
+        return bateriaRepository.findById(id)
+                .map(bateria -> {
+                    model.addAttribute("bateria", bateria);
+                    return "baterias/detalhes";
+                })
+                .orElseGet(() -> {
+                    redirectAttributes.addFlashAttribute("erro", "Bateria não encontrada");
+                    return "redirect:/baterias";
+                });
     }
 
     @GetMapping("/{id}/editar")
-    public String editar(@PathVariable Long id, Model model) {
-        Bateria bateria = bateriaRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Bateria não encontrada"));
-        model.addAttribute("bateria", bateria);
-        model.addAttribute("veiculos", veiculoRepository.findAll());
-        return "baterias/form";
+    public String editar(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
+        return bateriaRepository.findById(id)
+                .map(bateria -> {
+                    model.addAttribute("bateria", bateria);
+                    model.addAttribute("veiculos", veiculoRepository.findAll());
+                    return "baterias/form";
+                })
+                .orElseGet(() -> {
+                    redirectAttributes.addFlashAttribute("erro", "Bateria não encontrada");
+                    return "redirect:/baterias";
+                });
     }
 
     @PostMapping
@@ -103,30 +113,31 @@ public class BateriaController {
 
     @GetMapping("/{id}/foto")
     public ResponseEntity<byte[]> getFoto(@PathVariable Long id) {
-        Bateria bateria = bateriaRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Bateria não encontrada"));
-        
-        if (bateria.getFoto() == null) {
-            return ResponseEntity.notFound().build();
-        }
-        
-        // Determinar tipo de conteúdo baseado no nome do arquivo
-        String contentType = MediaType.IMAGE_PNG_VALUE; // padrão
-        if (bateria.getNomeArquivoFoto() != null) {
-            String fileName = bateria.getNomeArquivoFoto().toLowerCase();
-            if (fileName.endsWith(".jpg") || fileName.endsWith(".jpeg")) {
-                contentType = MediaType.IMAGE_JPEG_VALUE;
-            } else if (fileName.endsWith(".png")) {
-                contentType = MediaType.IMAGE_PNG_VALUE;
-            } else if (fileName.endsWith(".gif")) {
-                contentType = MediaType.IMAGE_GIF_VALUE;
-            }
-        }
-        
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.parseMediaType(contentType));
-        headers.setContentLength(bateria.getFoto().length);
-        
-        return new ResponseEntity<>(bateria.getFoto(), headers, HttpStatus.OK);
+        return bateriaRepository.findById(id)
+                .map(bateria -> {
+                    if (bateria.getFoto() == null) {
+                        return ResponseEntity.notFound().<byte[]>build();
+                    }
+                    
+                    // Determinar tipo de conteúdo baseado no nome do arquivo
+                    String contentType = MediaType.IMAGE_PNG_VALUE; // padrão
+                    if (bateria.getNomeArquivoFoto() != null) {
+                        String fileName = bateria.getNomeArquivoFoto().toLowerCase();
+                        if (fileName.endsWith(".jpg") || fileName.endsWith(".jpeg")) {
+                            contentType = MediaType.IMAGE_JPEG_VALUE;
+                        } else if (fileName.endsWith(".png")) {
+                            contentType = MediaType.IMAGE_PNG_VALUE;
+                        } else if (fileName.endsWith(".gif")) {
+                            contentType = MediaType.IMAGE_GIF_VALUE;
+                        }
+                    }
+                    
+                    HttpHeaders headers = new HttpHeaders();
+                    headers.setContentType(MediaType.parseMediaType(contentType));
+                    headers.setContentLength(bateria.getFoto().length);
+                    
+                    return new ResponseEntity<>(bateria.getFoto(), headers, HttpStatus.OK);
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

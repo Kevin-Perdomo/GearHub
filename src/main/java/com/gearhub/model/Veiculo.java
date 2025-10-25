@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,7 @@ public class Veiculo {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SEDE_ID", nullable = false)
+    @ToString.Exclude
     private Sede sede;
 
     @Column(name = "DESCRICAO", columnDefinition = "TEXT")
@@ -53,17 +55,22 @@ public class Veiculo {
     private String nomeArquivoFoto;
 
     @OneToOne(mappedBy = "veiculo", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
     private Autonomia autonomia;
 
     @OneToMany(mappedBy = "veiculo", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
     private List<Documento> documentos = new ArrayList<>();
 
     @OneToMany(mappedBy = "veiculo", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
     private List<Bateria> baterias = new ArrayList<>();
 
     @OneToMany(mappedBy = "veiculo", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
     private List<Pneu> pneus = new ArrayList<>();
 
     @OneToMany(mappedBy = "veiculo", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
     private List<Oleo> oleos = new ArrayList<>();
 }

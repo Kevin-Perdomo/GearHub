@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,8 +41,10 @@ public class Sede {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "EMPRESA_ID", nullable = false)
+    @ToString.Exclude
     private Empresa empresa;
 
     @OneToMany(mappedBy = "sede", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
     private List<Veiculo> veiculos = new ArrayList<>();
 }

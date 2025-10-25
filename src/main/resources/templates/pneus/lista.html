@@ -116,21 +116,28 @@
                 <td class="px-6 py-4">
                   <div class="flex justify-center gap-2">
                     <a
+                      th:href="@{/veiculos/{id}(id=${pneu.veiculo.id})}"
+                      class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded transition-colors text-center"
+                      title="Ver Veículo"
+                    >
+                      Veículo
+                    </a>
+                    <a
                       th:href="@{/pneus/{id}(id=${pneu.id})}"
-                      class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors"
+                      class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded transition-colors text-center"
                     >
                       Ver
                     </a>
                     <a
                       th:href="@{/pneus/{id}/editar(id=${pneu.id})}"
-                      class="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded transition-colors"
+                      class="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-6 rounded transition-colors text-center"
                     >
                       Editar
                     </a>
                     <a
                       th:href="@{/pneus/{id}/excluir(id=${pneu.id})}"
                       onclick="return confirm('Tem certeza que deseja excluir este pneu?')"
-                      class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition-colors"
+                      class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded transition-colors text-center"
                     >
                       Excluir
                     </a>

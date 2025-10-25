@@ -150,16 +150,10 @@
           th:if="${veiculo.autonomia != null}"
           class="bg-[#1a2733] rounded-lg border-2 border-[#3b4f5f] p-8 mb-6"
         >
-          <div class="flex justify-between items-center mb-6">
+          <div class="mb-6">
             <h2 class="text-white text-2xl font-bold">
               Autonomia e Combustível
             </h2>
-            <a
-              th:href="@{/autonomia/{id}/editar(id=${veiculo.autonomia.id})}"
-              class="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-lg transition-colors"
-            >
-              Editar
-            </a>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div>

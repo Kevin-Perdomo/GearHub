@@ -48,20 +48,30 @@ public class DocumentoController {
     }
 
     @GetMapping("/{id}")
-    public String detalhes(@PathVariable Long id, Model model) {
-        Documento documento = documentoRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Documento não encontrado"));
-        model.addAttribute("documento", documento);
-        return "documentos/detalhes";
+    public String detalhes(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
+        return documentoRepository.findById(id)
+                .map(documento -> {
+                    model.addAttribute("documento", documento);
+                    return "documentos/detalhes";
+                })
+                .orElseGet(() -> {
+                    redirectAttributes.addFlashAttribute("erro", "Documento não encontrado");
+                    return "redirect:/documentos";
+                });
     }
 
     @GetMapping("/{id}/editar")
-    public String editar(@PathVariable Long id, Model model) {
-        Documento documento = documentoRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Documento não encontrado"));
-        model.addAttribute("documento", documento);
-        model.addAttribute("veiculos", veiculoRepository.findAll());
-        return "documentos/form";
+    public String editar(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
+        return documentoRepository.findById(id)
+                .map(documento -> {
+                    model.addAttribute("documento", documento);
+                    model.addAttribute("veiculos", veiculoRepository.findAll());
+                    return "documentos/form";
+                })
+                .orElseGet(() -> {
+                    redirectAttributes.addFlashAttribute("erro", "Documento não encontrado");
+                    return "redirect:/documentos";
+                });
     }
 
     @PostMapping

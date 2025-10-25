@@ -97,20 +97,20 @@
                   <div class="flex justify-center gap-2">
                     <a
                       th:href="@{/empresas/{id}(id=${empresa.id})}"
-                      class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors"
+                      class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded transition-colors w-24 text-center"
                     >
                       Ver
                     </a>
                     <a
                       th:href="@{/empresas/{id}/editar(id=${empresa.id})}"
-                      class="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded transition-colors"
+                      class="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-6 rounded transition-colors w-24 text-center"
                     >
                       Editar
                     </a>
                     <a
                       th:href="@{/empresas/{id}/excluir(id=${empresa.id})}"
                       onclick="return confirm('Tem certeza que deseja excluir esta empresa?')"
-                      class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition-colors"
+                      class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded transition-colors w-24 text-center"
                     >
                       Excluir
                     </a>

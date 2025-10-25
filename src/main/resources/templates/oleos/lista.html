@@ -108,31 +108,29 @@
                     >
                   </td>
                   <td class="p-4">
-                    <div class="flex gap-2">
+                    <div class="flex gap-2 justify-center">
+                      <a
+                        th:href="@{/veiculos/{id}(id=${oleo.veiculo.id})}"
+                        class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded transition-colors text-center"
+                        title="Ver Veículo"
+                        >Veículo</a
+                      >
                       <a
                         th:href="@{/oleos/{id}(id=${oleo.id})}"
-                        class="bg-[#1565c0] hover:bg-[#0d47a1] text-white font-bold py-2 px-4 rounded-lg transition-colors"
+                        class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded transition-colors text-center"
                         >Ver</a
                       >
                       <a
-                        th:href="@{/oleos/editar/{id}(id=${oleo.id})}"
-                        class="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-lg transition-colors"
+                        th:href="@{/oleos/{id}/editar(id=${oleo.id})}"
+                        class="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-6 rounded transition-colors text-center"
                         >Editar</a
                       >
-                      <form
-                        th:action="@{/oleos/{id}(id=${oleo.id})}"
-                        method="post"
-                        style="display: inline"
-                        onsubmit="return confirm('Tem certeza que deseja excluir esta troca de óleo?');"
+                      <a
+                        th:href="@{/oleos/{id}/excluir(id=${oleo.id})}"
+                        onclick="return confirm('Tem certeza que deseja excluir esta troca de óleo?')"
+                        class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded transition-colors text-center"
+                        >Excluir</a
                       >
-                        <input type="hidden" name="_method" value="delete" />
-                        <button
-                          type="submit"
-                          class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition-colors"
-                        >
-                          Excluir
-                        </button>
-                      </form>
                     </div>
                   </td>
                 </tr>

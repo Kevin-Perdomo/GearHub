@@ -105,20 +105,20 @@
                   <div class="flex justify-center gap-2">
                     <a
                       th:href="@{/veiculos/{id}(id=${veiculo.id})}"
-                      class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors"
+                      class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded transition-colors w-24 text-center"
                     >
                       Ver
                     </a>
                     <a
                       th:href="@{/veiculos/{id}/editar(id=${veiculo.id})}"
-                      class="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded transition-colors"
+                      class="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-6 rounded transition-colors w-24 text-center"
                     >
                       Editar
                     </a>
                     <a
                       th:href="@{/veiculos/{id}/excluir(id=${veiculo.id})}"
                       onclick="return confirm('Tem certeza que deseja excluir este veículo?')"
-                      class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition-colors"
+                      class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded transition-colors w-24 text-center"
                     >
                       Excluir
                     </a>

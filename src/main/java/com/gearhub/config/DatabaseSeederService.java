@@ -53,52 +53,88 @@ public class DatabaseSeederService {
         Veiculo v1_1_1 = criarVeiculo("Fiat", "Fiorino", "ABC-1234", 2020, sede1_1);
         criarAutonomia(v1_1_1, "Gasolina", 50.0, 5.0);
         criarDocumentos(v1_1_1);
+        criarBateria(v1_1_1);
+        criarPneus(v1_1_1);
+        criarOleo(v1_1_1);
         
         Veiculo v1_1_2 = criarVeiculo("Volkswagen", "Saveiro", "ABC-1235", 2021, sede1_1);
         criarAutonomia(v1_1_2, "Flex", 55.0, 6.0);
         criarDocumentos(v1_1_2);
+        criarBateria(v1_1_2);
+        criarPneus(v1_1_2);
+        criarOleo(v1_1_2);
         
         Veiculo v1_1_3 = criarVeiculo("Chevrolet", "Montana", "ABC-1236", 2022, sede1_1);
         criarAutonomia(v1_1_3, "Flex", 54.0, 5.5);
         criarDocumentos(v1_1_3);
+        criarBateria(v1_1_3);
+        criarPneus(v1_1_3);
+        criarOleo(v1_1_3);
         
         Veiculo v1_1_4 = criarVeiculo("Ford", "Courier", "ABC-1237", 2020, sede1_1);
         criarAutonomia(v1_1_4, "Flex", 52.0, 5.0);
         criarDocumentos(v1_1_4);
+        criarBateria(v1_1_4);
+        criarPneus(v1_1_4);
+        criarOleo(v1_1_4);
 
         // Veículos da Sede 1.2 (RJ)
         Veiculo v1_2_1 = criarVeiculo("Mercedes-Benz", "Sprinter", "DEF-5678", 2022, sede1_2);
         criarAutonomia(v1_2_1, "Diesel", 75.0, 8.0);
         criarDocumentos(v1_2_1);
+        criarBateria(v1_2_1);
+        criarPneus(v1_2_1);
+        criarOleo(v1_2_1);
         
         Veiculo v1_2_2 = criarVeiculo("Renault", "Master", "DEF-5679", 2021, sede1_2);
         criarAutonomia(v1_2_2, "Diesel", 90.0, 10.0);
         criarDocumentos(v1_2_2);
+        criarBateria(v1_2_2);
+        criarPneus(v1_2_2);
+        criarOleo(v1_2_2);
         
         Veiculo v1_2_3 = criarVeiculo("Iveco", "Daily", "DEF-5680", 2023, sede1_2);
         criarAutonomia(v1_2_3, "Diesel", 80.0, 9.0);
         criarDocumentos(v1_2_3);
+        criarBateria(v1_2_3);
+        criarPneus(v1_2_3);
+        criarOleo(v1_2_3);
         
         Veiculo v1_2_4 = criarVeiculo("Peugeot", "Boxer", "DEF-5681", 2022, sede1_2);
         criarAutonomia(v1_2_4, "Diesel", 85.0, 8.5);
         criarDocumentos(v1_2_4);
+        criarBateria(v1_2_4);
+        criarPneus(v1_2_4);
+        criarOleo(v1_2_4);
 
         // Veículos da Sede 1.3 (BH)
         Veiculo v1_3_1 = criarVeiculo("Fiat", "Ducato", "GHI-9012", 2021, sede1_3);
         criarAutonomia(v1_3_1, "Diesel", 90.0, 10.0);
         criarDocumentos(v1_3_1);
+        criarBateria(v1_3_1);
+        criarPneus(v1_3_1);
+        criarOleo(v1_3_1);
         
         Veiculo v1_3_2 = criarVeiculo("Citroën", "Jumper", "GHI-9013", 2022, sede1_3);
         criarAutonomia(v1_3_2, "Diesel", 88.0, 9.5);
         criarDocumentos(v1_3_2);
+        criarBateria(v1_3_2);
+        criarPneus(v1_3_2);
+        criarOleo(v1_3_2);
         
         Veiculo v1_3_3 = criarVeiculo("Volkswagen", "Delivery", "GHI-9014", 2020, sede1_3);
         criarAutonomia(v1_3_3, "Diesel", 100.0, 12.0);
         criarDocumentos(v1_3_3);
+        criarBateria(v1_3_3);
+        criarPneus(v1_3_3);
+        criarOleo(v1_3_3);
         
         Veiculo v1_3_4 = criarVeiculo("Ford", "Transit", "GHI-9015", 2023, sede1_3);
         criarAutonomia(v1_3_4, "Diesel", 80.0, 8.0);
         criarDocumentos(v1_3_4);
+        criarBateria(v1_3_4);
+        criarPneus(v1_3_4);
+        criarOleo(v1_3_4);
 
         // ========== EMPRESA 2 ==========
         Empresa empresa2 = new Empresa();
@@ -118,56 +154,92 @@ public class DatabaseSeederService {
         Veiculo v2_1_1 = criarVeiculo("Hyundai", "HR", "JKL-3456", 2022, sede2_1);
         criarAutonomia(v2_1_1, "Diesel", 60.0, 7.0);
         criarDocumentos(v2_1_1);
+        criarBateria(v2_1_1);
+        criarPneus(v2_1_1);
+        criarOleo(v2_1_1);
         
         Veiculo v2_1_2 = criarVeiculo("JAC", "X200", "JKL-3457", 2021, sede2_1);
         criarAutonomia(v2_1_2, "Diesel", 65.0, 7.5);
         criarDocumentos(v2_1_2);
+        criarBateria(v2_1_2);
+        criarPneus(v2_1_2);
+        criarOleo(v2_1_2);
         
         Veiculo v2_1_3 = criarVeiculo("Kia", "Bongo", "JKL-3458", 2023, sede2_1);
         criarAutonomia(v2_1_3, "Diesel", 62.0, 7.0);
         criarDocumentos(v2_1_3);
+        criarBateria(v2_1_3);
+        criarPneus(v2_1_3);
+        criarOleo(v2_1_3);
         
         Veiculo v2_1_4 = criarVeiculo("Toyota", "Hilux", "JKL-3459", 2022, sede2_1);
         criarAutonomia(v2_1_4, "Diesel", 80.0, 9.0);
         criarDocumentos(v2_1_4);
+        criarBateria(v2_1_4);
+        criarPneus(v2_1_4);
+        criarOleo(v2_1_4);
 
         // Veículos da Sede 2.2 (Porto Alegre)
         Veiculo v2_2_1 = criarVeiculo("Volkswagen", "Amarok", "MNO-7890", 2023, sede2_2);
         criarAutonomia(v2_2_1, "Diesel", 80.0, 8.0);
         criarDocumentos(v2_2_1);
+        criarBateria(v2_2_1);
+        criarPneus(v2_2_1);
+        criarOleo(v2_2_1);
         
         Veiculo v2_2_2 = criarVeiculo("Nissan", "Frontier", "MNO-7891", 2022, sede2_2);
         criarAutonomia(v2_2_2, "Diesel", 80.0, 8.5);
         criarDocumentos(v2_2_2);
+        criarBateria(v2_2_2);
+        criarPneus(v2_2_2);
+        criarOleo(v2_2_2);
         
         Veiculo v2_2_3 = criarVeiculo("Mitsubishi", "L200", "MNO-7892", 2021, sede2_2);
         criarAutonomia(v2_2_3, "Diesel", 75.0, 8.0);
         criarDocumentos(v2_2_3);
+        criarBateria(v2_2_3);
+        criarPneus(v2_2_3);
+        criarOleo(v2_2_3);
         
         Veiculo v2_2_4 = criarVeiculo("Chevrolet", "S10", "MNO-7893", 2023, sede2_2);
         criarAutonomia(v2_2_4, "Diesel", 76.0, 8.2);
         criarDocumentos(v2_2_4);
+        criarBateria(v2_2_4);
+        criarPneus(v2_2_4);
+        criarOleo(v2_2_4);
 
         // Veículos da Sede 2.3 (Florianópolis)
         Veiculo v2_3_1 = criarVeiculo("Ram", "2500", "PQR-2468", 2023, sede2_3);
         criarAutonomia(v2_3_1, "Diesel", 100.0, 12.0);
         criarDocumentos(v2_3_1);
+        criarBateria(v2_3_1);
+        criarPneus(v2_3_1);
+        criarOleo(v2_3_1);
         
         Veiculo v2_3_2 = criarVeiculo("Ford", "Ranger", "PQR-2469", 2022, sede2_3);
         criarAutonomia(v2_3_2, "Diesel", 80.0, 9.0);
         criarDocumentos(v2_3_2);
+        criarBateria(v2_3_2);
+        criarPneus(v2_3_2);
+        criarOleo(v2_3_2);
         
         Veiculo v2_3_3 = criarVeiculo("Fiat", "Toro", "PQR-2470", 2023, sede2_3);
         criarAutonomia(v2_3_3, "Diesel", 60.0, 7.0);
         criarDocumentos(v2_3_3);
+        criarBateria(v2_3_3);
+        criarPneus(v2_3_3);
+        criarOleo(v2_3_3);
         
         Veiculo v2_3_4 = criarVeiculo("Jeep", "Gladiator", "PQR-2471", 2023, sede2_3);
         criarAutonomia(v2_3_4, "Diesel", 85.0, 9.5);
         criarDocumentos(v2_3_4);
+        criarBateria(v2_3_4);
+        criarPneus(v2_3_4);
+        criarOleo(v2_3_4);
 
         log.info("Seed do banco de dados concluído com sucesso!");
         
-        return "Seed executado com sucesso! 2 Empresas, 6 Sedes, 24 Veículos, 24 Autonomias e 96 Documentos criados.";
+        return "Seed executado com sucesso! 2 Empresas, 6 Sedes, 24 Veículos, 24 Autonomias, 96 Documentos, 24 Baterias, 72 Pneus e 24 Óleos criados.";
     }
 
     private Sede criarSede(String nome, String endereco, Empresa empresa) {
@@ -255,6 +327,55 @@ public class DatabaseSeederService {
         documentoRepository.save(manual);
 
         log.info("4 Documentos criados para veículo: {} (IPVA, CRLV, SEGURO, MANUAL)", veiculo.getPlaca());
+    }
+
+    private void criarBateria(Veiculo veiculo) {
+        Bateria bateria = new Bateria();
+        bateria.setVeiculo(veiculo);
+        bateria.setMarca("Moura");
+        bateria.setModelo("M60GD");
+        bateria.setVoltagem("12V");
+        bateria.setCapacidadeAh("60Ah");
+        bateria.setDataInstalacao(LocalDate.now().minusMonths(6));
+        bateria.setKmInstalacao(140000);
+        bateria.setFimGarantia(LocalDate.now().plusYears(2));
+        bateria.setFoto(gerarImagemExemplo());
+        bateria.setNomeArquivoFoto("bateria-" + veiculo.getPlaca().toLowerCase().replace("-", "") + ".png");
+        bateriaRepository.save(bateria);
+        log.info("Bateria criada para veículo: {}", veiculo.getPlaca());
+    }
+
+    private void criarPneus(Veiculo veiculo) {
+        String[] posicoes = {"Dianteiro", "Traseiro", "Estepe"};
+        
+        for (String posicao : posicoes) {
+            Pneu pneu = new Pneu();
+            pneu.setVeiculo(veiculo);
+            pneu.setPosicao(posicao);
+            pneu.setMarca("Michelin");
+            pneu.setModelo("LTX Force");
+            pneu.setMedida("215/75R16");
+            pneu.setDataInstalacao(LocalDate.now().minusMonths(3));
+            pneu.setKmInstalacao(130000);
+            pneu.setFoto(gerarImagemExemplo());
+            pneu.setNomeArquivoFoto("pneu-" + posicao.toLowerCase() + "-" + veiculo.getPlaca().toLowerCase().replace("-", "") + ".png");
+            pneuRepository.save(pneu);
+        }
+        log.info("3 Pneus criados para veículo: {} (Dianteiro, Traseiro, Estepe)", veiculo.getPlaca());
+    }
+
+    private void criarOleo(Veiculo veiculo) {
+        Oleo oleo = new Oleo();
+        oleo.setVeiculo(veiculo);
+        oleo.setTipoOleo("10W-40 Semissintético");
+        oleo.setQuantidadeLitros(4.5);
+        oleo.setDataTroca(LocalDate.now().minusMonths(2));
+        oleo.setQuilometragem(145000);
+        oleo.setTrocouFiltro(true);
+        oleo.setFoto(gerarImagemExemplo());
+        oleo.setNomeArquivoFoto("oleo-" + veiculo.getPlaca().toLowerCase().replace("-", "") + ".png");
+        oleoRepository.save(oleo);
+        log.info("Óleo criado para veículo: {}", veiculo.getPlaca());
     }
 
     @Transactional

@@ -47,20 +47,30 @@ public class OleoController {
     }
 
     @GetMapping("/{id}")
-    public String detalhes(@PathVariable Long id, Model model) {
-        Oleo oleo = oleoRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Óleo não encontrado"));
-        model.addAttribute("oleo", oleo);
-        return "oleos/detalhes";
+    public String detalhes(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
+        return oleoRepository.findById(id)
+                .map(oleo -> {
+                    model.addAttribute("oleo", oleo);
+                    return "oleos/detalhes";
+                })
+                .orElseGet(() -> {
+                    redirectAttributes.addFlashAttribute("erro", "Óleo não encontrado");
+                    return "redirect:/oleos";
+                });
     }
 
     @GetMapping("/{id}/editar")
-    public String editar(@PathVariable Long id, Model model) {
-        Oleo oleo = oleoRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Óleo não encontrado"));
-        model.addAttribute("oleo", oleo);
-        model.addAttribute("veiculos", veiculoRepository.findAll());
-        return "oleos/form";
+    public String editar(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
+        return oleoRepository.findById(id)
+                .map(oleo -> {
+                    model.addAttribute("oleo", oleo);
+                    model.addAttribute("veiculos", veiculoRepository.findAll());
+                    return "oleos/form";
+                })
+                .orElseGet(() -> {
+                    redirectAttributes.addFlashAttribute("erro", "Óleo não encontrado");
+                    return "redirect:/oleos";
+                });
     }
 
     @PostMapping
@@ -103,30 +113,31 @@ public class OleoController {
 
     @GetMapping("/{id}/foto")
     public ResponseEntity<byte[]> getFoto(@PathVariable Long id) {
-        Oleo oleo = oleoRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Óleo não encontrado"));
-        
-        if (oleo.getFoto() == null) {
-            return ResponseEntity.notFound().build();
-        }
-        
-        // Determinar tipo de conteúdo baseado no nome do arquivo
-        String contentType = MediaType.IMAGE_PNG_VALUE; // padrão
-        if (oleo.getNomeArquivoFoto() != null) {
-            String fileName = oleo.getNomeArquivoFoto().toLowerCase();
-            if (fileName.endsWith(".jpg") || fileName.endsWith(".jpeg")) {
-                contentType = MediaType.IMAGE_JPEG_VALUE;
-            } else if (fileName.endsWith(".png")) {
-                contentType = MediaType.IMAGE_PNG_VALUE;
-            } else if (fileName.endsWith(".gif")) {
-                contentType = MediaType.IMAGE_GIF_VALUE;
-            }
-        }
-        
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.parseMediaType(contentType));
-        headers.setContentLength(oleo.getFoto().length);
-        
-        return new ResponseEntity<>(oleo.getFoto(), headers, HttpStatus.OK);
+        return oleoRepository.findById(id)
+                .map(oleo -> {
+                    if (oleo.getFoto() == null) {
+                        return ResponseEntity.notFound().<byte[]>build();
+                    }
+                    
+                    // Determinar tipo de conteúdo baseado no nome do arquivo
+                    String contentType = MediaType.IMAGE_PNG_VALUE; // padrão
+                    if (oleo.getNomeArquivoFoto() != null) {
+                        String fileName = oleo.getNomeArquivoFoto().toLowerCase();
+                        if (fileName.endsWith(".jpg") || fileName.endsWith(".jpeg")) {
+                            contentType = MediaType.IMAGE_JPEG_VALUE;
+                        } else if (fileName.endsWith(".png")) {
+                            contentType = MediaType.IMAGE_PNG_VALUE;
+                        } else if (fileName.endsWith(".gif")) {
+                            contentType = MediaType.IMAGE_GIF_VALUE;
+                        }
+                    }
+                    
+                    HttpHeaders headers = new HttpHeaders();
+                    headers.setContentType(MediaType.parseMediaType(contentType));
+                    headers.setContentLength(oleo.getFoto().length);
+                    
+                    return new ResponseEntity<>(oleo.getFoto(), headers, HttpStatus.OK);
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }
