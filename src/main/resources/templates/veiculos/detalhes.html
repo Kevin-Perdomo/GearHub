@@ -10,15 +10,13 @@
   <body>
     <main>
       <div class="px-10 md:px-20 lg:px-40 py-10">
+        <!-- Header -->
         <div class="flex justify-between items-center mb-8">
           <div>
             <h1 class="text-white text-4xl font-black mb-2">
-              Detalhes do Veículo
+              <span th:text="${veiculo.marca + ' ' + veiculo.modelo}"></span>
             </h1>
-            <p
-              class="text-[#93adc8]"
-              th:text="${veiculo.marca + ' ' + veiculo.modelo + ' - ' + veiculo.placa}"
-            ></p>
+            <p class="text-[#93adc8] text-lg" th:text="${veiculo.placa}"></p>
           </div>
           <div class="flex gap-2">
             <a
@@ -36,6 +34,62 @@
           </div>
         </div>
 
+        <!-- Menu Horizontal - Navegação das 5 Tabelas -->
+        <div class="bg-[#1a2733] rounded-lg border-2 border-[#3b4f5f] p-2 mb-6">
+          <div class="flex flex-wrap gap-2">
+            <a
+              th:href="@{/veiculos/{id}(id=${veiculo.id})}"
+              class="flex-1 min-w-[150px] bg-[#1565c0] text-white font-bold py-3 px-4 rounded-lg text-center transition-colors"
+            >
+              📊 Overview
+            </a>
+            <a
+              th:href="@{/autonomia(veiculoId=${veiculo.id})}"
+              class="flex-1 min-w-[150px] bg-[#0f1b24] hover:bg-[#223649] text-white font-bold py-3 px-4 rounded-lg text-center transition-colors"
+            >
+              ⛽ Autonomia
+            </a>
+            <a
+              th:href="@{/documentos(veiculoId=${veiculo.id})}"
+              class="flex-1 min-w-[150px] bg-[#0f1b24] hover:bg-[#223649] text-white font-bold py-3 px-4 rounded-lg text-center transition-colors"
+            >
+              📄 Documentos
+            </a>
+            <a
+              th:href="@{/baterias(veiculoId=${veiculo.id})}"
+              class="flex-1 min-w-[150px] bg-[#0f1b24] hover:bg-[#223649] text-white font-bold py-3 px-4 rounded-lg text-center transition-colors"
+            >
+              🔋 Baterias
+            </a>
+            <a
+              th:href="@{/pneus(veiculoId=${veiculo.id})}"
+              class="flex-1 min-w-[150px] bg-[#0f1b24] hover:bg-[#223649] text-white font-bold py-3 px-4 rounded-lg text-center transition-colors"
+            >
+              🛞 Pneus
+            </a>
+            <a
+              th:href="@{/oleos(veiculoId=${veiculo.id})}"
+              class="flex-1 min-w-[150px] bg-[#0f1b24] hover:bg-[#223649] text-white font-bold py-3 px-4 rounded-lg text-center transition-colors"
+            >
+              🛢️ Óleos
+            </a>
+          </div>
+        </div>
+
+        <!-- Foto do Veículo (se existir) -->
+        <div
+          th:if="${veiculo.foto != null}"
+          class="bg-[#1a2733] rounded-lg border-2 border-[#3b4f5f] p-8 mb-6"
+        >
+          <h2 class="text-white text-2xl font-bold mb-4">Foto do Veículo</h2>
+          <img
+            th:src="@{/veiculos/{id}/foto(id=${veiculo.id})}"
+            th:alt="${veiculo.marca + ' ' + veiculo.modelo}"
+            class="max-w-md rounded-lg border-2 border-[#3b4f5f]"
+          />
+        </div>
+
+        <!-- Informações Gerais -->
         <div class="bg-[#1a2733] rounded-lg border-2 border-[#3b4f5f] p-8 mb-6">
           <h2 class="text-white text-2xl font-bold mb-6">Informações Gerais</h2>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -68,106 +122,135 @@
               ></p>
             </div>
             <div>
-              <p class="text-[#93adc8] text-sm mb-1">Combustível</p>
-              <p
-                class="text-white text-lg font-bold"
-                th:text="${veiculo.combustivelRecomendado}"
-              ></p>
-            </div>
-            <div>
               <p class="text-[#93adc8] text-sm mb-1">Sede</p>
               <p
                 class="text-white text-lg font-bold"
-                th:text="${veiculo.sede?.nome ?: 'Não informado'}"
+                th:text="${veiculo.sede?.nome ?: 'Não informada'}"
+              ></p>
+            </div>
+            <div>
+              <p class="text-[#93adc8] text-sm mb-1">Empresa</p>
+              <p
+                class="text-white text-lg font-bold"
+                th:text="${veiculo.sede?.empresa?.nome ?: 'Não informada'}"
+              ></p>
+            </div>
+          </div>
+          <div
+            th:if="${veiculo.descricao != null and !veiculo.descricao.isEmpty()}"
+            class="mt-6"
+          >
+            <p class="text-[#93adc8] text-sm mb-1">Descrição</p>
+            <p class="text-white" th:text="${veiculo.descricao}"></p>
+          </div>
+        </div>
+
+        <!-- Autonomia (se existir) -->
+        <div
+          th:if="${veiculo.autonomia != null}"
+          class="bg-[#1a2733] rounded-lg border-2 border-[#3b4f5f] p-8 mb-6"
+        >
+          <div class="flex justify-between items-center mb-6">
+            <h2 class="text-white text-2xl font-bold">
+              Autonomia e Combustível
+            </h2>
+            <a
+              th:href="@{/autonomia/{id}/editar(id=${veiculo.autonomia.id})}"
+              class="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-lg transition-colors"
+            >
+              Editar
+            </a>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div>
+              <p class="text-[#93adc8] text-sm mb-1">Combustível Recomendado</p>
+              <p
+                class="text-white text-lg font-bold"
+                th:text="${veiculo.autonomia.combustivelRecomendado}"
               ></p>
             </div>
             <div>
               <p class="text-[#93adc8] text-sm mb-1">Capacidade do Tanque</p>
               <p
                 class="text-white text-lg font-bold"
-                th:text="${veiculo.capacidadeTanqueLitros + ' L'}"
+                th:text="${veiculo.autonomia.capacidadeTanqueLitros + ' L'}"
               ></p>
             </div>
             <div>
               <p class="text-[#93adc8] text-sm mb-1">Capacidade da Reserva</p>
               <p
                 class="text-white text-lg font-bold"
-                th:text="${veiculo.capacidadeReservaLitros + ' L'}"
+                th:text="${veiculo.autonomia.capacidadeReservaLitros + ' L'}"
               ></p>
             </div>
           </div>
         </div>
 
-        <div class="bg-[#1a2733] rounded-lg border-2 border-[#3b4f5f] p-8">
-          <div class="flex justify-between items-center mb-6">
-            <h2 class="text-white text-2xl font-bold">Documentos</h2>
-            <a
-              th:href="@{/documentos-veiculo/novo(veiculoId=${veiculo.id})}"
-              class="bg-[#1565c0] hover:bg-[#0d47a1] text-white font-bold py-2 px-4 rounded-lg transition-colors"
+        <!-- Resumo Rápido das 4 Tabelas -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Card Documentos -->
+          <a th:href="@{/documentos(veiculoId=${veiculo.id})}" class="group">
+            <div
+              class="bg-[#1a2733] rounded-lg border-2 border-[#3b4f5f] p-6 hover:border-[#1565c0] transition-all"
             >
-              + Adicionar Documento
-            </a>
-          </div>
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="text-white text-xl font-bold">📄 Documentos</h3>
+                <span
+                  class="text-[#1565c0] text-2xl font-black"
+                  th:text="${#lists.size(veiculo.documentos)}"
+                ></span>
+              </div>
+              <p class="text-[#93adc8] text-sm">Ver todos os documentos →</p>
+            </div>
+          </a>
 
-          <div
-            th:if="${veiculo.documentosVeiculo != null and !veiculo.documentosVeiculo.isEmpty()}"
-          >
-            <table class="w-full text-white">
-              <thead>
-                <tr class="border-b border-[#3b4f5f]">
-                  <th class="text-left py-3 px-4">Tipo</th>
-                  <th class="text-left py-3 px-4">Ano</th>
-                  <th class="text-left py-3 px-4">Status</th>
-                  <th class="text-left py-3 px-4">Data Pagamento</th>
-                  <th class="text-center py-3 px-4">Ações</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  th:each="doc : ${veiculo.documentosVeiculo}"
-                  class="border-b border-[#3b4f5f] hover:bg-[#223649]"
-                >
-                  <td class="py-3 px-4" th:text="${doc.tipoDocumento}"></td>
-                  <td class="py-3 px-4" th:text="${doc.anoReferencia}"></td>
-                  <td class="py-3 px-4">
-                    <span
-                      th:class="${doc.status == 'Pago' ? 'bg-green-600' : 'bg-red-600'}"
-                      class="px-2 py-1 rounded text-sm"
-                      th:text="${doc.status}"
-                    ></span>
-                  </td>
-                  <td
-                    class="py-3 px-4"
-                    th:text="${doc.dataPagamento != null ? #temporals.format(doc.dataPagamento, 'dd/MM/yyyy') : '-'}"
-                  ></td>
-                  <td class="py-3 px-4 text-center">
-                    <a
-                      th:href="@{/documentos-veiculo/{id}(id=${doc.id})}"
-                      class="text-[#1565c0] hover:text-[#0d47a1] mr-3"
-                      >Ver</a
-                    >
-                    <a
-                      th:href="@{/documentos-veiculo/{id}/editar(id=${doc.id})}"
-                      class="text-yellow-500 hover:text-yellow-600"
-                      >Editar</a
-                    >
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <div
-            th:if="${veiculo.documentosVeiculo == null or veiculo.documentosVeiculo.isEmpty()}"
-            class="text-center py-8"
-          >
-            <p class="text-[#93adc8] mb-4">Nenhum documento cadastrado.</p>
-            <a
-              th:href="@{/documentos-veiculo/novo(veiculoId=${veiculo.id})}"
-              class="text-[#1565c0] hover:text-[#0d47a1]"
-              >Adicionar primeiro documento</a
+          <!-- Card Baterias -->
+          <a th:href="@{/baterias(veiculoId=${veiculo.id})}" class="group">
+            <div
+              class="bg-[#1a2733] rounded-lg border-2 border-[#3b4f5f] p-6 hover:border-[#1565c0] transition-all"
             >
-          </div>
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="text-white text-xl font-bold">🔋 Baterias</h3>
+                <span
+                  class="text-[#1565c0] text-2xl font-black"
+                  th:text="${#lists.size(veiculo.baterias)}"
+                ></span>
+              </div>
+              <p class="text-[#93adc8] text-sm">Ver histórico de baterias →</p>
+            </div>
+          </a>
+
+          <!-- Card Pneus -->
+          <a th:href="@{/pneus(veiculoId=${veiculo.id})}" class="group">
+            <div
+              class="bg-[#1a2733] rounded-lg border-2 border-[#3b4f5f] p-6 hover:border-[#1565c0] transition-all"
+            >
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="text-white text-xl font-bold">🛞 Pneus</h3>
+                <span
+                  class="text-[#1565c0] text-2xl font-black"
+                  th:text="${#lists.size(veiculo.pneus)}"
+                ></span>
+              </div>
+              <p class="text-[#93adc8] text-sm">Ver histórico de pneus →</p>
+            </div>
+          </a>
+
+          <!-- Card Óleos -->
+          <a th:href="@{/oleos(veiculoId=${veiculo.id})}" class="group">
+            <div
+              class="bg-[#1a2733] rounded-lg border-2 border-[#3b4f5f] p-6 hover:border-[#1565c0] transition-all"
+            >
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="text-white text-xl font-bold">🛢️ Trocas de Óleo</h3>
+                <span
+                  class="text-[#1565c0] text-2xl font-black"
+                  th:text="${#lists.size(veiculo.oleos)}"
+                ></span>
+              </div>
+              <p class="text-[#93adc8] text-sm">Ver histórico de trocas →</p>
+            </div>
+          </a>
         </div>
       </div>
     </main>

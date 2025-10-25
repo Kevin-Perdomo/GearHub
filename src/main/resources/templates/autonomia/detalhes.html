@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{layouts/main :: layout(~{::title}, ~{::content})}"
+>
+  <head>
+    <title>Detalhes da Autonomia</title>
+  </head>
+  <body>
+    <div th:fragment="content">
+      <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-6">
+          <div>
+            <h1 class="text-3xl font-bold text-white mb-2">
+              Detalhes da Autonomia
+            </h1>
+            <p class="text-gray-400">
+              Veículo: <span th:text="${autonomia.veiculo.marca}"></span>
+              <span th:text="${autonomia.veiculo.modelo}"></span>
+            </p>
+          </div>
+          <div class="space-x-2">
+            <a
+              th:href="@{/autonomia/{id}/editar(id=${autonomia.id})}"
+              class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
+            >
+              ✏️ Editar
+            </a>
+            <a
+              th:href="@{/autonomia}"
+              class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded"
+            >
+              ← Voltar
+            </a>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Informações de Combustível -->
+          <div class="bg-[#1a2733] rounded-lg p-6">
+            <h2 class="text-xl font-bold text-white mb-4">⛽ Combustível</h2>
+            <div class="space-y-4">
+              <div>
+                <label class="text-gray-400 text-sm"
+                  >Combustível Recomendado:</label
+                >
+                <p
+                  class="text-white font-medium text-lg"
+                  th:text="${autonomia.combustivelRecomendado}"
+                ></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Capacidades -->
+          <div class="bg-[#1a2733] rounded-lg p-6">
+            <h2 class="text-xl font-bold text-white mb-4">📊 Capacidades</h2>
+            <div class="space-y-4">
+              <div>
+                <label class="text-gray-400 text-sm"
+                  >Capacidade do Tanque:</label
+                >
+                <p class="text-white font-medium text-lg">
+                  <span th:text="${autonomia.capacidadeTanqueLitros}"></span> L
+                </p>
+              </div>
+              <div>
+                <label class="text-gray-400 text-sm"
+                  >Capacidade da Reserva:</label
+                >
+                <p class="text-white font-medium text-lg">
+                  <span th:text="${autonomia.capacidadeReservaLitros}"></span> L
+                </p>
+              </div>
+              <div class="pt-4 border-t border-gray-700">
+                <label class="text-gray-400 text-sm">Capacidade Útil:</label>
+                <p class="text-green-400 font-bold text-xl">
+                  <span
+                    th:text="${autonomia.capacidadeTanqueLitros - autonomia.capacidadeReservaLitros}"
+                  ></span>
+                  L
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Informações do Veículo -->
+          <div class="bg-[#1a2733] rounded-lg p-6 md:col-span-2">
+            <h2 class="text-xl font-bold text-white mb-4">🚗 Veículo</h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <div>
+                <label class="text-gray-400 text-sm">Marca:</label>
+                <p
+                  class="text-white font-medium"
+                  th:text="${autonomia.veiculo.marca}"
+                ></p>
+              </div>
+              <div>
+                <label class="text-gray-400 text-sm">Modelo:</label>
+                <p
+                  class="text-white font-medium"
+                  th:text="${autonomia.veiculo.modelo}"
+                ></p>
+              </div>
+              <div>
+                <label class="text-gray-400 text-sm">Placa:</label>
+                <p
+                  class="text-white font-medium"
+                  th:text="${autonomia.veiculo.placa}"
+                ></p>
+              </div>
+              <div>
+                <label class="text-gray-400 text-sm">Ano:</label>
+                <p
+                  class="text-white font-medium"
+                  th:text="${autonomia.veiculo.anoModelo}"
+                ></p>
+              </div>
+            </div>
+            <div class="mt-4">
+              <a
+                th:href="@{/veiculos/{id}(id=${autonomia.veiculo.id})}"
+                class="text-blue-400 hover:text-blue-300"
+              >
+                → Ver detalhes do veículo
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -27,8 +27,15 @@ public class PneuController {
     private final VeiculoRepository veiculoRepository;
 
     @GetMapping
-    public String listar(Model model) {
-        model.addAttribute("pneus", pneuRepository.findAll());
+    public String listar(@RequestParam(required = false) Long veiculoId, Model model) {
+        if (veiculoId != null) {
+            // Filtrar por veículo específico
+            model.addAttribute("pneus", pneuRepository.findByVeiculoId(veiculoId));
+            model.addAttribute("veiculo", veiculoRepository.findById(veiculoId).orElse(null));
+        } else {
+            // Listar todos
+            model.addAttribute("pneus", pneuRepository.findAll());
+        }
         return "pneus/lista";
     }
 

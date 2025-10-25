@@ -11,6 +11,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/autonomia")
 @RequiredArgsConstructor
@@ -20,8 +22,18 @@ public class AutonomiaController {
     private final VeiculoRepository veiculoRepository;
 
     @GetMapping
-    public String listar(Model model) {
-        model.addAttribute("autonomias", autonomiaRepository.findAll());
+    public String listar(@RequestParam(required = false) Long veiculoId, Model model) {
+        if (veiculoId != null) {
+            // Filtrar por veículo específico
+            List<Autonomia> autonomias = autonomiaRepository.findByVeiculoId(veiculoId)
+                .map(java.util.Collections::singletonList)
+                .orElse(java.util.Collections.emptyList());
+            model.addAttribute("autonomias", autonomias);
+            model.addAttribute("veiculo", veiculoRepository.findById(veiculoId).orElse(null));
+        } else {
+            // Listar todas
+            model.addAttribute("autonomias", autonomiaRepository.findAll());
+        }
         return "autonomia/lista";
     }
 

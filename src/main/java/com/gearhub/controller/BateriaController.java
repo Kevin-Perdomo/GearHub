@@ -27,8 +27,15 @@ public class BateriaController {
     private final VeiculoRepository veiculoRepository;
 
     @GetMapping
-    public String listar(Model model) {
-        model.addAttribute("baterias", bateriaRepository.findAll());
+    public String listar(@RequestParam(required = false) Long veiculoId, Model model) {
+        if (veiculoId != null) {
+            // Filtrar por veículo específico
+            model.addAttribute("baterias", bateriaRepository.findByVeiculoId(veiculoId));
+            model.addAttribute("veiculo", veiculoRepository.findById(veiculoId).orElse(null));
+        } else {
+            // Listar todas
+            model.addAttribute("baterias", bateriaRepository.findAll());
+        }
         return "baterias/lista";
     }
 

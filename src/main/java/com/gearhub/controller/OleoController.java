@@ -27,8 +27,15 @@ public class OleoController {
     private final VeiculoRepository veiculoRepository;
 
     @GetMapping
-    public String listar(Model model) {
-        model.addAttribute("oleos", oleoRepository.findAll());
+    public String listar(@RequestParam(required = false) Long veiculoId, Model model) {
+        if (veiculoId != null) {
+            // Filtrar por veículo específico
+            model.addAttribute("oleos", oleoRepository.findByVeiculoId(veiculoId));
+            model.addAttribute("veiculo", veiculoRepository.findById(veiculoId).orElse(null));
+        } else {
+            // Listar todos
+            model.addAttribute("oleos", oleoRepository.findAll());
+        }
         return "oleos/lista";
     }
 

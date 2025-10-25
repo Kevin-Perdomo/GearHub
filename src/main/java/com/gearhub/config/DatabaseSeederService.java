@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Base64;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +21,9 @@ public class DatabaseSeederService {
     private final VeiculoRepository veiculoRepository;
     private final DocumentoRepository documentoRepository;
     private final AutonomiaRepository autonomiaRepository;
+    private final BateriaRepository bateriaRepository;
+    private final PneuRepository pneuRepository;
+    private final OleoRepository oleoRepository;
 
     @Transactional
     public String executarSeed() {
@@ -35,6 +39,8 @@ public class DatabaseSeederService {
         Empresa empresa1 = new Empresa();
         empresa1.setNome("GearHub Transportes Ltda");
         empresa1.setCnpj("12.345.678/0001-99");
+        empresa1.setLogo(gerarImagemExemplo());
+        empresa1.setNomeArquivoLogo("logo-gearhub-transportes.png");
         empresa1 = empresaRepository.save(empresa1);
         log.info("Empresa 1 criada: {}", empresa1.getNome());
 
@@ -98,6 +104,8 @@ public class DatabaseSeederService {
         Empresa empresa2 = new Empresa();
         empresa2.setNome("LogiFreight Brasil S.A.");
         empresa2.setCnpj("98.765.432/0001-10");
+        empresa2.setLogo(gerarImagemExemplo());
+        empresa2.setNomeArquivoLogo("logo-logifreight.png");
         empresa2 = empresaRepository.save(empresa2);
         log.info("Empresa 2 criada: {}", empresa2.getNome());
 
@@ -167,6 +175,8 @@ public class DatabaseSeederService {
         sede.setNome(nome);
         sede.setEndereco(endereco);
         sede.setEmpresa(empresa);
+        sede.setFoto(gerarImagemExemplo());
+        sede.setNomeArquivoFoto("foto-" + nome.toLowerCase().replaceAll("[^a-z0-9]", "-") + ".png");
         sede = sedeRepository.save(sede);
         log.info("Sede criada: {} - {}", sede.getNome(), empresa.getNome());
         return sede;
@@ -179,6 +189,8 @@ public class DatabaseSeederService {
         veiculo.setPlaca(placa);
         veiculo.setAnoModelo(anoModelo);
         veiculo.setSede(sede);
+        veiculo.setFoto(gerarImagemExemplo());
+        veiculo.setNomeArquivoFoto("veiculo-" + placa.toLowerCase().replace("-", "") + ".png");
         veiculo = veiculoRepository.save(veiculo);
         log.info("Veículo criado: {} {} ({}) - {}", marca, modelo, placa, sede.getNome());
         return veiculo;
@@ -204,6 +216,8 @@ public class DatabaseSeederService {
         ipva.setStatus("Pago");
         ipva.setDataPagamento(LocalDate.of(2024, 1, 10));
         ipva.setDataUpload(LocalDateTime.now());
+        ipva.setArquivoPdf(gerarPdfExemplo("IPVA " + veiculo.getPlaca()));
+        ipva.setNomeArquivo("ipva-2024-" + veiculo.getPlaca().toLowerCase().replace("-", "") + ".pdf");
         documentoRepository.save(ipva);
 
         // Licenciamento 2024 (CRLV)
@@ -214,6 +228,8 @@ public class DatabaseSeederService {
         crlv.setStatus("Pago");
         crlv.setDataPagamento(LocalDate.of(2024, 1, 15));
         crlv.setDataUpload(LocalDateTime.now());
+        crlv.setArquivoPdf(gerarPdfExemplo("CRLV " + veiculo.getPlaca()));
+        crlv.setNomeArquivo("crlv-2024-" + veiculo.getPlaca().toLowerCase().replace("-", "") + ".pdf");
         documentoRepository.save(crlv);
 
         // Seguro
@@ -224,6 +240,8 @@ public class DatabaseSeederService {
         seguro.setStatus("Pago");
         seguro.setDataPagamento(LocalDate.of(2024, 2, 1));
         seguro.setDataUpload(LocalDateTime.now());
+        seguro.setArquivoPdf(gerarPdfExemplo("Seguro " + veiculo.getPlaca()));
+        seguro.setNomeArquivo("seguro-2024-" + veiculo.getPlaca().toLowerCase().replace("-", "") + ".pdf");
         documentoRepository.save(seguro);
 
         // Manual do Proprietário
@@ -232,6 +250,8 @@ public class DatabaseSeederService {
         manual.setTipoDocumento("MANUAL");
         manual.setStatus("Ativo");
         manual.setDataUpload(LocalDateTime.now());
+        manual.setArquivoPdf(gerarPdfExemplo("Manual " + veiculo.getMarca() + " " + veiculo.getModelo()));
+        manual.setNomeArquivo("manual-" + veiculo.getMarca().toLowerCase() + "-" + veiculo.getModelo().toLowerCase() + ".pdf");
         documentoRepository.save(manual);
 
         log.info("4 Documentos criados para veículo: {} (IPVA, CRLV, SEGURO, MANUAL)", veiculo.getPlaca());
@@ -241,6 +261,9 @@ public class DatabaseSeederService {
     public String limparBanco() {
         log.info("Limpando banco de dados...");
         
+        oleoRepository.deleteAll();
+        pneuRepository.deleteAll();
+        bateriaRepository.deleteAll();
         documentoRepository.deleteAll();
         autonomiaRepository.deleteAll();
         veiculoRepository.deleteAll();
@@ -250,5 +273,28 @@ public class DatabaseSeederService {
         log.info("Banco de dados limpo com sucesso!");
         
         return "Banco de dados limpo com sucesso!";
+    }
+
+    /**
+     * Gera uma imagem PNG simples (1x1 pixel azul) para usar como exemplo
+     */
+    private byte[] gerarImagemExemplo() {
+        // PNG 1x1 pixel azul (#1565c0) em base64
+        String pngBase64 = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==";
+        return Base64.getDecoder().decode(pngBase64);
+    }
+
+    /**
+     * Gera um PDF mínimo válido para usar como exemplo
+     */
+    private byte[] gerarPdfExemplo(String titulo) {
+        // PDF mínimo válido
+        String pdf = "%PDF-1.4\n" +
+                "1 0 obj<</Type/Catalog/Pages 2 0 R>>endobj\n" +
+                "2 0 obj<</Type/Pages/Count 1/Kids[3 0 R]>>endobj\n" +
+                "3 0 obj<</Type/Page/MediaBox[0 0 612 792]/Parent 2 0 R/Resources<<>>>>endobj\n" +
+                "xref\n0 4\n0000000000 65535 f\n0000000009 00000 n\n0000000056 00000 n\n0000000115 00000 n\n" +
+                "trailer<</Size 4/Root 1 0 R>>\nstartxref\n199\n%%EOF";
+        return pdf.getBytes();
     }
 }
