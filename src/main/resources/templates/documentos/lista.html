@@ -99,24 +99,24 @@
                   <div class="flex justify-center gap-2">
                     <a
                       th:href="@{/veiculos/{id}(id=${doc.veiculo.id})}"
-                      class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded transition-colors w-24 text-center"
+                      class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded transition-colors text-center"
                       title="Ver Veículo"
-                      >🚗 Veículo</a
+                      >Veículo</a
                     >
                     <a
                       th:href="@{/documentos/{id}(id=${doc.id})}"
-                      class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors w-20 text-center"
+                      class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded transition-colors text-center"
                       >Ver</a
                     >
                     <a
                       th:href="@{/documentos/{id}/editar(id=${doc.id})}"
-                      class="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded transition-colors w-20 text-center"
+                      class="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-6 rounded transition-colors text-center"
                       >Editar</a
                     >
                     <a
                       th:href="@{/documentos/{id}/excluir(id=${doc.id})}"
                       onclick="return confirm('Tem certeza que deseja excluir este documento?')"
-                      class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition-colors w-20 text-center"
+                      class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded transition-colors text-center"
                       >Excluir</a
                     >
                   </div>
