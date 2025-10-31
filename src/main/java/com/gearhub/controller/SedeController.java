@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import jakarta.validation.Valid;
 import java.io.IOException;
 
 @Controller
@@ -57,12 +56,43 @@ public class SedeController {
     }
 
     @PostMapping
-    public String salvar(@Valid @ModelAttribute Sede sede,
+    public String salvar(@ModelAttribute Sede sede,
                         BindingResult result,
+                        @RequestParam(value = "empresaId", required = false) Long empresaId,
                         @RequestParam(value = "fotoFile", required = false) MultipartFile fotoFile,
                         Model model,
                         RedirectAttributes redirectAttributes) {
+        
+        System.out.println("=== DEBUG SALVAR SEDE ===");
+        System.out.println("Empresa ID recebido: " + empresaId);
+        System.out.println("Nome: " + sede.getNome());
+        System.out.println("Endereço: " + sede.getEndereco());
+        
+        // Buscar e associar a empresa antes da validação
+        if (empresaId != null) {
+            empresaRepository.findById(empresaId).ifPresentOrElse(
+                empresa -> {
+                    sede.setEmpresa(empresa);
+                    System.out.println("Empresa associada: " + empresa.getNome());
+                },
+                () -> System.out.println("Empresa não encontrada com ID: " + empresaId)
+            );
+        } else {
+            System.out.println("empresaId é NULL!");
+        }
+        
+        // Validar campos manualmente
+        if (sede.getNome() == null || sede.getNome().trim().isEmpty()) {
+            result.rejectValue("nome", "error.sede", "Nome é obrigatório");
+        }
+        
+        if (sede.getEmpresa() == null) {
+            result.rejectValue("empresa", "error.sede", "Empresa é obrigatória");
+            System.out.println("ERRO: Empresa não foi associada!");
+        }
+        
         if (result.hasErrors()) {
+            System.out.println("Erros encontrados: " + result.getAllErrors());
             model.addAttribute("empresas", empresaRepository.findAll());
             return "sedes/form";
         }
@@ -74,11 +104,13 @@ public class SedeController {
                 sede.setNomeArquivoFoto(fotoFile.getOriginalFilename());
             } catch (IOException e) {
                 redirectAttributes.addFlashAttribute("erro", "Erro ao processar o arquivo de foto");
-                return "redirect:/sedes";
+                model.addAttribute("empresas", empresaRepository.findAll());
+                return "sedes/form";
             }
         }
         
         sedeRepository.save(sede);
+        System.out.println("Sede salva com sucesso! ID: " + sede.getId());
         redirectAttributes.addFlashAttribute("mensagem", "Sede salva com sucesso!");
         return "redirect:/sedes";
     }
