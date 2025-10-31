@@ -65,7 +65,7 @@
                 <label class="text-gray-400 text-sm">Quantidade:</label>
                 <p
                   class="text-white font-medium"
-                  th:text="${oleo.quantidadeLitros != null ? #numbers.formatDecimal(oleo.quantidadeLitros, 1, 'POINT', 1, 'COMMA') + ' L' : 'Não informada'}"
+                  th:text="${oleo.quantidadeLitros != null ? #numbers.formatDecimal(oleo.quantidadeLitros, 1, 'POINT', 2, 'COMMA') + ' L' : 'Não informada'}"
                 ></p>
               </div>
               <div>

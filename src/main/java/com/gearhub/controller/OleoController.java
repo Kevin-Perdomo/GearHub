@@ -3,7 +3,6 @@ package com.gearhub.controller;
 import com.gearhub.model.Oleo;
 import com.gearhub.repository.OleoRepository;
 import com.gearhub.repository.VeiculoRepository;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -74,11 +73,28 @@ public class OleoController {
     }
 
     @PostMapping
-    public String salvar(@Valid @ModelAttribute Oleo oleo,
+    public String salvar(@ModelAttribute Oleo oleo,
                         BindingResult result,
+                        @RequestParam(value = "veiculoId", required = false) Long veiculoId,
                         @RequestParam(value = "fotoFile", required = false) MultipartFile fotoFile,
                         Model model,
                         RedirectAttributes redirectAttributes) {
+        
+        // Buscar e associar o veículo antes da validação
+        if (veiculoId != null) {
+            veiculoRepository.findById(veiculoId).ifPresent(oleo::setVeiculo);
+        }
+        
+        // Validar veículo
+        if (oleo.getVeiculo() == null) {
+            result.rejectValue("veiculo", "error.oleo", "Veículo é obrigatório");
+        }
+        
+        // Validar data da troca
+        if (oleo.getDataTroca() == null) {
+            result.rejectValue("dataTroca", "error.oleo", "Data da troca é obrigatória");
+        }
+        
         if (result.hasErrors()) {
             model.addAttribute("veiculos", veiculoRepository.findAll());
             return "oleos/form";
@@ -91,7 +107,8 @@ public class OleoController {
                 oleo.setNomeArquivoFoto(fotoFile.getOriginalFilename());
             } catch (IOException e) {
                 redirectAttributes.addFlashAttribute("erro", "Erro ao processar o arquivo de foto");
-                return "redirect:/oleos";
+                model.addAttribute("veiculos", veiculoRepository.findAll());
+                return "oleos/form";
             }
         }
         
