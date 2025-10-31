@@ -33,27 +33,42 @@
 
         <div class="bg-[#1a2733] rounded-lg border-2 border-[#3b4f5f] p-8 mb-6">
           <h2 class="text-white text-2xl font-bold mb-6">Dados da Sede</h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <p class="text-[#93adc8] text-sm mb-1">Nome</p>
-              <p
-                class="text-white text-lg font-bold"
-                th:text="${sede.nome}"
-              ></p>
+
+          <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Foto da Sede -->
+            <div th:if="${sede.foto != null}" class="flex-shrink-0">
+              <div class="bg-white rounded-lg p-4 flex items-center justify-center lg:w-64 lg:h-64">
+                <img 
+                  th:src="@{/sedes/{id}/foto(id=${sede.id})}" 
+                  th:alt="${sede.nome}"
+                  class="max-w-full max-h-full object-contain"
+                />
+              </div>
             </div>
-            <div>
-              <p class="text-[#93adc8] text-sm mb-1">Empresa</p>
-              <p
-                class="text-white text-lg font-bold"
-                th:text="${sede.empresa.nome}"
-              ></p>
-            </div>
-            <div class="md:col-span-2">
-              <p class="text-[#93adc8] text-sm mb-1">Endereço</p>
-              <p
-                class="text-white text-lg font-bold"
-                th:text="${sede.endereco}"
-              ></p>
+
+            <!-- Informações -->
+            <div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-6 content-start">
+              <div>
+                <p class="text-[#93adc8] text-sm mb-1">Nome</p>
+                <p
+                  class="text-white text-lg font-bold"
+                  th:text="${sede.nome}"
+                ></p>
+              </div>
+              <div>
+                <p class="text-[#93adc8] text-sm mb-1">Empresa</p>
+                <p
+                  class="text-white text-lg font-bold"
+                  th:text="${sede.empresa.nome}"
+                ></p>
+              </div>
+              <div class="md:col-span-2">
+                <p class="text-[#93adc8] text-sm mb-1">Endereço</p>
+                <p
+                  class="text-white text-lg font-bold"
+                  th:text="${sede.endereco}"
+                ></p>
+              </div>
             </div>
           </div>
         </div>

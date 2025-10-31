@@ -38,37 +38,51 @@
         <div class="bg-[#1a2733] rounded-lg border-2 border-[#3b4f5f] p-8 mb-6">
           <h2 class="text-white text-2xl font-bold mb-6">Dados da Empresa</h2>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <p class="text-[#93adc8] text-sm mb-1">ID</p>
-              <p
-                class="text-white text-lg font-bold"
-                th:text="${empresa.id}"
-              ></p>
+          <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Logo da Empresa -->
+            <div th:if="${empresa.logo != null}" class="flex-shrink-0">
+              <div class="bg-white rounded-lg p-4 flex items-center justify-center lg:w-64 lg:h-64">
+                <img 
+                  th:src="@{/empresas/{id}/logo(id=${empresa.id})}" 
+                  th:alt="${empresa.nome}"
+                  class="max-w-full max-h-full object-contain"
+                />
+              </div>
             </div>
 
-            <div>
-              <p class="text-[#93adc8] text-sm mb-1">Nome</p>
-              <p
-                class="text-white text-lg font-bold"
-                th:text="${empresa.nome}"
-              ></p>
-            </div>
+            <!-- Informações -->
+            <div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-6 content-start">
+              <div>
+                <p class="text-[#93adc8] text-sm mb-1">ID</p>
+                <p
+                  class="text-white text-lg font-bold"
+                  th:text="${empresa.id}"
+                ></p>
+              </div>
 
-            <div>
-              <p class="text-[#93adc8] text-sm mb-1">CNPJ</p>
-              <p
-                class="text-white text-lg font-bold"
-                th:text="${empresa.cnpj}"
-              ></p>
-            </div>
+              <div>
+                <p class="text-[#93adc8] text-sm mb-1">Nome</p>
+                <p
+                  class="text-white text-lg font-bold"
+                  th:text="${empresa.nome}"
+                ></p>
+              </div>
 
-            <div>
-              <p class="text-[#93adc8] text-sm mb-1">Data de Criação</p>
-              <p
-                class="text-white text-lg font-bold"
-                th:text="${#temporals.format(empresa.dataCriacao, 'dd/MM/yyyy HH:mm:ss')}"
-              ></p>
+              <div>
+                <p class="text-[#93adc8] text-sm mb-1">CNPJ</p>
+                <p
+                  class="text-white text-lg font-bold"
+                  th:text="${empresa.cnpj}"
+                ></p>
+              </div>
+
+              <div>
+                <p class="text-[#93adc8] text-sm mb-1">Data de Criação</p>
+                <p
+                  class="text-white text-lg font-bold"
+                  th:text="${#temporals.format(empresa.dataCriacao, 'dd/MM/yyyy HH:mm:ss')}"
+                ></p>
+              </div>
             </div>
           </div>
         </div>

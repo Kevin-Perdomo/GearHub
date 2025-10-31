@@ -74,7 +74,8 @@
               >
               <select
                 id="empresa"
-                th:field="*{empresa.id}"
+                name="empresaId"
+                th:value="${sede.empresa?.id}"
                 class="w-full px-4 py-3 rounded-lg bg-[#0f1b24] border-2 border-[#3b4f5f] text-white focus:border-[#1565c0] focus:outline-none"
                 required
               >
@@ -83,6 +84,7 @@
                   th:each="emp : ${empresas}"
                   th:value="${emp.id}"
                   th:text="${emp.nome}"
+                  th:selected="${sede.empresa?.id == emp.id}"
                 ></option>
               </select>
               <p
@@ -104,7 +106,7 @@
                 class="w-full px-4 py-3 rounded-lg bg-[#0f1b24] border-2 border-[#3b4f5f] text-[#93adc8] focus:border-[#1565c0] focus:outline-none file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-[#1565c0] file:text-white file:cursor-pointer hover:file:bg-[#0d47a1]"
               />
               <p class="text-[#93adc8] text-sm mt-1">
-                Formatos: JPG, PNG (máx. 5MB)
+                Formatos: JPG, PNG, GIF (máx. 10MB)
               </p>
             </div>
 
